@@ -1,0 +1,38 @@
+@font-face {
+  font-family: IBMPlexSans;
+  font-display: swap;
+  src: url(./fonts/IBMPlexSans-400.ttf) format('ttf');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: IBMPlexSans;
+  font-display: swap;
+  src: url(././fonts/IBMPlexSans-700.ttf) format('ttf');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: JetBrainsMono;
+  font-display: swap;
+  src: url(./fonts/JetBrainsMono-400.ttf) format('ttf');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: JetBrainsMono;
+  font-display: swap;
+  src: url(./fonts/JetBrainsMono-700.ttf) format('ttf');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: Iceland;
+  font-display: swap;
+  src: url(./fonts/Iceland-400.ttf) format('ttf');
+  font-weight: 400;
+  font-style: normal;
+}

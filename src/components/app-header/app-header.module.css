@@ -1,0 +1,14 @@
+.header {
+  width: 100%;
+  max-width: 1920px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  composes: pb-4 pt-4 from global;
+  background-color: #1c1c21;
+}
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

@@ -1,0 +1,11 @@
+.tabs {
+  composes: mb-10 from global;
+}
+.subtitle {
+  composes: text text_type_main-medium from global;
+}
+.cardList {
+  composes: pt-6 pr-4 pl-4 pb-10 from global;
+}
+.cardItem {
+}
