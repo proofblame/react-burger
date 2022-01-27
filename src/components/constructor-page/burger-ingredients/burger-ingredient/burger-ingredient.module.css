@@ -1,6 +1,6 @@
 .cardList {
   box-sizing: border-box;
-  composes: pt-6 pr-2 pl-4 pb-10 from global;
+  composes: pt-6 pl-4 pb-10 from global;
   list-style-type: none;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(272px, 1fr));

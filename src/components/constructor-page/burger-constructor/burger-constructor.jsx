@@ -1,8 +1,9 @@
 import styles from './burger-constructor.module.css'
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import img from '../../../images/bun-01.png'
+import { ingredientsPropTypes } from '../../../utils/types'
 
-const BurgerConstructor = () => {
+const BurgerConstructor = ({ data }) => {
+
   return (
     <section className={styles.burgerConstructor}>
       <div className={styles.constructorWrapper}>
@@ -10,9 +11,9 @@ const BurgerConstructor = () => {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text="Краторная булка N-200i (верх)"
-            price={200}
-            thumbnail={img}
+            text={data[0].name}
+            price={data[0].price}
+            thumbnail={data[0].image}
           />
         </div>
         <div className={styles.burgerBody}>
@@ -21,9 +22,9 @@ const BurgerConstructor = () => {
               <DragIcon type="primary" />
             </div>
             <ConstructorElement
-              text="Краторная булка N-200i (верх)"
-              price={50}
-              thumbnail={img}
+              text={data[1].name}
+              price={data[1].price}
+              thumbnail={data[1].image}
             />
           </div>
           <div className={styles.burgerElement}>
@@ -31,9 +32,9 @@ const BurgerConstructor = () => {
               <DragIcon type="primary" />
             </div>
             <ConstructorElement
-              text="Краторная булка N-200i (верх)"
-              price={50}
-              thumbnail={img}
+              text={data[1].name}
+              price={data[1].price}
+              thumbnail={data[1].image}
             />
           </div>
           <div className={styles.burgerElement}>
@@ -41,9 +42,9 @@ const BurgerConstructor = () => {
               <DragIcon type="primary" />
             </div>
             <ConstructorElement
-              text="Краторная булка N-200i (верх)"
-              price={50}
-              thumbnail={img}
+              text={data[1].name}
+              price={data[1].price}
+              thumbnail={data[1].image}
             />
           </div>
           <div className={styles.burgerElement}>
@@ -51,19 +52,18 @@ const BurgerConstructor = () => {
               <DragIcon type="primary" />
             </div>
             <ConstructorElement
-              text="Краторная булка N-200i (верх)"
-              price={50}
-              thumbnail={img}
+              text={data[1].name}
+              price={data[1].price}
+              thumbnail={data[1].image}
             />
           </div>
         </div>
         <div className={styles.burgerElement}>
           <ConstructorElement
             type="bottom"
-            isLocked={true}
-            text="Краторная булка N-200i (верх)"
-            price={200}
-            thumbnail={img}
+            text={data[0].name}
+            price={data[0].price}
+            thumbnail={data[0].image}
           />
         </div>
       </div>
@@ -80,6 +80,10 @@ const BurgerConstructor = () => {
       </div>
     </section>
   );
+};
+
+BurgerConstructor.propTypes = {
+  data: ingredientsPropTypes.isRequired
 };
 
 export default BurgerConstructor;

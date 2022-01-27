@@ -1,23 +1,21 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-ingredients.module.css';
 import BurgerIngredient from './burger-ingredient/burger-ingredient'
+import { ingredientsPropTypes } from '../../../utils/types'
 
 const BurgerIngredients = ({ data }) => {
   const [current, setCurrent] = useState('one')
 
-  const buns = data.filter((item, index) => {
+  const buns = data.filter((item) => {
     return item.type === 'bun'
   })
-  const sauces = data.filter((item, index) => {
+  const sauces = data.filter((item) => {
     return item.type === 'sauce'
   })
-  const fillings = data.filter((item, index) => {
+  const fillings = data.filter((item) => {
     return item.type === 'main'
   })
-  useEffect(() => {
-    console.log(buns)
-  }, [])
 
   return (
     <section className={styles.burgerIngredients}>
@@ -53,6 +51,10 @@ const BurgerIngredients = ({ data }) => {
       </div>
     </section>
   );
+};
+
+BurgerIngredients.propTypes = {
+  data: ingredientsPropTypes.isRequired
 };
 
 export default BurgerIngredients;

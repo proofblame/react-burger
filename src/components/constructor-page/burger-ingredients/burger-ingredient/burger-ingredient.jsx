@@ -1,6 +1,5 @@
 import styles from './burger-ingredient.module.css'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-
 const BurgerIngredient = ({ ingredients }) => {
 
   const ingredientItem = ingredients.map((ingredient, index) => (
