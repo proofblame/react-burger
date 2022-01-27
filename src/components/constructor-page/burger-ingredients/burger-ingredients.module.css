@@ -1,0 +1,28 @@
+.burgerIngredients {
+  max-width: 600px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.table {
+  overflow-y: auto;
+}
+.table::-webkit-scrollbar {
+  background-color: #2f2f37;
+  width: 8px;
+}
+.table::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+}
+.tabs {
+  composes: mb-10 from global;
+  display: flex;
+  flex-direction: column;
+}
+.subtitle {
+  composes: text text_type_main-medium from global;
+}
+
+.title {
+  composes: mb-5 text text_type_main-large from global;
+}

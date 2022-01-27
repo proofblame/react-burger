@@ -10,7 +10,3 @@
   composes: pl-5 pr-5 pt-4 pb-4 from global;
   box-sizing: border-box;
 }
-
-* {
-  outline: 1px solid red;
-}
