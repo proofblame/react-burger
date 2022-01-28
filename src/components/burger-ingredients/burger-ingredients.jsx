@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-ingredients.module.css';
 import BurgerIngredient from './burger-ingredient/burger-ingredient'
-import { ingredientsPropTypes } from '../../../utils/types'
+import { ingredientsPropTypes } from '../../utils/types'
 
 const BurgerIngredients = ({ data }) => {
   const [current, setCurrent] = useState('one')
