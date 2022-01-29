@@ -17,6 +17,8 @@ const BurgerIngredients = ({ data }) => {
     return item.type === 'main'
   })
 
+
+
   return (
     <section className={styles.burgerIngredients}>
       <h2 className={styles.title}>
