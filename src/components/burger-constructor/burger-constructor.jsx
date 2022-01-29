@@ -2,47 +2,31 @@ import styles from './burger-constructor.module.css'
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ingredientsPropTypes } from '../../utils/types'
 import BurgerConstructorElements from './burger-constructor-elements/burger-constructor-elements'
-import Modal from '../modal/modal'
-import OrderDetails from '../order-details/order-details'
-import { useState } from 'react'
+import PropTypes from 'prop-types';
 
 
-const BurgerConstructor = ({ data }) => {
-  const [modalActive, setModalActive] = useState(false)
-
-  const handleOpenModal = () => {
-    setModalActive(true)
-  }
-  const handleCloseModal = () => {
-    setModalActive(false)
-
-  }
+const BurgerConstructor = ({ data, onOpen }) => {
   return (
-    <>
-      <section className={styles.burgerConstructor}>
-        <BurgerConstructorElements data={data} />
-        <div className={styles.total}>
-          <div className={styles.price}>
-            <span className={styles.priceNumber}>610</span>
-            <div className={styles.currencyIcon}>
-              <CurrencyIcon type="primary" />
-            </div>
+    <section className={styles.burgerConstructor}>
+      <BurgerConstructorElements data={data} />
+      <div className={styles.total}>
+        <div className={styles.price}>
+          <span className={styles.priceNumber}>610</span>
+          <div className={styles.currencyIcon}>
+            <CurrencyIcon type="primary" />
           </div>
-          <Button type="primary" size="medium" onClick={handleOpenModal}>
-            Оформить заказ
-          </Button>
         </div>
-      </section >
-
-      <Modal onClose={handleCloseModal} active={modalActive} >
-        <OrderDetails />
-      </Modal>
-    </>
+        <Button type="primary" size="medium" onClick={onOpen}>
+          Оформить заказ
+        </Button>
+      </div>
+    </section >
   );
 };
 
 BurgerConstructor.propTypes = {
-  data: ingredientsPropTypes.isRequired
+  data: ingredientsPropTypes.isRequired,
+  onOpen: PropTypes.func.isRequired,
 };
 
 export default BurgerConstructor;

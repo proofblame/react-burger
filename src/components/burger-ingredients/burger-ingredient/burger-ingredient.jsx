@@ -1,26 +1,13 @@
 import styles from './burger-ingredient.module.css'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ingredientPropTypes } from '../../../utils/types'
-import { useState } from 'react'
+import { ingredientsPropTypes } from '../../../utils/types'
+import PropTypes from 'prop-types';
 
-import Modal from '../../modal/modal'
-import IngredientDetails from '../../ingredient-details/ingredient-details'
 
-const BurgerIngredient = ({ ingredients }) => {
-  const [modalActive, setModalActive] = useState(false)
-  const [ingredient, setIngredient] = useState({})
-
-  const handleOpenModal = (ingredient) => {
-    setIngredient(ingredient)
-    setModalActive(true)
-  }
-  const handleCloseModal = () => {
-    setModalActive(false)
-    setIngredient({})
-  }
+const BurgerIngredient = ({ ingredients, onOpen }) => {
 
   const ingredientItem = ingredients.map((ingredient) => (
-    <li className={styles.cardItem} key={ingredient._id} onClick={() => handleOpenModal(ingredient)}>
+    <li className={styles.cardItem} key={ingredient._id} onClick={() => onOpen(ingredient)}>
       <img src={ingredient.image} alt={ingredient.image} className={styles.cardImage} />
       <div className={styles.price}>
         <span>{ingredient.price}</span>
@@ -31,20 +18,15 @@ const BurgerIngredient = ({ ingredients }) => {
   ))
 
   return (
-    <>
-      <ul className={styles.cardList}>
-        {ingredientItem}
-      </ul>
-      <Modal onClose={handleCloseModal} active={modalActive} header='Детали ингредиента'>
-        <IngredientDetails selectedCard={ingredient} />
-      </Modal>
-    </>
-
+    <ul className={styles.cardList}>
+      {ingredientItem}
+    </ul>
   )
 }
 
 BurgerIngredient.propTypes = {
-  ingredients: ingredientPropTypes.isRequired
+  ingredients: ingredientsPropTypes.isRequired,
+  onOpen: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredient

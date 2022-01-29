@@ -3,15 +3,10 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-ingredients.module.css';
 import BurgerIngredient from './burger-ingredient/burger-ingredient'
 import { ingredientsPropTypes } from '../../utils/types'
-import Modal from '../modal/modal'
+import PropTypes from 'prop-types';
 
-const BurgerIngredients = ({ data }) => {
+const BurgerIngredients = ({ data, onOpen }) => {
   const [current, setCurrent] = useState('one')
-  const [modalActive, setModalActive] = useState(false);
-
-  const handleClick = () => {
-    setModalActive(!modalActive)
-  }
 
   const buns = data.filter((item) => {
     return item.type === 'bun'
@@ -22,8 +17,6 @@ const BurgerIngredients = ({ data }) => {
   const fillings = data.filter((item) => {
     return item.type === 'main'
   })
-
-
 
   return (
     <>
@@ -48,15 +41,15 @@ const BurgerIngredients = ({ data }) => {
           <h3 className={styles.subtitle}>
             Булки
           </h3>
-          <BurgerIngredient ingredients={buns} onClick={handleClick} />
+          <BurgerIngredient ingredients={buns} onOpen={onOpen} />
           <h3 className={styles.subtitle}>
             Соусы
           </h3>
-          <BurgerIngredient ingredients={sauces} onClick={handleClick} />
+          <BurgerIngredient ingredients={sauces} onOpen={onOpen} />
           <h3 className={styles.subtitle}>
             Начинки
           </h3>
-          <BurgerIngredient ingredients={fillings} onClick={handleClick} />
+          <BurgerIngredient ingredients={fillings} onOpen={onOpen} />
         </div>
       </section>
     </>
@@ -65,7 +58,8 @@ const BurgerIngredients = ({ data }) => {
 };
 
 BurgerIngredients.propTypes = {
-  data: ingredientsPropTypes.isRequired
+  data: ingredientsPropTypes.isRequired,
+  onOpen: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredients;

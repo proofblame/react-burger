@@ -1,5 +1,5 @@
 import styles from './burger-constructor-elements.module.css'
-import { ingredientPropTypes } from '../../../utils/types'
+import { ingredientsPropTypes } from '../../../utils/types'
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { randomData } from '../../../utils/random'
 
@@ -55,7 +55,7 @@ const BurgerConstructorElements = ({ data }) => {
 }
 
 BurgerConstructorElements.propTypes = {
-  data: ingredientPropTypes.isRequired
+  data: ingredientsPropTypes.isRequired
 };
 
 export default BurgerConstructorElements

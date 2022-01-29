@@ -6,9 +6,16 @@ import api from '../../utils/api'
 import { useEffect, useState } from 'react'
 import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 
 function App() {
   const [ingredients, setIngredients] = useState([]);
+  const [modalActive, setModalActive] = useState({
+    ingredientModal: false,
+    orderModal: false,
+  })
+  const [ingredient, setIngredient] = useState(null)
+
 
   const getData = async () => {
     try {
@@ -18,21 +25,61 @@ function App() {
       console.error(err);
     }
   }
-  const active = true
+
   useEffect(() => {
     getData()
   }, [])
 
+  const handleOpenIngredientModal = (ingredient) => {
+    setIngredient(ingredient)
+    setModalActive({
+      ...modalActive,
+      ingredientModal: true
+    })
+  }
+
+  const handleOpenOrderModal = () => {
+    setModalActive({
+      ...modalActive,
+      orderModal: true
+    })
+  }
+  const handleCloseModal = () => {
+    setModalActive({
+      ...modalActive,
+      ingredientModal: false,
+      orderModal: false,
+    })
+    setIngredient(null)
+  }
+
+
   return (
+    <>
+      {ingredients &&
+        <section className={styles.app}>
+          <AppHeader />
+          <main className={styles.main}>
+            <BurgerIngredients data={ingredients} onOpen={handleOpenIngredientModal} />
+            <BurgerConstructor data={ingredients} onOpen={handleOpenOrderModal} />
+          </main>
+        </section>
+      }
 
-    <section className={styles.app}>
-      <AppHeader />
-      <main className={styles.main}>
-        <BurgerIngredients data={ingredients} />
-        <BurgerConstructor data={ingredients} />
-      </main>
-    </section>
+      <Modal onClose={handleCloseModal} active={modalActive.ingredientModal} header='Детали ингредиента'>
+        {
+          ingredient &&
+          <IngredientDetails selectedCard={ingredient} />
+        }
+      </Modal>
 
+
+
+      <Modal onClose={handleCloseModal} active={modalActive.orderModal} >
+        <OrderDetails />
+      </Modal>
+
+    </>
   );
 }
 

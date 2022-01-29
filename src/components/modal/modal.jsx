@@ -3,6 +3,7 @@ import ModalOverlay from './modal-overlay/modal-overlay'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useEffect } from 'react'
 import ReactDOM from 'react-dom';
+import { modalPropTypes } from '../../utils/types'
 const modalRoot = document.getElementById("modals");
 
 const Modal = ({ header, onClose, active, children }) => {
@@ -39,5 +40,7 @@ const Modal = ({ header, onClose, active, children }) => {
     </ModalOverlay>
     , modalRoot)
 }
+
+Modal.propTypes = modalPropTypes.isRequired
 
 export default Modal
