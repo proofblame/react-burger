@@ -4,6 +4,8 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import api from '../../utils/api'
 import { useEffect, useState } from 'react'
+import Modal from '../modal/modal'
+import OrderDetails from '../order-details/order-details';
 
 function App() {
   const [ingredients, setIngredients] = useState([]);
@@ -16,7 +18,7 @@ function App() {
       console.error(err);
     }
   }
-
+  const active = true
   useEffect(() => {
     getData()
   }, [])
