@@ -1,11 +1,13 @@
 import styles from './burger-ingredient.module.css'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ingredientPropTypes } from '../../../utils/types'
+import { ingredientsPropTypes } from '../../../utils/types'
+import PropTypes from 'prop-types';
 
-const BurgerIngredient = ({ ingredients }) => {
+
+const BurgerIngredient = ({ ingredients, onOpen }) => {
 
   const ingredientItem = ingredients.map((ingredient) => (
-    <li className={styles.cardItem} key={ingredient._id}>
+    <li className={styles.cardItem} key={ingredient._id} onClick={() => onOpen(ingredient)}>
       <img src={ingredient.image} alt={ingredient.image} className={styles.cardImage} />
       <div className={styles.price}>
         <span>{ingredient.price}</span>
@@ -23,7 +25,8 @@ const BurgerIngredient = ({ ingredients }) => {
 }
 
 BurgerIngredient.propTypes = {
-  ingredients: ingredientPropTypes.isRequired
+  ingredients: ingredientsPropTypes.isRequired,
+  onOpen: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredient

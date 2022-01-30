@@ -1,11 +1,11 @@
 import styles from './burger-constructor.module.css'
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ingredientsPropTypes } from '../../utils/types'
-
 import BurgerConstructorElements from './burger-constructor-elements/burger-constructor-elements'
+import PropTypes from 'prop-types';
 
-const BurgerConstructor = ({ data }) => {
 
+const BurgerConstructor = ({ data, onOpen }) => {
   return (
     <section className={styles.burgerConstructor}>
       <BurgerConstructorElements data={data} />
@@ -16,7 +16,7 @@ const BurgerConstructor = ({ data }) => {
             <CurrencyIcon type="primary" />
           </div>
         </div>
-        <Button type="primary" size="medium">
+        <Button type="primary" size="medium" onClick={onOpen}>
           Оформить заказ
         </Button>
       </div>
@@ -25,7 +25,8 @@ const BurgerConstructor = ({ data }) => {
 };
 
 BurgerConstructor.propTypes = {
-  data: ingredientsPropTypes.isRequired
+  data: ingredientsPropTypes.isRequired,
+  onOpen: PropTypes.func.isRequired,
 };
 
 export default BurgerConstructor;
