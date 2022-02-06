@@ -2,42 +2,40 @@ import styles from './burger-constructor.module.css'
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import BurgerConstructorElements from './burger-constructor-elements/burger-constructor-elements'
 import PropTypes from 'prop-types';
-import { useContext, useEffect, useState } from 'react';
-import { CartContext } from '../../contexts/cart-context';
-import { TotalCost } from '../../contexts/total-cost-context';
-import { Order } from '../../contexts/order-context';
+import { useContext, useEffect, useMemo, useState } from 'react';
+import { CartContext } from '../../services/cart-context';
+import { Order } from '../../services/order-context';
 
 const BurgerConstructor = ({ onOpen }) => {
-  const { cost, costDispatch } = useContext(TotalCost)
   const { cart } = useContext(CartContext)
   const { order, setOrder } = useContext(Order)
 
-  const [bun, setBun] = useState(null)
-  const [stuff, setStuff] = useState([])
+  const totalCost = useMemo(() => {
+    return cart
+      .map(item => item.price * (item.type === 'bun' ? 2 : 1))
+      .reduce((sum, current) => { return sum + current })
+  }, [cart])
+
+  const bun = useMemo(() => {
+    return cart.find(bun => bun.type === 'bun')
+  }, [cart])
+
+  const stuff = useMemo(() => {
+    return cart.filter(stuff => stuff.type !== 'bun')
+  }, [cart])
+
 
   useEffect(() => {
     if (cart.length > 0) {
-      setBun(cart.find(bun => bun.type === 'bun'))
-      setStuff(cart.filter(stuff => stuff.type !== 'bun'))
-      const totalCost = cart
-        .map(item => item.price * (item.type === 'bun' ? 2 : 1))
-        .reduce((sum, current) => { return sum + current })
-      costDispatch({
-        type: 'sum', payload: totalCost
-      })
       const cartId = cart.map(item => item._id)
       setOrder(
         cartId
       )
+
     } else {
-      setBun(null)
-      setStuff([])
-      costDispatch({
-        type: 'reset', payload: 0
-      })
       setOrder(Order)
     }
-  }, [cart, costDispatch])
+  }, [cart])
 
   return (
     <section className={styles.burgerConstructor}>
@@ -46,7 +44,7 @@ const BurgerConstructor = ({ onOpen }) => {
       }
       <div className={styles.total}>
         <div className={styles.price}>
-          <span className={styles.priceNumber}>{cost.cost}</span>
+          <span className={styles.priceNumber}>{totalCost}</span>
           <div className={styles.currencyIcon}>
             <CurrencyIcon type="primary" />
           </div>

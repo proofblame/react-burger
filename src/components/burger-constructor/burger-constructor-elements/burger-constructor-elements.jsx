@@ -1,6 +1,6 @@
 import styles from './burger-constructor-elements.module.css'
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { CartContext } from '../../../contexts/cart-context';
+import { CartContext } from '../../../services/cart-context';
 import { useContext, useEffect } from 'react';
 import { ingredientDetails, ingredientsPropTypes } from '../../../utils/types';
 

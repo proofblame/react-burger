@@ -5,7 +5,7 @@ import BurgerIngredient from './burger-ingredient/burger-ingredient'
 import { ingredientsPropTypes } from '../../utils/types'
 import PropTypes from 'prop-types';
 
-import { IngredientsContext } from '../../contexts/ingredients-context';
+import { IngredientsContext } from '../../services/ingredients-context';
 import { useContext } from 'react';
 
 const BurgerIngredients = ({ onOpen }) => {

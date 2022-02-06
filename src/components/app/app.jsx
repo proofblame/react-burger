@@ -3,33 +3,22 @@ import AppHeader from '../app-header/app-header'
 import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import api from '../../utils/api'
-import { useCallback, useEffect, useReducer, useState } from 'react'
+import { useCallback, useEffect, useReducer, useState, useMemo } from 'react'
 import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
-import { IngredientsContext } from '../../contexts/ingredients-context'
-import { CartContext } from '../../contexts/cart-context';
-import { TotalCost } from '../../contexts/total-cost-context';
-import { Order } from '../../contexts/order-context';
+import { IngredientsContext } from '../../services/ingredients-context'
+import { CartContext } from '../../services/cart-context';
+import { Order } from '../../services/order-context';
 
 import { defaultCart } from '../../utils/data'
 
-const initialCost = { cost: 0 }
-
-const totalCostReducer = (state, action) => {
-  switch (action.type) {
-    case "sum":
-      return { cost: action.payload }
-    case "reset":
-      return initialCost
-    default:
-      throw new Error(`Wrong type of action: ${action.type}`);
-  }
-}
 
 function App() {
   const [ingredients, setIngredients] = useState([]);
+  const ingredientsMemo = useMemo(() => ({ ingredients, setIngredients }), [ingredients])
+
   const [modalActive, setModalActive] = useState({
     ingredientModal: false,
     orderModal: false,
@@ -39,7 +28,6 @@ function App() {
   const [order, setOrder] = useState([])
   const [orderDetails, setOrderDetails] = useState(null)
 
-  const [cost, costDispatch] = useReducer(totalCostReducer, initialCost, undefined)
 
 
   const getData = useCallback(async () => {
@@ -59,6 +47,10 @@ function App() {
     try {
       const res = await api.sendData(order)
       setOrderDetails(res)
+      setModalActive({
+        ...modalActive,
+        orderModal: true
+      })
     } catch (error) {
       console.log(error)
     }
@@ -72,13 +64,6 @@ function App() {
     })
   }
 
-  const handleOpenOrderModal = async (order) => {
-    await sendOrder(order)
-    setModalActive({
-      ...modalActive,
-      orderModal: true
-    })
-  }
   const handleCloseModal = () => {
     setModalActive({
       ...modalActive,
@@ -90,35 +75,37 @@ function App() {
 
 
   return (
-    <IngredientsContext.Provider value={{ ingredients, setIngredients }}>
+    <IngredientsContext.Provider value={ingredientsMemo}>
       <CartContext.Provider value={{ cart, setCart }}>
-        <TotalCost.Provider value={{ cost, costDispatch }}>
-          <Order.Provider value={{ order, setOrder }}>
-            {ingredients.length &&
-              <section className={styles.app}>
-                <AppHeader />
-                <main className={styles.main}>
-                  <BurgerIngredients onOpen={handleOpenIngredientModal} />
-                  <BurgerConstructor onOpen={handleOpenOrderModal} />
-                </main>
-              </section>
-            }
+        <Order.Provider value={{ order, setOrder }}>
+          {ingredients.length &&
+            <section className={styles.app}>
+              <AppHeader />
+              <main className={styles.main}>
+                <BurgerIngredients onOpen={handleOpenIngredientModal} />
+                <BurgerConstructor onOpen={sendOrder} />
+              </main>
+            </section>
+          }
 
-            <Modal onClose={handleCloseModal} active={modalActive.ingredientModal} header='Детали ингредиента'>
-              {
-                ingredient &&
+          {modalActive.ingredientModal &&
+            (
+              <Modal onClose={handleCloseModal} header='Детали ингредиента'>
                 <IngredientDetails selectedCard={ingredient} />
-              }
-            </Modal>
-
-            <Modal onClose={handleCloseModal} active={modalActive.orderModal} >
-              {
-                orderDetails &&
-                <OrderDetails orderDetails={orderDetails} />
-              }
-            </Modal>
-          </Order.Provider>
-        </TotalCost.Provider>
+              </Modal>
+            )
+          }
+          {modalActive.orderModal &&
+            (
+              <Modal onClose={handleCloseModal} active={modalActive.orderModal} >
+                {
+                  orderDetails &&
+                  <OrderDetails orderDetails={orderDetails} />
+                }
+              </Modal>
+            )
+          }
+        </Order.Provider>
       </CartContext.Provider>
     </IngredientsContext.Provider>
   );
