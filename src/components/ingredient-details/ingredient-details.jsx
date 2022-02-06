@@ -1,10 +1,7 @@
 import styles from './ingredient-details.module.css'
 import { ingredientDetails } from '../../utils/types'
-import { useEffect } from 'react';
 
 const IngredientDetails = ({ selectedCard }) => {
-  useEffect(() => {
-  }, [selectedCard])
   return (
     (selectedCard &&
       <div className={styles.card}>

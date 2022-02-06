@@ -8,6 +8,12 @@ const modalRoot = document.getElementById("modals");
 
 const Modal = ({ header, onClose, active, children }) => {
 
+  const handleEscapePress = (e) => {
+    if (e.key === 'Escape') {
+      onClose()
+    }
+  };
+
   useEffect(() => {
     document.addEventListener('keydown', handleEscapePress);
 
@@ -17,11 +23,7 @@ const Modal = ({ header, onClose, active, children }) => {
 
   }, [])
 
-  const handleEscapePress = (e) => {
-    if (e.key === 'Escape') {
-      onClose()
-    }
-  };
+
 
 
   return ReactDOM.createPortal(

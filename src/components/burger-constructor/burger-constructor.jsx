@@ -5,10 +5,10 @@ import BurgerConstructorElements from './burger-constructor-elements/burger-cons
 import PropTypes from 'prop-types';
 
 
-const BurgerConstructor = ({ data, onOpen }) => {
+const BurgerConstructor = ({ ingredients, onOpen }) => {
   return (
     <section className={styles.burgerConstructor}>
-      <BurgerConstructorElements data={data} />
+      <BurgerConstructorElements ingredients={ingredients} />
       <div className={styles.total}>
         <div className={styles.price}>
           <span className={styles.priceNumber}>610</span>
@@ -25,7 +25,7 @@ const BurgerConstructor = ({ data, onOpen }) => {
 };
 
 BurgerConstructor.propTypes = {
-  data: ingredientsPropTypes.isRequired,
+  ingredients: ingredientsPropTypes.isRequired,
   onOpen: PropTypes.func.isRequired,
 };
 

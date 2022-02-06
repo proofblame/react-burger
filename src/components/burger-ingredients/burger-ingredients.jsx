@@ -5,16 +5,16 @@ import BurgerIngredient from './burger-ingredient/burger-ingredient'
 import { ingredientsPropTypes } from '../../utils/types'
 import PropTypes from 'prop-types';
 
-const BurgerIngredients = ({ data, onOpen }) => {
+const BurgerIngredients = ({ ingredients, onOpen }) => {
   const [current, setCurrent] = useState('one')
 
-  const buns = data.filter((item) => {
+  const buns = ingredients.filter((item) => {
     return item.type === 'bun'
   })
-  const sauces = data.filter((item) => {
+  const sauces = ingredients.filter((item) => {
     return item.type === 'sauce'
   })
-  const fillings = data.filter((item) => {
+  const fillings = ingredients.filter((item) => {
     return item.type === 'main'
   })
 
@@ -58,7 +58,7 @@ const BurgerIngredients = ({ data, onOpen }) => {
 };
 
 BurgerIngredients.propTypes = {
-  data: ingredientsPropTypes.isRequired,
+  ingredients: ingredientsPropTypes.isRequired,
   onOpen: PropTypes.func.isRequired,
 };
 

@@ -3,7 +3,7 @@ import { ingredientsPropTypes } from '../../../utils/types'
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { randomData } from '../../../utils/random'
 
-const BurgerConstructorElements = ({ data }) => {
+const BurgerConstructorElements = ({ ingredients }) => {
 
 
   const ingredientItem = randomData.map((ingredient, index) => (
@@ -23,15 +23,15 @@ const BurgerConstructorElements = ({ data }) => {
   return (
     (
 
-      data.length > 0 &&
+      ingredients.length > 0 &&
       <div className={styles.constructorWrapper}>
         <div className={styles.burgerElement}>
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${data[0].name} (верх)`}
-            price={data[0].price}
-            thumbnail={data[0].image}
+            text={`${ingredients[0].name} (верх)`}
+            price={ingredients[0].price}
+            thumbnail={ingredients[0].image}
           />
         </div>
 
@@ -42,9 +42,9 @@ const BurgerConstructorElements = ({ data }) => {
         <div className={styles.burgerElement}>
           <ConstructorElement
             type="bottom"
-            text={`${data[0].name} (низ)`}
-            price={data[0].price}
-            thumbnail={data[0].image}
+            text={`${ingredients[0].name} (низ)`}
+            price={ingredients[0].price}
+            thumbnail={ingredients[0].image}
           />
         </div>
       </div>
@@ -55,7 +55,7 @@ const BurgerConstructorElements = ({ data }) => {
 }
 
 BurgerConstructorElements.propTypes = {
-  data: ingredientsPropTypes.isRequired
+  ingredients: ingredientsPropTypes.isRequired
 };
 
 export default BurgerConstructorElements

@@ -3,7 +3,7 @@ import AppHeader from '../app-header/app-header'
 import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import api from '../../utils/api'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
@@ -17,18 +17,18 @@ function App() {
   const [ingredient, setIngredient] = useState(null)
 
 
-  const getData = async () => {
+  const getData = useCallback(async () => {
     try {
       const res = await api.getData()
       setIngredients(res.data)
     } catch (err) {
       console.error(err);
     }
-  }
+  }, [])
 
   useEffect(() => {
     getData()
-  }, [])
+  }, [getData])
 
   const handleOpenIngredientModal = (ingredient) => {
     setIngredient(ingredient)
@@ -56,12 +56,12 @@ function App() {
 
   return (
     <>
-      {ingredients &&
+      {ingredients.length &&
         <section className={styles.app}>
           <AppHeader />
           <main className={styles.main}>
-            <BurgerIngredients data={ingredients} onOpen={handleOpenIngredientModal} />
-            <BurgerConstructor data={ingredients} onOpen={handleOpenOrderModal} />
+            <BurgerIngredients ingredients={ingredients} onOpen={handleOpenIngredientModal} />
+            <BurgerConstructor ingredients={ingredients} onOpen={handleOpenOrderModal} />
           </main>
         </section>
       }
