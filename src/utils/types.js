@@ -36,3 +36,11 @@ export const ingredientDetails = PropTypes.shape({
   image_large: PropTypes.string.isRequired,
   __v: PropTypes.number.isRequired,
 });
+
+export const orderDetailsPropTypes = PropTypes.shape({
+  name: PropTypes.string.isRequired,
+  order: PropTypes.shape({
+    number: PropTypes.number.isRequired,
+  }),
+  success: PropTypes.bool.isRequired,
+})

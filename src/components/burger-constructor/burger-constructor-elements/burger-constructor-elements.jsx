@@ -1,7 +1,9 @@
 import styles from './burger-constructor-elements.module.css'
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { CartContext } from '../../../contexts/cart-context';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
+import { ingredientDetails, ingredientsPropTypes } from '../../../utils/types';
+
 
 const BurgerConstructorElements = ({ bun, stuff }) => {
   const { cart, setCart } = useContext(CartContext)
@@ -10,7 +12,6 @@ const BurgerConstructorElements = ({ bun, stuff }) => {
     const newCart = cart.filter(item => item._id !== ingredient._id)
     setCart(newCart)
   }
-
 
   const ingredientItem = stuff.map((ingredient, index) => (
     <li className={styles.burgerElement} key={index}>
@@ -26,10 +27,8 @@ const BurgerConstructorElements = ({ bun, stuff }) => {
     </li>
   ))
 
-
   return (
     (
-
       cart.length > 0 &&
       <div className={styles.constructorWrapper}>
         <div className={styles.burgerElement}>
@@ -63,7 +62,8 @@ const BurgerConstructorElements = ({ bun, stuff }) => {
 }
 
 BurgerConstructorElements.propTypes = {
-  // cart: ingredientsPropTypes.isRequired
+  bun: ingredientDetails.isRequired,
+  stuff: ingredientsPropTypes.isRequired,
 };
 
 export default BurgerConstructorElements

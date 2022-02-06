@@ -12,7 +12,7 @@ const BurgerConstructor = ({ onOpen }) => {
   const { cart } = useContext(CartContext)
   const { order, setOrder } = useContext(Order)
 
-  const [bun, setBun] = useState({})
+  const [bun, setBun] = useState(null)
   const [stuff, setStuff] = useState([])
 
   useEffect(() => {
@@ -30,16 +30,20 @@ const BurgerConstructor = ({ onOpen }) => {
         cartId
       )
     } else {
-      setBun({})
+      setBun(null)
       setStuff([])
       costDispatch({
         type: 'reset', payload: 0
       })
+      setOrder(Order)
     }
   }, [cart, costDispatch])
+
   return (
     <section className={styles.burgerConstructor}>
-      <BurgerConstructorElements bun={bun} stuff={stuff} />
+      {bun &&
+        <BurgerConstructorElements bun={bun} stuff={stuff} />
+      }
       <div className={styles.total}>
         <div className={styles.price}>
           <span className={styles.priceNumber}>{cost.cost}</span>

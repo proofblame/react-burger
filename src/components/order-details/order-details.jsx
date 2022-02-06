@@ -1,5 +1,6 @@
 import styles from './order-details.module.css'
 import done from '../../images/done.png'
+import { orderDetailsPropTypes } from '../../utils/types';
 
 const OrderDetails = ({ orderDetails }) => {
   const { order } = orderDetails
@@ -15,4 +16,7 @@ const OrderDetails = ({ orderDetails }) => {
   );
 };
 
+OrderDetails.propTypes = {
+  orderDetails: orderDetailsPropTypes.isRequired,
+}
 export default OrderDetails;
