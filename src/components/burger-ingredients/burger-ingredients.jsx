@@ -5,7 +5,14 @@ import BurgerIngredient from './burger-ingredient/burger-ingredient'
 import { ingredientsPropTypes } from '../../utils/types'
 import PropTypes from 'prop-types';
 
-const BurgerIngredients = ({ ingredients, onOpen }) => {
+import { IngredientsContext } from '../../contexts/ingredients-context';
+import { useContext } from 'react';
+
+const BurgerIngredients = ({ onOpen }) => {
+
+  const { ingredients } = useContext(IngredientsContext)
+
+
   const [current, setCurrent] = useState('one')
 
   const buns = ingredients.filter((item) => {
@@ -58,7 +65,6 @@ const BurgerIngredients = ({ ingredients, onOpen }) => {
 };
 
 BurgerIngredients.propTypes = {
-  ingredients: ingredientsPropTypes.isRequired,
   onOpen: PropTypes.func.isRequired,
 };
 

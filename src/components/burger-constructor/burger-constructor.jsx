@@ -1,14 +1,19 @@
 import styles from './burger-constructor.module.css'
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ingredientsPropTypes } from '../../utils/types'
 import BurgerConstructorElements from './burger-constructor-elements/burger-constructor-elements'
 import PropTypes from 'prop-types';
+import { ingredientsPropTypes } from '../../utils/types'
+import { CartContext } from '../../contexts/cart-context';
+import { useContext, useState } from 'react';
 
 
-const BurgerConstructor = ({ ingredients, onOpen }) => {
+const BurgerConstructor = ({ onOpen }) => {
+  const { cart, setCart } = useContext(CartContext)
+
+
   return (
     <section className={styles.burgerConstructor}>
-      <BurgerConstructorElements ingredients={ingredients} />
+      <BurgerConstructorElements />
       <div className={styles.total}>
         <div className={styles.price}>
           <span className={styles.priceNumber}>610</span>
@@ -25,7 +30,7 @@ const BurgerConstructor = ({ ingredients, onOpen }) => {
 };
 
 BurgerConstructor.propTypes = {
-  ingredients: ingredientsPropTypes.isRequired,
+
   onOpen: PropTypes.func.isRequired,
 };
 
