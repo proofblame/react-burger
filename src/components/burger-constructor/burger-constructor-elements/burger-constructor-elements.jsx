@@ -3,7 +3,7 @@ import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burg
 import { CartContext } from '../../../contexts/cart-context';
 import { useContext } from 'react';
 
-const BurgerConstructorElements = () => {
+const BurgerConstructorElements = ({ bun, stuff }) => {
   const { cart, setCart } = useContext(CartContext)
 
   const handleDeleteIngredient = (ingredient) => {
@@ -12,7 +12,7 @@ const BurgerConstructorElements = () => {
   }
 
 
-  const ingredientItem = cart.map((ingredient, index) => (
+  const ingredientItem = stuff.map((ingredient, index) => (
     <li className={styles.burgerElement} key={index}>
       <div className={styles.dragIcon}>
         <DragIcon type="primary" />
@@ -36,9 +36,9 @@ const BurgerConstructorElements = () => {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${cart[0].name} (верх)`}
-            price={cart[0].price}
-            thumbnail={cart[0].image}
+            text={`${bun.name} (верх)`}
+            price={bun.price}
+            thumbnail={bun.image}
           />
         </div>
 
@@ -49,9 +49,10 @@ const BurgerConstructorElements = () => {
         <div className={styles.burgerElement}>
           <ConstructorElement
             type="bottom"
-            text={`${cart[0].name} (низ)`}
-            price={cart[0].price}
-            thumbnail={cart[0].image}
+            isLocked={true}
+            text={`${bun.name} (низ)`}
+            price={bun.price}
+            thumbnail={bun.image}
           />
         </div>
       </div>
