@@ -83,15 +83,15 @@ function App() {
 
   return (
     <>
-      {ingredients.length &&
-        <section className={styles.app}>
-          <AppHeader />
-          <main className={styles.main}>
-            <BurgerIngredients onOpen={handleOpenIngredientModal} />
-            <BurgerConstructor onOpen={sendOrder} />
-          </main>
-        </section>
-      }
+
+      <section className={styles.app}>
+        <AppHeader />
+        <main className={styles.main}>
+          <BurgerIngredients onOpen={handleOpenIngredientModal} />
+          <BurgerConstructor onOpen={sendOrder} />
+        </main>
+      </section>
+
 
       {/* {modalActive.ingredientModal &&
             (

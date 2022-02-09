@@ -6,14 +6,22 @@ import { useContext, useEffect, useMemo, useState } from 'react';
 import { CartContext } from '../../services/cart-context';
 import { Order } from '../../services/order-context';
 
+import { useSelector } from 'react-redux';
+
 const BurgerConstructor = ({ onOpen }) => {
-  const { cart } = useContext(CartContext)
-  const { order, setOrder } = useContext(Order)
+  // const { cart } = useContext(CartContext)
+  // const { order, setOrder } = useContext(Order)
+  const { cart, order } = useSelector(store => store.ingredients)
+
 
   const totalCost = useMemo(() => {
-    return cart
-      .map(item => item.price * (item.type === 'bun' ? 2 : 1))
-      .reduce((sum, current) => { return sum + current })
+    if (cart.length > 0) {
+      return cart
+        .map(item => item.price * (item.type === 'bun' ? 2 : 1))
+        .reduce((sum, current) => { return sum + current })
+    } else {
+      return 0
+    }
   }, [cart])
 
   const bun = useMemo(() => {
@@ -28,12 +36,12 @@ const BurgerConstructor = ({ onOpen }) => {
   useEffect(() => {
     if (cart.length > 0) {
       const cartId = cart.map(item => item._id)
-      setOrder(
-        cartId
-      )
+      // setOrder(
+      //   cartId
+      // )
 
     } else {
-      setOrder(Order)
+      // setOrder(Order)
     }
   }, [cart])
 

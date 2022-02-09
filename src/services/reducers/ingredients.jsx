@@ -9,16 +9,18 @@ export const initialState = {
 
 
   cart: [],
-  selectedIngredients: {},
   order: {},
 
   fetchingState: 'none',
+
+  currentTab: 'buns'
 };
 
 const ingredientsSlice = createSlice({
   name: 'ingredients',
   initialState,
   reducers: {
+    // Получение ингредиентов
     getIngredientsRequest(state) {
       state.itemsRequest = true;
       state.itemsFailed = false;
@@ -30,7 +32,12 @@ const ingredientsSlice = createSlice({
     getIngredientsFailed(state) {
       state.itemsRequest = false;
       state.itemsFailed = true;
-    }
+    },
+    // Переключение Таба
+    swithTab(state, action) {
+      state.currentTab = action.payload
+    },
+
   },
 })
 const { actions, reducer } = ingredientsSlice;
@@ -39,6 +46,7 @@ export const {
   getIngredientsRequest,
   getIngredientsSuccess,
   getIngredientsFailed,
+  swithTab
 } = actions;
 
 
