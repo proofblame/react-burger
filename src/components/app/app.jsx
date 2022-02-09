@@ -13,9 +13,13 @@ import { CartContext } from '../../services/cart-context';
 import { Order } from '../../services/order-context';
 
 import { defaultCart } from '../../utils/data'
+import { getIngredients } from '../../services/actions/ingredients';
 
+import { useDispatch, useSelector } from 'react-redux';
 
 function App() {
+  const dispatch = useDispatch()
+
   const [ingredients, setIngredients] = useState([]);
   const ingredientsMemo = useMemo(() => ({ ingredients, setIngredients }), [ingredients])
 
@@ -39,9 +43,12 @@ function App() {
     }
   }, [])
 
-  useEffect(() => {
-    getData()
-  }, [getData])
+  useEffect(
+    () => {
+      dispatch(getIngredients())
+    },
+    [dispatch]
+  )
 
   const sendOrder = async (order) => {
     try {
@@ -75,20 +82,18 @@ function App() {
 
 
   return (
-    <IngredientsContext.Provider value={ingredientsMemo}>
-      <CartContext.Provider value={{ cart, setCart }}>
-        <Order.Provider value={{ order, setOrder }}>
-          {ingredients.length &&
-            <section className={styles.app}>
-              <AppHeader />
-              <main className={styles.main}>
-                <BurgerIngredients onOpen={handleOpenIngredientModal} />
-                <BurgerConstructor onOpen={sendOrder} />
-              </main>
-            </section>
-          }
+    <>
+      {ingredients.length &&
+        <section className={styles.app}>
+          <AppHeader />
+          <main className={styles.main}>
+            <BurgerIngredients onOpen={handleOpenIngredientModal} />
+            <BurgerConstructor onOpen={sendOrder} />
+          </main>
+        </section>
+      }
 
-          {modalActive.ingredientModal &&
+      {/* {modalActive.ingredientModal &&
             (
               <Modal onClose={handleCloseModal} header='Детали ингредиента'>
                 <IngredientDetails selectedCard={ingredient} />
@@ -104,10 +109,8 @@ function App() {
                 }
               </Modal>
             )
-          }
-        </Order.Provider>
-      </CartContext.Provider>
-    </IngredientsContext.Provider>
+          } */}
+    </>
   );
 }
 

@@ -42,8 +42,16 @@
     ]
   },
   "devDependencies": {
+    "@reduxjs/toolkit": "^1.7.2",
     "@types/react-transition-group": "^4.4.4",
+    "@types/redux-logger": "^3.0.9",
     "prop-types": "^15.8.1",
-    "react-transition-group": "^4.4.2"
+    "react-dnd": "^15.1.1",
+    "react-dnd-html5-backend": "^15.1.2",
+    "react-redux": "^7.2.6",
+    "react-transition-group": "^4.4.2",
+    "redux": "^4.1.2",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.4.1"
   }
 }
