@@ -6,6 +6,7 @@
 }
 .table {
   overflow-y: auto;
+  position: relative;
 }
 .table::-webkit-scrollbar {
   background-color: #2f2f37;
@@ -26,4 +27,11 @@
 .link {
   text-decoration: none;
   color: inherit;
+}
+.plank {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 1px;
+  width: 100%;
 }

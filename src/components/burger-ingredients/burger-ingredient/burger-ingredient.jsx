@@ -6,10 +6,7 @@ import { forwardRef } from 'react';
 import { useSelector } from 'react-redux';
 
 
-const BurgerIngredient = forwardRef(({ ingredients, onOpen, title, id }, ref) => {
-
-  const currentTab = useSelector(store => store.ingredients)
-
+const BurgerIngredient = forwardRef(({ ingredients, onOpen, title }, ref) => {
 
   const ingredientItem = ingredients.map((ingredient) => (
     <li className={styles.cardItem} key={ingredient._id} onClick={() => onOpen(ingredient)}>
@@ -24,10 +21,10 @@ const BurgerIngredient = forwardRef(({ ingredients, onOpen, title, id }, ref) =>
 
   return (
     <>
-      <h3 className={styles.subtitle} ref={ref} id={id}>
+      <h3 className={styles.subtitle} ref={ref}>
         {title}
       </h3>
-      <ul className={styles.cardList}>
+      <ul className={styles.cardList} >
         {ingredientItem}
       </ul>
     </>
