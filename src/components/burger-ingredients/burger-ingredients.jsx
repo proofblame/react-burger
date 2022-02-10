@@ -17,10 +17,10 @@ const BurgerIngredients = ({ onOpen }) => {
   const dispatch = useDispatch()
   const { ingredients, currentTab } = useSelector(store => store.ingredients)
 
-  const bunsRef = createRef(null)
-  const saucesRef = createRef(null)
-  const fillingsRef = createRef(null)
-  const rootRef = useRef()
+  const bunsRef = useRef(null)
+  const saucesRef = useRef(null)
+  const fillingsRef = useRef(null)
+  const rootRef = useRef(null)
 
   const smoothSettings = { block: "start", behavior: "smooth" }
 
@@ -59,7 +59,8 @@ const BurgerIngredients = ({ onOpen }) => {
         <h2 className={styles.title}>
           Соберите бургер
         </h2>
-        <div className={styles.tabs}>
+
+        <div className={styles.tabs} >
           <div style={{ display: 'flex' }}>
             <Tab value="buns" active={currentTab === 'buns'} onClick={handleBunTab}>
               Булки
@@ -72,11 +73,12 @@ const BurgerIngredients = ({ onOpen }) => {
             </Tab>
           </div>
         </div>
-        <div className={styles.table} >
+        <div className={styles.table} ref={rootRef}>
           <BurgerIngredient ingredients={buns} onOpen={onOpen} title="Булки" ref={bunsRef} />
           <BurgerIngredient ingredients={sauces} onOpen={onOpen} title="Соусы" ref={saucesRef} />
           <BurgerIngredient ingredients={fillings} onOpen={onOpen} title="Начинки" ref={fillingsRef} />
         </div>
+
       </section>
     </>
   );

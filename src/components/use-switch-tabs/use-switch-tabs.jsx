@@ -1,24 +1,21 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 const useSwitchTabs = (rootRef, currentRef, switchTab) => {
 
   const observer = useRef(null)
-  const [margin, setMargin] = useState(0)
   useEffect(
     () => {
 
       const options = {
         root: rootRef.current,
-        rootMargin: `0px 0px -${margin}px  0px`,
-        // rootMargin: `0px 0px -${margin}%  0px`,
-        threshold: 0
+        rootMargin: '0px',
+        threshold: [0, 1.0]
       }
 
       const callbackFunctions = (entries) => {
         const [entry] = entries
-        if (entry.isIntersecting && currentRef.current) {
+        if (entry.isIntersecting && entry.boundingClientRect.top < entry.intersectionRect.top) {
           switchTab()
-          setMargin(entry.intersectionRect.top - entry.rootBounds.top)
         }
       }
 
@@ -33,6 +30,6 @@ const useSwitchTabs = (rootRef, currentRef, switchTab) => {
       return () => {
         observer.current.unobserve(current)
       }
-    }, [margin, switchTab])
+    }, [switchTab])
 }
 export default useSwitchTabs
