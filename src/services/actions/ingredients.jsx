@@ -12,8 +12,9 @@ export const getIngredients = () => {
     try {
       const res = await api.getData()
       dispatch(getIngredientsSuccess(res.data));
-    } catch {
+    } catch (error) {
       dispatch(getIngredientsFailed());
+      console.error(error)
     }
   };
 }

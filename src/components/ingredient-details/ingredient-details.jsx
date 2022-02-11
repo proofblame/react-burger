@@ -1,37 +1,36 @@
 import styles from './ingredient-details.module.css'
-import { ingredientDetails } from '../../utils/types'
+import { useSelector } from 'react-redux';
 
-const IngredientDetails = ({ selectedCard }) => {
+const IngredientDetails = () => {
+
+  const { ingredient } = useSelector(store => store.ingredients)
+
   return (
-    (selectedCard &&
+    (ingredient &&
       <div className={styles.card}>
-        <img src={selectedCard.image} alt={selectedCard.name} className={styles.image} />
-        <p className={styles.cardTitle}>{selectedCard.name}</p>
+        <img src={ingredient.image} alt={ingredient.name} className={styles.image} />
+        <p className={styles.cardTitle}>{ingredient.name}</p>
         <ul className={styles.nutritionals}>
           <li className={styles.item}>
             <p className={styles.nutritionalTitle}>Калории,ккал</p>
-            <p className={styles.nutritionalValue}>{selectedCard.calories}</p>
+            <p className={styles.nutritionalValue}>{ingredient.calories}</p>
           </li>
           <li className={styles.item}>
             <p className={styles.nutritionalTitle}>Белки, г</p>
-            <p className={styles.nutritionalValue}>{selectedCard.proteins}</p>
+            <p className={styles.nutritionalValue}>{ingredient.proteins}</p>
           </li>
           <li className={styles.item}>
             <p className={styles.nutritionalTitle}>Жиры, г</p>
-            <p className={styles.nutritionalValue}>{selectedCard.fat}</p>
+            <p className={styles.nutritionalValue}>{ingredient.fat}</p>
           </li>
           <li className={styles.item}>
             <p className={styles.nutritionalTitle}>Углеводы, г</p>
-            <p className={styles.nutritionalValue}>{selectedCard.carbohydrates}</p>
+            <p className={styles.nutritionalValue}>{ingredient.carbohydrates}</p>
           </li>
         </ul>
       </div>
     )
   );
 };
-
-IngredientDetails.propTypes = {
-  selectedCard: ingredientDetails.isRequired
-}
 
 export default IngredientDetails;

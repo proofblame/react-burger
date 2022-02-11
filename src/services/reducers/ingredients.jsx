@@ -4,16 +4,28 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export const initialState = {
   ingredients: [],
-  itemsRequest: false,
-  itemsFailed: false,
+  ingredientsRequest: false,
+  ingredientsFailed: false,
 
+  currentTab: 'buns',
+
+  ingredient: {},
+  ingredientModal: false,
 
   cart: [],
+
+
+  // Неиспользуемые
+
+  currentFrame: 'bun',
+
+
+
+
   order: {},
 
   fetchingState: 'none',
 
-  currentTab: 'buns'
 };
 
 const ingredientsSlice = createSlice({
@@ -22,21 +34,40 @@ const ingredientsSlice = createSlice({
   reducers: {
     // Получение ингредиентов
     getIngredientsRequest(state) {
-      state.itemsRequest = true;
-      state.itemsFailed = false;
+      state.ingredientsRequest = true
+      state.ingredientsFailed = false
     },
     getIngredientsSuccess(state, action) {
       state.ingredients = action.payload
-      state.itemsRequest = false;
+      state.ingredientsRequest = false
     },
     getIngredientsFailed(state) {
-      state.itemsRequest = false;
-      state.itemsFailed = true;
+      state.ingredientsRequest = false
+      state.ingredientsFailed = true
     },
     // Переключение Таба
     swithTab(state, action) {
       state.currentTab = action.payload
     },
+    // Получение информации об ингредиенте
+    openIngredientModal(state, action) {
+      state.ingredientModal = true
+      state.ingredient = action.payload
+    },
+    closeIngredientModal(state) {
+      state.ingredient = {}
+      state.ingredientModal = false
+    },
+    // Удаление ингредиента из заказа
+    deleteIngredient(state, action) {
+      state.cart = state.cart.filter(item => item._id !== action.payload)
+    },
+    // Добавление ингредиента из заказа
+    addIngredient(state, action) {
+      state.cart = 
+    }
+
+
 
   },
 })
@@ -46,7 +77,10 @@ export const {
   getIngredientsRequest,
   getIngredientsSuccess,
   getIngredientsFailed,
-  swithTab
+  swithTab,
+  openIngredientModal,
+  closeIngredientModal,
+  deleteIngredient,
 } = actions;
 
 

@@ -1,17 +1,21 @@
 import styles from './burger-constructor.module.css'
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import BurgerConstructorElements from './burger-constructor-elements/burger-constructor-elements'
+import ConstructorList from './constructor-list/constructor-list'
 import PropTypes from 'prop-types';
 import { useContext, useEffect, useMemo, useState } from 'react';
-import { CartContext } from '../../services/cart-context';
+import { useDrop } from 'react-dnd';
+
 import { Order } from '../../services/order-context';
 
 import { useSelector } from 'react-redux';
 
-const BurgerConstructor = ({ onOpen }) => {
+import DndField from '../dnd-field/dnd-field';
+
+
+const BurgerConstructor = ({ onOpen, frameName }) => {
   // const { cart } = useContext(CartContext)
   // const { order, setOrder } = useContext(Order)
-  const { cart, order } = useSelector(store => store.ingredients)
+  const { cart, order, currentFrame } = useSelector(store => store.ingredients)
 
 
   const totalCost = useMemo(() => {
@@ -24,43 +28,40 @@ const BurgerConstructor = ({ onOpen }) => {
     }
   }, [cart])
 
-  const bun = useMemo(() => {
-    return cart.find(bun => bun.type === 'bun')
-  }, [cart])
 
-  const stuff = useMemo(() => {
-    return cart.filter(stuff => stuff.type !== 'bun')
-  }, [cart])
+  const [{ isHover }, dropTarget, drop] = useDrop({
+    accept: 'bun',
+    collect: monitor => ({
+      isHover: monitor.isOver()
+    }),
+    drop() {
 
-
-  useEffect(() => {
-    if (cart.length > 0) {
-      const cartId = cart.map(item => item._id)
-      // setOrder(
-      //   cartId
-      // )
-
-    } else {
-      // setOrder(Order)
-    }
-  }, [cart])
+      // currentFrame === 'bun' ? 'stuff' : 'bun'
+      // Отправим экшен с текущим перетаскиваемым элементом и названием доски
+      // currentTab === 'bun' ? moveItem() : movePostponedItem()
+    },
+  });
 
   return (
-    <section className={styles.burgerConstructor}>
-      {bun &&
-        <BurgerConstructorElements bun={bun} stuff={stuff} />
-      }
-      <div className={styles.total}>
-        <div className={styles.price}>
-          <span className={styles.priceNumber}>{totalCost}</span>
-          <div className={styles.currencyIcon}>
-            <CurrencyIcon type="primary" />
+    <section className={styles.burgerConstructor} >
+      {cart.length > 0 ?
+        (<>
+          <ConstructorList />
+          <div className={styles.total}>
+            <div className={styles.price}>
+              <span className={styles.priceNumber}>{totalCost}</span>
+              <div className={styles.currencyIcon}>
+                <CurrencyIcon type="primary" />
+              </div>
+            </div>
+            <Button type="primary" size="medium" onClick={() => onOpen(order)}>
+              Оформить заказ
+            </Button>
           </div>
-        </div>
-        <Button type="primary" size="medium" onClick={() => onOpen(order)}>
-          Оформить заказ
-        </Button>
-      </div>
+        </>)
+        :
+        <DndField target={dropTarget} />
+      }
     </section >
   );
 };

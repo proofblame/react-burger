@@ -6,13 +6,6 @@
   composes: mb-10 from global;
 }
 
-.burgerElement {
-  display: flex;
-  align-items: center;
-  position: relative;
-  composes: pl-8 pr-4 from global;
-}
-
 .burgerBody {
   display: flex;
   flex-direction: column;
@@ -27,10 +20,9 @@
 .burgerBody::-webkit-scrollbar-thumb {
   background-color: #8585ad;
 }
-
-.dragIcon {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
+.burgerElement {
+  display: flex;
+  align-items: center;
+  position: relative;
+  composes: pl-8 pr-4 from global;
 }

@@ -1,21 +1,28 @@
-import { useState, createRef, useCallback, useMemo, useEffect, useRef } from 'react'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-ingredients.module.css';
-import BurgerIngredient from './burger-ingredient/burger-ingredient'
+import IngredientsList from './ingredients-list/ingredients-list'
 import { ingredientsPropTypes } from '../../utils/types'
 import PropTypes from 'prop-types';
 
 import { IngredientsContext } from '../../services/ingredients-context';
 import { useContext } from 'react';
 
+import { useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { swithTab } from '../../services/reducers/ingredients';
+
+
+import { swithTab, closeIngredientModal } from '../../services/reducers/ingredients';
+
 import useSwitchTabs from '../use-switch-tabs/use-switch-tabs';
 
-const BurgerIngredients = ({ onOpen }) => {
+import Modal from '../modal/modal';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+
+const BurgerIngredients = () => {
 
   const dispatch = useDispatch()
-  const { ingredients, currentTab } = useSelector(store => store.ingredients)
+
+  const { ingredients, currentTab, ingredientModal } = useSelector(store => store.ingredients)
 
   const bunsRef = useRef(null)
   const saucesRef = useRef(null)
@@ -53,6 +60,12 @@ const BurgerIngredients = ({ onOpen }) => {
   useSwitchTabs(rootRef, saucesRef, () => setCurrent('sauces'))
   useSwitchTabs(rootRef, fillingsRef, () => setCurrent('fillings'))
 
+  const handleCloseModal = () => {
+    dispatch(closeIngredientModal())
+  }
+
+
+
   return (
     <>
       <section className={styles.burgerIngredients} >
@@ -74,18 +87,26 @@ const BurgerIngredients = ({ onOpen }) => {
           </div>
         </div>
         <div className={styles.table} ref={rootRef}>
-          <BurgerIngredient ingredients={buns} onOpen={onOpen} title="Булки" ref={bunsRef} />
-          <BurgerIngredient ingredients={sauces} onOpen={onOpen} title="Соусы" ref={saucesRef} />
-          <BurgerIngredient ingredients={fillings} onOpen={onOpen} title="Начинки" ref={fillingsRef} />
+          <IngredientsList ingredients={buns} title="Булки" ref={bunsRef} />
+          <IngredientsList ingredients={sauces} title="Соусы" ref={saucesRef} />
+          <IngredientsList ingredients={fillings} title="Начинки" ref={fillingsRef} />
         </div>
 
       </section>
+
+      {ingredientModal &&
+        (
+          <Modal onClose={handleCloseModal} header='Детали ингредиента'>
+            <IngredientDetails />
+          </Modal>
+        )
+      }
     </>
   );
 };
 
 BurgerIngredients.propTypes = {
-  onOpen: PropTypes.func.isRequired,
+  // onOpen: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredients;

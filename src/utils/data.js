@@ -1,4 +1,4 @@
-export const defaultCart = [
+export const data = [
   {
     "_id": "60d3b41abdacab0026a733c8",
     "name": "Филе Люминесцентного тетраодонтимформа",

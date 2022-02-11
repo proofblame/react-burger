@@ -1,40 +1,49 @@
 import styles from './burger-ingredient.module.css'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ingredientsPropTypes } from '../../../utils/types'
-import PropTypes from 'prop-types';
-import { forwardRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux'
+import { openIngredientModal } from '../../../services/reducers/ingredients'
+import { ingredientDetails } from '../../../utils/types'
+import { useDrag } from "react-dnd";
 
+const BurgerIngredient = ({ ingredient }) => {
 
-const BurgerIngredient = forwardRef(({ ingredients, onOpen, title }, ref) => {
+  const { image, price, name, _id } = ingredient
+  const dispatch = useDispatch()
 
-  const ingredientItem = ingredients.map((ingredient) => (
-    <li className={styles.cardItem} key={ingredient._id} onClick={() => onOpen(ingredient)}>
-      <img src={ingredient.image} alt={ingredient.image} className={styles.cardImage} />
-      <div className={styles.price}>
-        <span>{ingredient.price}</span>
-        <CurrencyIcon type="primary" />
-      </div>
-      <p className={styles.cardTitle}>{ingredient.name}</p>
-    </li>
-  ))
+  const handleOpenIngredientModal = (ingredient) => {
+    dispatch(openIngredientModal(ingredient))
+  }
+
+  const [{ opacity }, dragRef] = useDrag({
+    type: 'bun',
+    item: { _id },
+    collect: monitor => ({
+      opacity: monitor.isDragging() ? .5 : 1,
+    })
+  });
 
   return (
-    <>
-      <h3 className={styles.subtitle} ref={ref}>
-        {title}
-      </h3>
-      <ul className={styles.cardList} >
-        {ingredientItem}
-      </ul>
-    </>
+    <li
+      className={styles.cardItem}
+      onClick={() => handleOpenIngredientModal(ingredient)}
+      ref={dragRef}
+      style={{ opacity }}
+    >
+      <img
+        src={image}
+        alt={image}
+        className={styles.cardImage} />
+      <div className={styles.price}>
+        <span>{price}</span>
+        <CurrencyIcon type="primary" />
+      </div>
+      <p className={styles.cardTitle}>{name}</p>
+    </li>
   )
-})
+}
 
 BurgerIngredient.propTypes = {
-  ingredients: ingredientsPropTypes.isRequired,
-  onOpen: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
+  ingredient: ingredientDetails.isRequired,
 };
 
 export default BurgerIngredient
