@@ -74,7 +74,7 @@ function App() {
       <main className={styles.main}>
         <DndProvider backend={HTML5Backend}>
           <BurgerIngredients />
-          <BurgerConstructor onOpen={sendOrder} frameName='bun' />
+          <BurgerConstructor onOpen={sendOrder} fieldName='bun' />
         </DndProvider>
       </main>
     </section>

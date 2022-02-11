@@ -1,12 +1,16 @@
 
-import { forwardRef } from 'react'
 import styles from './dnd-field.module.css'
 
-const DndField = ({ target }) => {
+const DndField = ({ target, text, onHover }) => {
+
+  const classes = `${styles.wrapper} ${styles.borderColor}`
+
+  const borderColor = onHover ? classes : styles.wrapper
+
   return (
     <section className={styles.field}>
-      <div className={styles.wrapper} ref={target}>
-        <p className={styles.title}>Выберите булку</p>
+      <div className={borderColor} ref={target}>
+        <p className={styles.title}>{text}</p>
       </div>
     </section >
   )

@@ -7,16 +7,17 @@ import { useDrop } from 'react-dnd';
 
 import { Order } from '../../services/order-context';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import DndField from '../dnd-field/dnd-field';
+import { addIngredient } from '../../services/reducers/ingredients';
 
 
-const BurgerConstructor = ({ onOpen, frameName }) => {
+const BurgerConstructor = ({ onOpen, fieldName }) => {
   // const { cart } = useContext(CartContext)
   // const { order, setOrder } = useContext(Order)
   const { cart, order, currentFrame } = useSelector(store => store.ingredients)
-
+  const dispatch = useDispatch()
 
   const totalCost = useMemo(() => {
     if (cart.length > 0) {
@@ -30,23 +31,23 @@ const BurgerConstructor = ({ onOpen, frameName }) => {
 
 
   const [{ isHover }, dropTarget, drop] = useDrop({
-    accept: 'bun',
+    accept: fieldName === 'bun' ? 'bun' : 'stuff',
     collect: monitor => ({
       isHover: monitor.isOver()
     }),
-    drop() {
-
+    drop(ingredient) {
+      dispatch(addIngredient(ingredient))
       // currentFrame === 'bun' ? 'stuff' : 'bun'
-      // Отправим экшен с текущим перетаскиваемым элементом и названием доски
-      // currentTab === 'bun' ? moveItem() : movePostponedItem()
     },
   });
+
+
 
   return (
     <section className={styles.burgerConstructor} >
       {cart.length > 0 ?
-        (<>
-          <ConstructorList />
+        <>
+          <ConstructorList fieldName='bun' />
           <div className={styles.total}>
             <div className={styles.price}>
               <span className={styles.priceNumber}>{totalCost}</span>
@@ -58,9 +59,9 @@ const BurgerConstructor = ({ onOpen, frameName }) => {
               Оформить заказ
             </Button>
           </div>
-        </>)
+        </>
         :
-        <DndField target={dropTarget} />
+        <DndField target={dropTarget} onHover={isHover} text='Выберите булку' />
       }
     </section >
   );

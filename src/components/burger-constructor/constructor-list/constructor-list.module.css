@@ -4,6 +4,8 @@
   flex-direction: column;
   gap: 10px;
   composes: mb-10 from global;
+  height: 100%;
+  justify-content: center;
 }
 
 .burgerBody {

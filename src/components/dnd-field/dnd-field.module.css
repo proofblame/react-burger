@@ -12,12 +12,18 @@
   outline: 2px dashed #8585ad;
   border-radius: 40px;
   outline-offset: -10px;
-  transition: outline-offset 0.15s ease-in-out, background-color 0.15s linear;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  transition: outline 0.15s ease-in-out;
 }
 .title {
   composes: text text_type_main-default from global;
   color: #8585ad;
+}
+.borderColor {
+  outline: 2px dashed green !important;
+  transition: outline 0.15s ease-in-out;
 }

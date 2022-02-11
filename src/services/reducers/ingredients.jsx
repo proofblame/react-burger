@@ -64,7 +64,7 @@ const ingredientsSlice = createSlice({
     },
     // Добавление ингредиента из заказа
     addIngredient(state, action) {
-      state.cart = 
+      state.cart.push(action.payload)
     }
 
 
@@ -81,6 +81,7 @@ export const {
   openIngredientModal,
   closeIngredientModal,
   deleteIngredient,
+  addIngredient,
 } = actions;
 
 

@@ -2,12 +2,15 @@ import styles from './constructor-list.module.css'
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ingredientDetails, ingredientsPropTypes } from '../../../utils/types';
 import ConstructorIngredient from '../constructor-ingredient/constructor-ingredient';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from "react-dnd";
 import { useMemo } from 'react';
+import DndField from '../../dnd-field/dnd-field';
+import { addIngredient } from '../../../services/reducers/ingredients';
 
-const ConstructorList = () => {
 
+const ConstructorList = ({ fieldName }) => {
+  const dispatch = useDispatch()
   const { cart } = useSelector(store => store.ingredients)
 
   const bun = useMemo(() => {
@@ -20,12 +23,18 @@ const ConstructorList = () => {
 
 
 
-  const [, dropTarget] = useDrop({
-    accept: "animal",
-    drop(itemId) {
-      // onDropHandler(itemId);
+
+  const [{ isHover }, dropTarget, drop] = useDrop({
+    accept: fieldName === 'bun' ? 'bun' : 'stuff',
+    collect: monitor => ({
+      isHover: monitor.isOver()
+    }),
+    drop(ingredient) {
+      dispatch(addIngredient(ingredient))
+      // currentFrame === 'bun' ? 'stuff' : 'bun'
     },
   });
+
 
 
   const ingredientItem = stuff.map((ingredient, index) => (
@@ -46,14 +55,17 @@ const ConstructorList = () => {
             text={`${bun.name} (верх)`}
             price={bun.price}
             thumbnail={bun.image}
+
           />
         </div>
       }
-
-      <ul className={styles.burgerBody}>
-        {ingredientItem}
-      </ul>
-
+      {stuff.length > 0 ?
+        <ul className={styles.burgerBody}>
+          {ingredientItem}
+        </ul>
+        :
+        <DndField target={dropTarget} text='Выберите начинки' onHover={isHover} />
+      }
       {bun &&
         <div className={styles.burgerElement}>
           <ConstructorElement
