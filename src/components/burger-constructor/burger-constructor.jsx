@@ -30,7 +30,7 @@ const BurgerConstructor = ({ onOpen, fieldName }) => {
   }, [cart])
 
 
-  const [{ isHover }, dropTarget, drop] = useDrop({
+  const [{ isHover }, dropTarget] = useDrop({
     accept: fieldName === 'bun' ? 'bun' : 'stuff',
     collect: monitor => ({
       isHover: monitor.isOver()
@@ -47,7 +47,7 @@ const BurgerConstructor = ({ onOpen, fieldName }) => {
     <section className={styles.burgerConstructor} >
       {cart.length > 0 ?
         <>
-          <ConstructorList fieldName='bun' />
+          <ConstructorList />
           <div className={styles.total}>
             <div className={styles.price}>
               <span className={styles.priceNumber}>{totalCost}</span>

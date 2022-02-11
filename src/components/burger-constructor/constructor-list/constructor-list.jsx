@@ -7,9 +7,10 @@ import { useDrop } from "react-dnd";
 import { useMemo } from 'react';
 import DndField from '../../dnd-field/dnd-field';
 import { addIngredient } from '../../../services/reducers/ingredients';
+import StuffList from '../stuff-list/stuff-list';
 
 
-const ConstructorList = ({ fieldName }) => {
+const ConstructorList = () => {
   const dispatch = useDispatch()
   const { cart } = useSelector(store => store.ingredients)
 
@@ -24,12 +25,13 @@ const ConstructorList = ({ fieldName }) => {
 
 
 
-  const [{ isHover }, dropTarget, drop] = useDrop({
-    accept: fieldName === 'bun' ? 'bun' : 'stuff',
+  const [{ isHover }, dropTarget] = useDrop({
+    accept: 'bun',
     collect: monitor => ({
       isHover: monitor.isOver()
     }),
     drop(ingredient) {
+      // console.log(drop())
       dispatch(addIngredient(ingredient))
       // currentFrame === 'bun' ? 'stuff' : 'bun'
     },
@@ -37,9 +39,12 @@ const ConstructorList = ({ fieldName }) => {
 
 
 
-  const ingredientItem = stuff.map((ingredient, index) => (
-    <ConstructorIngredient ingredient={ingredient} key={index} />
-  ))
+
+
+
+  // const ingredientItem = stuff.map((ingredient, index) => (
+  //   <ConstructorIngredient ingredient={ingredient} key={index} />
+  // ))
 
   // const content = cart.length > 0 ?  : <DndField />
 
@@ -55,14 +60,17 @@ const ConstructorList = ({ fieldName }) => {
             text={`${bun.name} (верх)`}
             price={bun.price}
             thumbnail={bun.image}
-
           />
         </div>
       }
       {stuff.length > 0 ?
-        <ul className={styles.burgerBody}>
-          {ingredientItem}
-        </ul>
+        <>
+          <StuffList target={dropTarget} onHover={isHover} stuff={stuff} />
+
+          {/* <ul className={styles.burgerBody} ref={dropTarget}>
+            {ingredientItem}
+          </ul> */}
+        </>
         :
         <DndField target={dropTarget} text='Выберите начинки' onHover={isHover} />
       }

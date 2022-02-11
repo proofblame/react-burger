@@ -16,6 +16,7 @@ const BurgerIngredient = ({ ingredient }) => {
 
   const [{ opacity }, dragRef] = useDrag({
     type: 'bun',
+    // type: ingredient.type === 'bun' ? 'bun' : 'stuff',
     item: ingredient,
     collect: monitor => ({
       opacity: monitor.isDragging() ? .5 : 1,

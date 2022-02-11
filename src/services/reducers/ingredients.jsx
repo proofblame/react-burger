@@ -60,11 +60,17 @@ const ingredientsSlice = createSlice({
     },
     // Удаление ингредиента из заказа
     deleteIngredient(state, action) {
-      state.cart = state.cart.filter(item => item._id !== action.payload)
+      const index = state.cart.findIndex(item => item._id === action.payload)
+      state.cart.splice(index, 1)
     },
     // Добавление ингредиента из заказа
     addIngredient(state, action) {
-      state.cart.push(action.payload)
+      if (action.payload.type === 'bun') {
+        const index = state.cart.findIndex(bun => bun.type === 'bun')
+        state.cart.splice(index, 1, action.payload)
+      } else {
+        state.cart.push(action.payload)
+      }
     }
 
 
