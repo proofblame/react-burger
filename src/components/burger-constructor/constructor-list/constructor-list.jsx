@@ -1,7 +1,5 @@
 import styles from './constructor-list.module.css'
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ingredientDetails, ingredientsPropTypes } from '../../../utils/types';
-import ConstructorIngredient from '../constructor-ingredient/constructor-ingredient';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from "react-dnd";
 import { useMemo } from 'react';
@@ -23,7 +21,9 @@ const ConstructorList = () => {
   }, [cart])
 
 
-
+  const addItem = (ingredient) => {
+    dispatch(addIngredient(ingredient))
+  }
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: 'bun',
@@ -31,25 +31,11 @@ const ConstructorList = () => {
       isHover: monitor.isOver()
     }),
     drop(ingredient) {
-      // console.log(drop())
-      dispatch(addIngredient(ingredient))
-      // currentFrame === 'bun' ? 'stuff' : 'bun'
+      addItem(ingredient)
     },
   });
 
-
-
-
-
-
-  // const ingredientItem = stuff.map((ingredient, index) => (
-  //   <ConstructorIngredient ingredient={ingredient} key={index} />
-  // ))
-
-  // const content = cart.length > 0 ?  : <DndField />
-
   return (
-
 
     <div className={styles.constructorWrapper}>
       {bun &&
@@ -64,13 +50,7 @@ const ConstructorList = () => {
         </div>
       }
       {stuff.length > 0 ?
-        <>
-          <StuffList target={dropTarget} onHover={isHover} stuff={stuff} />
-
-          {/* <ul className={styles.burgerBody} ref={dropTarget}>
-            {ingredientItem}
-          </ul> */}
-        </>
+        <StuffList target={dropTarget} onHover={isHover} />
         :
         <DndField target={dropTarget} text='Выберите начинки' onHover={isHover} />
       }
@@ -87,14 +67,8 @@ const ConstructorList = () => {
       }
     </div>
 
-
   )
 
 }
-
-ConstructorList.propTypes = {
-  // bun: ingredientDetails.isRequired,
-  // stuff: ingredientsPropTypes.isRequired,
-};
 
 export default ConstructorList

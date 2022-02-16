@@ -17,7 +17,6 @@ export const initialState = {
 
   // Неиспользуемые
 
-  currentFrame: 'bun',
 
 
 
@@ -67,14 +66,24 @@ const ingredientsSlice = createSlice({
     addIngredient(state, action) {
       if (action.payload.type === 'bun') {
         const index = state.cart.findIndex(bun => bun.type === 'bun')
-        state.cart.splice(index, 1, action.payload)
+        index !== -1
+          ?
+          state.cart.splice(index, 1, action.payload)
+          :
+          state.cart.push(action.payload)
       } else {
         state.cart.push(action.payload)
       }
-    }
-
-
-
+    },
+    // Сортировка корзины
+    sortCart(state, action) {
+      const { hoverIndex, dragIndex } = action.payload
+      const dragItem = state.cart[dragIndex]
+      if (dragItem) {
+        const prevItem = state.cart.splice(hoverIndex, 1, dragItem)
+        state.cart.splice(dragIndex, 1, prevItem[0])
+      }
+    },
   },
 })
 const { actions, reducer } = ingredientsSlice;
@@ -88,6 +97,7 @@ export const {
   closeIngredientModal,
   deleteIngredient,
   addIngredient,
+  sortCart,
 } = actions;
 
 

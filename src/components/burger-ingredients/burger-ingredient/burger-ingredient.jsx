@@ -7,7 +7,7 @@ import { useDrag } from "react-dnd";
 
 const BurgerIngredient = ({ ingredient }) => {
 
-  const { image, price, name, _id } = ingredient
+  const { image, price, name } = ingredient
   const dispatch = useDispatch()
 
   const handleOpenIngredientModal = (ingredient) => {
@@ -16,7 +16,6 @@ const BurgerIngredient = ({ ingredient }) => {
 
   const [{ opacity }, dragRef] = useDrag({
     type: 'bun',
-    // type: ingredient.type === 'bun' ? 'bun' : 'stuff',
     item: ingredient,
     collect: monitor => ({
       opacity: monitor.isDragging() ? .5 : 1,

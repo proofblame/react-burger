@@ -2,21 +2,18 @@ import styles from './burger-constructor.module.css'
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import ConstructorList from './constructor-list/constructor-list'
 import PropTypes from 'prop-types';
-import { useContext, useEffect, useMemo, useState } from 'react';
+
+
 import { useDrop } from 'react-dnd';
-
-import { Order } from '../../services/order-context';
-
 import { useSelector, useDispatch } from 'react-redux';
+import { useMemo } from 'react';
 
 import DndField from '../dnd-field/dnd-field';
 import { addIngredient } from '../../services/reducers/ingredients';
 
 
 const BurgerConstructor = ({ onOpen, fieldName }) => {
-  // const { cart } = useContext(CartContext)
-  // const { order, setOrder } = useContext(Order)
-  const { cart, order, currentFrame } = useSelector(store => store.ingredients)
+  const { cart, order } = useSelector(store => store.ingredients)
   const dispatch = useDispatch()
 
   const totalCost = useMemo(() => {
@@ -37,7 +34,6 @@ const BurgerConstructor = ({ onOpen, fieldName }) => {
     }),
     drop(ingredient) {
       dispatch(addIngredient(ingredient))
-      // currentFrame === 'bun' ? 'stuff' : 'bun'
     },
   });
 
