@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { deleteIngredient } from '../../../services/reducers/ingredients'
 import { useDrag, useDrop } from "react-dnd";
 import { useRef } from 'react';
+import { constructorIngredientPropTypes } from '../../../utils/types';
 
 const ConstructorIngredient = ({ ingredient, index, onMove }) => {
   const ref = useRef(null)
@@ -72,5 +73,7 @@ const ConstructorIngredient = ({ ingredient, index, onMove }) => {
     </li>
   )
 }
+
+ConstructorIngredient.propTypes = constructorIngredientPropTypes.isRequired
 
 export default ConstructorIngredient

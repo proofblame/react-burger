@@ -59,8 +59,6 @@ const BurgerIngredients = () => {
     dispatch(closeIngredientModal())
   }
 
-
-
   return (
     <>
       <section className={styles.burgerIngredients} >

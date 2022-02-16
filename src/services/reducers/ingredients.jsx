@@ -1,7 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-
-
 export const initialState = {
   ingredients: [],
   ingredientsRequest: false,
@@ -18,15 +16,6 @@ export const initialState = {
   orderModal: false,
   orderRequest: false,
   orderFailed: false,
-
-  // Неиспользуемые
-
-
-
-
-
-  fetchingState: 'none',
-
 };
 
 const ingredientsSlice = createSlice({
@@ -106,10 +95,6 @@ const ingredientsSlice = createSlice({
     closeOrderModal(state) {
       state.orderModal = false
     },
-
-
-
-
   },
 })
 const { actions, reducer } = ingredientsSlice;
@@ -130,6 +115,5 @@ export const {
   openOrderModal,
   closeOrderModal,
 } = actions;
-
 
 export default reducer;

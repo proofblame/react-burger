@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useMemo } from 'react';
 
 import DndField from '../dnd-field/dnd-field';
-import { addIngredient, openOrderModal, closeOrderModal } from '../../services/reducers/ingredients';
+import { addIngredient, closeOrderModal } from '../../services/reducers/ingredients';
 import { sendOrder } from '../../services/actions/ingredients';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';

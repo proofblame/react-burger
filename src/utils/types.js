@@ -42,3 +42,42 @@ export const orderDetailsPropTypes = PropTypes.shape({
   }),
   success: PropTypes.bool.isRequired,
 })
+export const constructorIngredientPropTypes = PropTypes.shape({
+  ingredient: ingredientDetails.isRequired,
+  index: PropTypes.number.isRequired,
+  onMove: PropTypes.func.isRequired,
+})
+
+export const stuffListPropTypes = PropTypes.shape({
+  target: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ]).isRequired,
+  onHover: PropTypes.func.isRequired,
+})
+
+export const dndFieldPropTypes = PropTypes.shape({
+  target: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ]).isRequired,
+  onHover: PropTypes.func.isRequired,
+  text: PropTypes.string,
+})
+
+export const modalOverlayPropTypes = PropTypes.shape({
+  onClose: PropTypes.func.isRequired,
+  children: PropTypes.node
+})
+
+export const useSwitchTabsPropTypes = PropTypes.shape({
+  rootRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ]).isRequired,
+  currentRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ]).isRequired,
+  switchTab: PropTypes.func.isRequired,
+})

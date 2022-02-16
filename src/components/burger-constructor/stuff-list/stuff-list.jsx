@@ -2,8 +2,11 @@ import styles from './stuff-list.module.css'
 import ConstructorIngredient from '../constructor-ingredient/constructor-ingredient'
 import { useSelector, useDispatch } from 'react-redux';
 import { sortCart } from '../../../services/reducers/ingredients';
+import { stuffListPropTypes } from '../../../utils/types';
 
 const StuffList = ({ target, onHover }) => {
+
+
   const dispatch = useDispatch()
   const { cart } = useSelector(store => store.ingredients)
 
@@ -33,5 +36,7 @@ const StuffList = ({ target, onHover }) => {
     </ul>
   )
 }
+
+StuffList.propTypes = stuffListPropTypes.isRequired
 
 export default StuffList
