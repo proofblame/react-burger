@@ -1,19 +1,20 @@
 import styles from './burger-constructor.module.css'
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import ConstructorList from './constructor-list/constructor-list'
-import PropTypes from 'prop-types';
-
 
 import { useDrop } from 'react-dnd';
 import { useSelector, useDispatch } from 'react-redux';
 import { useMemo } from 'react';
 
 import DndField from '../dnd-field/dnd-field';
-import { addIngredient } from '../../services/reducers/ingredients';
+import { addIngredient, openOrderModal, closeOrderModal } from '../../services/reducers/ingredients';
+import { sendOrder } from '../../services/actions/ingredients';
+import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
 
 
-const BurgerConstructor = ({ onOpen, fieldName }) => {
-  const { cart, order } = useSelector(store => store.ingredients)
+const BurgerConstructor = () => {
+  const { cart, orderModal } = useSelector(store => store.ingredients)
   const dispatch = useDispatch()
 
   const totalCost = useMemo(() => {
@@ -28,7 +29,7 @@ const BurgerConstructor = ({ onOpen, fieldName }) => {
 
 
   const [{ isHover }, dropTarget] = useDrop({
-    accept: fieldName === 'bun' ? 'bun' : 'stuff',
+    accept: 'bun',
     collect: monitor => ({
       isHover: monitor.isOver()
     }),
@@ -37,34 +38,49 @@ const BurgerConstructor = ({ onOpen, fieldName }) => {
     },
   });
 
+  const handleOpenOrderModal = (cart) => {
+    const idList = cart.map(item => item._id)
+    dispatch(sendOrder(idList))
 
+  }
+  const handleCloseModal = () => {
+    dispatch(closeOrderModal())
+  }
 
   return (
-    <section className={styles.burgerConstructor} >
-      {cart.length > 0 ?
-        <>
-          <ConstructorList />
-          <div className={styles.total}>
-            <div className={styles.price}>
-              <span className={styles.priceNumber}>{totalCost}</span>
-              <div className={styles.currencyIcon}>
-                <CurrencyIcon type="primary" />
+    <>
+      <section className={styles.burgerConstructor} >
+        {cart.length > 0 ?
+          <>
+            <ConstructorList />
+            <div className={styles.total}>
+              <div className={styles.price}>
+                <span className={styles.priceNumber}>{totalCost}</span>
+                <div className={styles.currencyIcon}>
+                  <CurrencyIcon type="primary" />
+                </div>
               </div>
+              <Button type="primary" size="medium" onClick={() => handleOpenOrderModal(cart)}>
+                Оформить заказ
+              </Button>
             </div>
-            <Button type="primary" size="medium" onClick={() => onOpen(order)}>
-              Оформить заказ
-            </Button>
-          </div>
-        </>
-        :
-        <DndField target={dropTarget} onHover={isHover} text='Выберите булку' />
+          </>
+          :
+          <DndField target={dropTarget} onHover={isHover} text='Выберите булку' />
+        }
+      </section >
+      {
+        orderModal &&
+        <Modal onClose={handleCloseModal}>
+          <OrderDetails />
+        </Modal>
       }
-    </section >
+    </>
   );
 };
 
 BurgerConstructor.propTypes = {
-  onOpen: PropTypes.func.isRequired,
+
 };
 
 export default BurgerConstructor;

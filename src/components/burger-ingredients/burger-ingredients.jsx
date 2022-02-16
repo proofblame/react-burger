@@ -1,11 +1,6 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-ingredients.module.css';
 import IngredientsList from './ingredients-list/ingredients-list'
-import { ingredientsPropTypes } from '../../utils/types'
-import PropTypes from 'prop-types';
-
-import { IngredientsContext } from '../../services/ingredients-context';
-import { useContext } from 'react';
 
 import { useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
@@ -95,18 +90,12 @@ const BurgerIngredients = () => {
       </section>
 
       {ingredientModal &&
-        (
-          <Modal onClose={handleCloseModal} header='Детали ингредиента'>
-            <IngredientDetails />
-          </Modal>
-        )
+        <Modal onClose={handleCloseModal} header='Детали ингредиента'>
+          <IngredientDetails />
+        </Modal>
       }
     </>
   );
-};
-
-BurgerIngredients.propTypes = {
-  // onOpen: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredients;

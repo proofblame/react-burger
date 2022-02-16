@@ -1,9 +1,9 @@
 import styles from './order-details.module.css'
 import done from '../../images/done.png'
-import { orderDetailsPropTypes } from '../../utils/types';
+import { useSelector } from 'react-redux';
 
-const OrderDetails = ({ orderDetails }) => {
-  const { order } = orderDetails
+const OrderDetails = () => {
+  const { order } = useSelector(store => store.ingredients)
 
   return (
     <div className={styles.order}>
@@ -16,7 +16,4 @@ const OrderDetails = ({ orderDetails }) => {
   );
 };
 
-OrderDetails.propTypes = {
-  orderDetails: orderDetailsPropTypes.isRequired,
-}
 export default OrderDetails;

@@ -14,14 +14,16 @@ export const initialState = {
 
   cart: [],
 
+  order: {},
+  orderModal: false,
+  orderRequest: false,
+  orderFailed: false,
 
   // Неиспользуемые
 
 
 
 
-
-  order: {},
 
   fetchingState: 'none',
 
@@ -84,6 +86,30 @@ const ingredientsSlice = createSlice({
         state.cart.splice(dragIndex, 1, prevItem[0])
       }
     },
+    // Отправка заказа
+    sendOrderRequest(state) {
+      state.orderRequest = true
+      state.orderFailed = false
+    },
+    sendOrderSuccess(state, action) {
+      state.order = action.payload
+      state.orderRequest = false
+    },
+    sendOrderFailed(state) {
+      state.orderRequest = false
+      state.orderFailed = true
+    },
+    // Действия с модальным окном заказа
+    openOrderModal(state) {
+      state.orderModal = true
+    },
+    closeOrderModal(state) {
+      state.orderModal = false
+    },
+
+
+
+
   },
 })
 const { actions, reducer } = ingredientsSlice;
@@ -98,6 +124,11 @@ export const {
   deleteIngredient,
   addIngredient,
   sortCart,
+  sendOrderRequest,
+  sendOrderSuccess,
+  sendOrderFailed,
+  openOrderModal,
+  closeOrderModal,
 } = actions;
 
 

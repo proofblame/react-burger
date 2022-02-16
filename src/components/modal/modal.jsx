@@ -4,11 +4,10 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useEffect } from 'react'
 import ReactDOM from 'react-dom';
 import { modalPropTypes } from '../../utils/types'
+
 const modalRoot = document.getElementById("modals");
 
 const Modal = ({ header, onClose, children }) => {
-
-
 
   useEffect(() => {
     const handleEscapePress = (e) => {
@@ -24,8 +23,6 @@ const Modal = ({ header, onClose, children }) => {
     }
 
   }, [onClose])
-
-
 
 
   return ReactDOM.createPortal(

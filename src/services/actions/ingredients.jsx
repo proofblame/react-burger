@@ -3,6 +3,12 @@ import {
   getIngredientsRequest,
   getIngredientsSuccess,
   getIngredientsFailed,
+  sendOrderRequest,
+  sendOrderSuccess,
+  sendOrderFailed,
+  openOrderModal,
+  closeOrderModal
+
 } from '../reducers/ingredients'
 
 export const getIngredients = () => {
@@ -14,6 +20,22 @@ export const getIngredients = () => {
       dispatch(getIngredientsSuccess(res.data));
     } catch (error) {
       dispatch(getIngredientsFailed());
+      console.error(error)
+    }
+  };
+}
+
+export const sendOrder = (idList) => {
+
+  return async (dispatch) => {
+    dispatch(sendOrderRequest())
+    try {
+      const res = await api.sendData(idList)
+      dispatch(sendOrderSuccess(res.order));
+      dispatch(openOrderModal());
+    } catch (error) {
+      dispatch(sendOrderFailed());
+      dispatch(closeOrderModal());
       console.error(error)
     }
   };
