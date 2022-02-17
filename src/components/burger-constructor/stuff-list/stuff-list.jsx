@@ -26,7 +26,7 @@ const StuffList = ({ target, onHover }) => {
 
   const ingredientItem = cart.map((ingredient, index) => (
     ingredient.type !== 'bun' &&
-    <ConstructorIngredient ingredient={ingredient} key={index} index={index} onMove={moveItemHandler} />
+    <ConstructorIngredient ingredient={ingredient} key={ingredient.uid} index={index} onMove={moveItemHandler} />
   ))
 
 

@@ -11,10 +11,13 @@ import { addIngredient, closeOrderModal } from '../../services/reducers/ingredie
 import { sendOrder } from '../../services/actions/ingredients';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
+import uuid from 'react-uuid'
+import CircularProgress from '@mui/material/CircularProgress';
+import ModalOverlay from '../modal/modal-overlay/modal-overlay';
 
 
 const BurgerConstructor = () => {
-  const { cart, orderModal } = useSelector(store => store.ingredients)
+  const { cart, orderModal, loader } = useSelector(store => store.ingredients)
   const dispatch = useDispatch()
 
   const totalCost = useMemo(() => {
@@ -34,7 +37,8 @@ const BurgerConstructor = () => {
       isHover: monitor.isOver()
     }),
     drop(ingredient) {
-      dispatch(addIngredient(ingredient))
+      const uid = uuid()
+      dispatch(addIngredient({ ...ingredient, uid }))
     },
   });
 
@@ -74,6 +78,12 @@ const BurgerConstructor = () => {
         <Modal onClose={handleCloseModal}>
           <OrderDetails />
         </Modal>
+      }
+      {
+        loader &&
+        <ModalOverlay>
+          <CircularProgress className={styles.loader} size="100px" />
+        </ModalOverlay>
       }
     </>
   );

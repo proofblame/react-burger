@@ -33,6 +33,7 @@ export const ingredientDetails = PropTypes.shape({
   image_mobile: PropTypes.string.isRequired,
   image_large: PropTypes.string.isRequired,
   __v: PropTypes.number.isRequired,
+  uid: PropTypes.string,
 });
 
 export const orderDetailsPropTypes = PropTypes.shape({
@@ -66,7 +67,6 @@ export const dndFieldPropTypes = PropTypes.shape({
 })
 
 export const modalOverlayPropTypes = PropTypes.shape({
-  onClose: PropTypes.func.isRequired,
   children: PropTypes.node
 })
 

@@ -1,22 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-export const initialState = {
-  ingredients: [],
-  ingredientsRequest: false,
-  ingredientsFailed: false,
-
-  currentTab: 'buns',
-
-  ingredient: {},
-  ingredientModal: false,
-
-  cart: [],
-
-  order: {},
-  orderModal: false,
-  orderRequest: false,
-  orderFailed: false,
-};
+import { initialState } from '../store';
 
 const ingredientsSlice = createSlice({
   name: 'ingredients',
@@ -50,7 +33,7 @@ const ingredientsSlice = createSlice({
     },
     // Удаление ингредиента из заказа
     deleteIngredient(state, action) {
-      const index = state.cart.findIndex(item => item._id === action.payload)
+      const index = state.cart.findIndex(item => item.uid === action.payload)
       state.cart.splice(index, 1)
     },
     // Добавление ингредиента из заказа
@@ -75,6 +58,10 @@ const ingredientsSlice = createSlice({
         state.cart.splice(dragIndex, 1, prevItem[0])
       }
     },
+    // Очистка корзины
+    clearCart(state) {
+      state.cart = initialState.cart
+    },
     // Отправка заказа
     sendOrderRequest(state) {
       state.orderRequest = true
@@ -95,6 +82,17 @@ const ingredientsSlice = createSlice({
     closeOrderModal(state) {
       state.orderModal = false
     },
+    // Геренация uuid
+    setUuid(state, action) {
+      state.uuid = action.payload
+    },
+    // Открытие/закрытие лоадера
+    enableLoader(state) {
+      state.loader = true
+    },
+    disableLoader(state) {
+      state.loader = false
+    },
   },
 })
 const { actions, reducer } = ingredientsSlice;
@@ -114,6 +112,11 @@ export const {
   sendOrderFailed,
   openOrderModal,
   closeOrderModal,
+  setUuid,
+  clearCart,
+  enableLoader,
+  disableLoader,
+
 } = actions;
 
 export default reducer;

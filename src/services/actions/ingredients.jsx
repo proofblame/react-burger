@@ -7,8 +7,10 @@ import {
   sendOrderSuccess,
   sendOrderFailed,
   openOrderModal,
-  closeOrderModal
-
+  closeOrderModal,
+  clearCart,
+  enableLoader,
+  disableLoader,
 } from '../reducers/ingredients'
 
 export const getIngredients = () => {
@@ -28,15 +30,19 @@ export const getIngredients = () => {
 export const sendOrder = (idList) => {
 
   return async (dispatch) => {
+    dispatch(enableLoader());
     dispatch(sendOrderRequest())
     try {
       const res = await api.sendData(idList)
       dispatch(sendOrderSuccess(res.order));
       dispatch(openOrderModal());
+      dispatch(clearCart());
     } catch (error) {
       dispatch(sendOrderFailed());
       dispatch(closeOrderModal());
       console.error(error)
+    } finally {
+      dispatch(disableLoader());
     }
   };
 }

@@ -4,7 +4,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux';
 import './index.css';
 import App from './components/app/app';
-import {rootReducer} from './services/reducers/root-reducer'
+import {rootReducer} from './services/reducers'
 import logger from 'redux-logger'
 
 

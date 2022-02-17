@@ -6,7 +6,7 @@ import { useMemo } from 'react';
 import DndField from '../../dnd-field/dnd-field';
 import { addIngredient } from '../../../services/reducers/ingredients';
 import StuffList from '../stuff-list/stuff-list';
-
+import uuid from 'react-uuid'
 
 const ConstructorList = () => {
   const dispatch = useDispatch()
@@ -22,7 +22,9 @@ const ConstructorList = () => {
 
 
   const addItem = (ingredient) => {
-    dispatch(addIngredient(ingredient))
+    const uid = uuid()
+    dispatch(addIngredient({ ...ingredient, uid }))
+
   }
 
   const [{ isHover }, dropTarget] = useDrop({

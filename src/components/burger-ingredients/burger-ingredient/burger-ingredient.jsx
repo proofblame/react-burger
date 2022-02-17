@@ -43,7 +43,11 @@ const BurgerIngredient = ({ ingredient }) => {
         <CurrencyIcon type="primary" />
       </div>
       <p className={styles.cardTitle}>{name}</p>
-      {counter > 0 && <Counter className={styles.count} count={counter} size="default" />}
+      {counter > 0 &&
+        <div className={styles.count} >
+          <Counter count={counter} size="default" />
+        </div>
+      }
     </li>
   )
 }

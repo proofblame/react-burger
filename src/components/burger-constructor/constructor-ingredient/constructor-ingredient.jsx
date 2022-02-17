@@ -6,10 +6,11 @@ import { useDrag, useDrop } from "react-dnd";
 import { useRef } from 'react';
 import { constructorIngredientPropTypes } from '../../../utils/types';
 
+
 const ConstructorIngredient = ({ ingredient, index, onMove }) => {
   const ref = useRef(null)
 
-  const { name, price, image, _id } = ingredient
+  const { name, price, image, uid } = ingredient
 
   const dispatch = useDispatch();
 
@@ -25,10 +26,13 @@ const ConstructorIngredient = ({ ingredient, index, onMove }) => {
     })
   });
 
-  const opacity = isDragging ? 0.5 : 1
+  const opacity = isDragging ? 0 : 1
+
+
 
   const [, drop] = useDrop({
     accept: 'stuff',
+
     hover(item, monitor) {
       if (!ref.current) {
         return;
@@ -68,7 +72,7 @@ const ConstructorIngredient = ({ ingredient, index, onMove }) => {
         text={name}
         price={price}
         thumbnail={image}
-        handleClose={() => handleDeleteIngredient(_id)}
+        handleClose={() => handleDeleteIngredient(uid)}
       />
     </li>
   )
