@@ -67,7 +67,8 @@ export const dndFieldPropTypes = PropTypes.shape({
 })
 
 export const modalOverlayPropTypes = PropTypes.shape({
-  children: PropTypes.node
+  children: PropTypes.node,
+  onClose: PropTypes.func,
 })
 
 export const useSwitchTabsPropTypes = PropTypes.shape({
