@@ -1,21 +1,8 @@
-export const initialState = {
-  ingredients: [],
-  ingredientsRequest: false,
-  ingredientsFailed: false,
+import { configureStore } from '@reduxjs/toolkit'
+import { rootReducer } from './reducers/index'
+import logger from 'redux-logger'
 
-  currentTab: 'buns',
-
-  ingredient: {},
-  ingredientModal: false,
-
-  cart: [],
-
-  order: {},
-  orderModal: false,
-  orderRequest: false,
-  orderFailed: false,
-
-  uuid: null,
-
-  loader: false,
-};
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+})
