@@ -1,64 +1,96 @@
 import styles from './burger-constructor.module.css'
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import BurgerConstructorElements from './burger-constructor-elements/burger-constructor-elements'
-import PropTypes from 'prop-types';
-import { useContext, useEffect, useMemo, useState } from 'react';
-import { CartContext } from '../../services/cart-context';
-import { Order } from '../../services/order-context';
+import ConstructorList from './constructor-list/constructor-list'
 
-const BurgerConstructor = ({ onOpen }) => {
-  const { cart } = useContext(CartContext)
-  const { order, setOrder } = useContext(Order)
+import { useDrop } from 'react-dnd';
+import { useSelector, useDispatch } from 'react-redux';
+import { useMemo } from 'react';
+
+import DndField from '../dnd-field/dnd-field';
+import { addIngredient, closeOrderModal } from '../../services/reducers/ingredients';
+import { sendOrder } from '../../services/actions/ingredients';
+import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
+import uuid from 'react-uuid'
+import CircularProgress from '@mui/material/CircularProgress';
+import ModalOverlay from '../modal/modal-overlay/modal-overlay';
+
+
+const BurgerConstructor = () => {
+  const { cart, orderModal, loader } = useSelector(store => store.ingredients)
+  const dispatch = useDispatch()
 
   const totalCost = useMemo(() => {
-    return cart
-      .map(item => item.price * (item.type === 'bun' ? 2 : 1))
-      .reduce((sum, current) => { return sum + current })
-  }, [cart])
-
-  const bun = useMemo(() => {
-    return cart.find(bun => bun.type === 'bun')
-  }, [cart])
-
-  const stuff = useMemo(() => {
-    return cart.filter(stuff => stuff.type !== 'bun')
-  }, [cart])
-
-
-  useEffect(() => {
     if (cart.length > 0) {
-      const cartId = cart.map(item => item._id)
-      setOrder(
-        cartId
-      )
-
+      return cart
+        .map(item => item.price * (item.type === 'bun' ? 2 : 1))
+        .reduce((sum, current) => { return sum + current })
     } else {
-      setOrder(Order)
+      return 0
     }
   }, [cart])
 
+
+  const [{ isHover }, dropTarget] = useDrop({
+    accept: 'bun',
+    collect: monitor => ({
+      isHover: monitor.isOver()
+    }),
+    drop(ingredient) {
+      const uid = uuid()
+      dispatch(addIngredient({ ...ingredient, uid }))
+    },
+  });
+
+  const handleOpenOrderModal = (cart) => {
+    const idList = cart.map(item => item._id)
+    dispatch(sendOrder(idList))
+
+  }
+  const handleCloseModal = () => {
+    dispatch(closeOrderModal())
+  }
+
   return (
-    <section className={styles.burgerConstructor}>
-      {bun &&
-        <BurgerConstructorElements bun={bun} stuff={stuff} />
+    <>
+      <section className={styles.burgerConstructor} >
+        {cart.length > 0 ?
+          <>
+            <ConstructorList />
+            <div className={styles.total}>
+              <div className={styles.price}>
+                <span className={styles.priceNumber}>{totalCost}</span>
+                <div className={styles.currencyIcon}>
+                  <CurrencyIcon type="primary" />
+                </div>
+              </div>
+              <Button type="primary" size="medium" onClick={() => handleOpenOrderModal(cart)}>
+                Оформить заказ
+              </Button>
+            </div>
+          </>
+          :
+          <DndField target={dropTarget} onHover={isHover} text='Выберите булку' />
+        }
+      </section >
+      {
+        orderModal &&
+        <Modal onClose={handleCloseModal}>
+          <OrderDetails />
+        </Modal>
       }
-      <div className={styles.total}>
-        <div className={styles.price}>
-          <span className={styles.priceNumber}>{totalCost}</span>
-          <div className={styles.currencyIcon}>
-            <CurrencyIcon type="primary" />
-          </div>
-        </div>
-        <Button type="primary" size="medium" onClick={() => onOpen(order)}>
-          Оформить заказ
-        </Button>
-      </div>
-    </section >
+      {
+        loader &&
+        <ModalOverlay>
+          <CircularProgress className={styles.loader} size="100px" />
+        </ModalOverlay>
+      }
+    </>
   );
 };
 
 BurgerConstructor.propTypes = {
-  onOpen: PropTypes.func.isRequired,
+
 };
 
 export default BurgerConstructor;

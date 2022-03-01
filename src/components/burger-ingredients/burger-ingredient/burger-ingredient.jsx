@@ -1,32 +1,59 @@
 import styles from './burger-ingredient.module.css'
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ingredientsPropTypes } from '../../../utils/types'
-import PropTypes from 'prop-types';
+import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
+import { useDispatch, useSelector } from 'react-redux'
+import { openIngredientModal } from '../../../services/reducers/ingredients'
+import { ingredientDetails } from '../../../utils/types'
+import { useDrag } from "react-dnd";
 
 
-const BurgerIngredient = ({ ingredients, onOpen }) => {
+const BurgerIngredient = ({ ingredient }) => {
 
-  const ingredientItem = ingredients.map((ingredient) => (
-    <li className={styles.cardItem} key={ingredient._id} onClick={() => onOpen(ingredient)}>
-      <img src={ingredient.image} alt={ingredient.image} className={styles.cardImage} />
-      <div className={styles.price}>
-        <span>{ingredient.price}</span>
-        <CurrencyIcon type="primary" />
-      </div>
-      <p className={styles.cardTitle}>{ingredient.name}</p>
-    </li>
-  ))
+  const { image, price, name } = ingredient
+  const dispatch = useDispatch()
+  const { cart } = useSelector(store => store.ingredients)
+
+  const handleOpenIngredientModal = (ingredient) => {
+    dispatch(openIngredientModal(ingredient))
+  }
+
+  const [{ opacity }, dragRef] = useDrag({
+    type: 'bun',
+    item: ingredient,
+    collect: monitor => ({
+      opacity: monitor.isDragging() ? .5 : 1,
+    })
+  });
+
+  let counter = 0
+  cart.forEach(ingredient => ingredient.name === name && (ingredient.type === 'bun' ? counter += 2 : counter += 1))
 
   return (
-    <ul className={styles.cardList}>
-      {ingredientItem}
-    </ul>
+    <li
+      className={styles.cardItem}
+      onClick={() => handleOpenIngredientModal(ingredient)}
+      ref={dragRef}
+      style={{ opacity }}
+    >
+      <img
+        src={image}
+        alt={image}
+        className={styles.cardImage} />
+      <div className={styles.price}>
+        <span>{price}</span>
+        <CurrencyIcon type="primary" />
+      </div>
+      <p className={styles.cardTitle}>{name}</p>
+      {counter > 0 &&
+        <div className={styles.count} >
+          <Counter count={counter} size="default" />
+        </div>
+      }
+    </li>
   )
 }
 
 BurgerIngredient.propTypes = {
-  ingredients: ingredientsPropTypes.isRequired,
-  onOpen: PropTypes.func.isRequired,
+  ingredient: ingredientDetails.isRequired,
 };
 
 export default BurgerIngredient

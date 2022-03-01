@@ -1,0 +1,10 @@
+.dragIcon {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.burgerElement {
+  composes: burgerElement from '../constructor-list/constructor-list.module.css';
+  cursor: move;
+}

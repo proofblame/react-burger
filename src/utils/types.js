@@ -17,7 +17,6 @@ export const ingredientsPropTypes = PropTypes.arrayOf(PropTypes.shape({
 
 export const modalPropTypes = PropTypes.shape({
   header: PropTypes.string,
-  onClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 })
 
@@ -34,6 +33,7 @@ export const ingredientDetails = PropTypes.shape({
   image_mobile: PropTypes.string.isRequired,
   image_large: PropTypes.string.isRequired,
   __v: PropTypes.number.isRequired,
+  uid: PropTypes.string,
 });
 
 export const orderDetailsPropTypes = PropTypes.shape({
@@ -42,4 +42,43 @@ export const orderDetailsPropTypes = PropTypes.shape({
     number: PropTypes.number.isRequired,
   }),
   success: PropTypes.bool.isRequired,
+})
+export const constructorIngredientPropTypes = PropTypes.shape({
+  ingredient: ingredientDetails.isRequired,
+  index: PropTypes.number.isRequired,
+  onMove: PropTypes.func.isRequired,
+})
+
+export const stuffListPropTypes = PropTypes.shape({
+  target: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ]).isRequired,
+  onHover: PropTypes.func.isRequired,
+})
+
+export const dndFieldPropTypes = PropTypes.shape({
+  target: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ]).isRequired,
+  onHover: PropTypes.func.isRequired,
+  text: PropTypes.string,
+})
+
+export const modalOverlayPropTypes = PropTypes.shape({
+  children: PropTypes.node,
+  onClose: PropTypes.func,
+})
+
+export const useSwitchTabsPropTypes = PropTypes.shape({
+  rootRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ]).isRequired,
+  currentRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ]).isRequired,
+  switchTab: PropTypes.func.isRequired,
 })

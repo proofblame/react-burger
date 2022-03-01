@@ -2,112 +2,33 @@ import styles from './app.module.css';
 import AppHeader from '../app-header/app-header'
 import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import api from '../../utils/api'
-import { useCallback, useEffect, useReducer, useState, useMemo } from 'react'
-import Modal from '../modal/modal'
-import OrderDetails from '../order-details/order-details';
-import IngredientDetails from '../ingredient-details/ingredient-details';
 
-import { IngredientsContext } from '../../services/ingredients-context'
-import { CartContext } from '../../services/cart-context';
-import { Order } from '../../services/order-context';
-
-import { defaultCart } from '../../utils/data'
-
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
+import { getIngredients } from '../../services/actions/ingredients';
 
 function App() {
-  const [ingredients, setIngredients] = useState([]);
-  const ingredientsMemo = useMemo(() => ({ ingredients, setIngredients }), [ingredients])
+  const dispatch = useDispatch()
 
-  const [modalActive, setModalActive] = useState({
-    ingredientModal: false,
-    orderModal: false,
-  })
-  const [ingredient, setIngredient] = useState(null)
-  const [cart, setCart] = useState(defaultCart);
-  const [order, setOrder] = useState([])
-  const [orderDetails, setOrderDetails] = useState(null)
-
-
-
-  const getData = useCallback(async () => {
-    try {
-      const res = await api.getData()
-      setIngredients(res.data)
-    } catch (err) {
-      console.error(err);
-    }
-  }, [])
-
-  useEffect(() => {
-    getData()
-  }, [getData])
-
-  const sendOrder = async (order) => {
-    try {
-      const res = await api.sendData(order)
-      setOrderDetails(res)
-      setModalActive({
-        ...modalActive,
-        orderModal: true
-      })
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const handleOpenIngredientModal = (ingredient) => {
-    setIngredient(ingredient)
-    setModalActive({
-      ...modalActive,
-      ingredientModal: true
-    })
-  }
-
-  const handleCloseModal = () => {
-    setModalActive({
-      ...modalActive,
-      ingredientModal: false,
-      orderModal: false,
-    })
-    setIngredient(null)
-  }
-
+  useEffect(
+    () => {
+      dispatch(getIngredients())
+    },
+    [dispatch]
+  )
 
   return (
-    <IngredientsContext.Provider value={ingredientsMemo}>
-      <CartContext.Provider value={{ cart, setCart }}>
-        <Order.Provider value={{ order, setOrder }}>
-          {ingredients.length &&
-            <section className={styles.app}>
-              <AppHeader />
-              <main className={styles.main}>
-                <BurgerIngredients onOpen={handleOpenIngredientModal} />
-                <BurgerConstructor onOpen={sendOrder} />
-              </main>
-            </section>
-          }
-
-          {modalActive.ingredientModal &&
-            (
-              <Modal onClose={handleCloseModal} header='Детали ингредиента'>
-                <IngredientDetails selectedCard={ingredient} />
-              </Modal>
-            )
-          }
-          {modalActive.orderModal &&
-            (
-              <Modal onClose={handleCloseModal} active={modalActive.orderModal} >
-                {
-                  orderDetails &&
-                  <OrderDetails orderDetails={orderDetails} />
-                }
-              </Modal>
-            )
-          }
-        </Order.Provider>
-      </CartContext.Provider>
-    </IngredientsContext.Provider>
+    <section className={styles.app}>
+      <AppHeader />
+      <main className={styles.main}>
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </DndProvider>
+      </main>
+    </section>
   );
 }
 

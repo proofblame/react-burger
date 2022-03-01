@@ -1,12 +1,3 @@
-.cardList {
-  box-sizing: border-box;
-  composes: pt-6 pl-4 pb-10 from global;
-  list-style-type: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(272px, 1fr));
-  column-gap: 24px;
-  row-gap: 32px;
-}
 .cardItem {
   display: flex;
   flex-direction: column;
@@ -14,6 +5,7 @@
   position: relative;
   max-width: 272px;
   cursor: pointer;
+  position: relative;
 }
 .cardImage {
   composes: pr-4 pl-4 from global;
@@ -26,7 +18,8 @@
   align-items: center;
   column-gap: 8px;
 }
-.cardTitle {
-  composes: text text_type_main-default from global;
-  text-align: center;
+.count {
+  position: absolute;
+  top: 0;
+  right: 16px;
 }
