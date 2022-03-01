@@ -1,12 +1,19 @@
 import styles from './burger-constructor-elements.module.css'
-import { ingredientsPropTypes } from '../../../utils/types'
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { randomData } from '../../../utils/random'
+import { CartContext } from '../../../services/cart-context';
+import { useContext, useEffect } from 'react';
+import { ingredientDetails, ingredientsPropTypes } from '../../../utils/types';
 
-const BurgerConstructorElements = ({ data }) => {
 
+const BurgerConstructorElements = ({ bun, stuff }) => {
+  const { cart, setCart } = useContext(CartContext)
 
-  const ingredientItem = randomData.map((ingredient, index) => (
+  const handleDeleteIngredient = (ingredient) => {
+    const newCart = cart.filter(item => item._id !== ingredient._id)
+    setCart(newCart)
+  }
+
+  const ingredientItem = stuff.map((ingredient, index) => (
     <li className={styles.burgerElement} key={index}>
       <div className={styles.dragIcon}>
         <DragIcon type="primary" />
@@ -15,23 +22,22 @@ const BurgerConstructorElements = ({ data }) => {
         text={ingredient.name}
         price={ingredient.price}
         thumbnail={ingredient.image}
+        handleClose={() => handleDeleteIngredient(ingredient)}
       />
     </li>
   ))
 
-
   return (
     (
-
-      data.length > 0 &&
+      cart.length > 0 &&
       <div className={styles.constructorWrapper}>
         <div className={styles.burgerElement}>
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${data[0].name} (верх)`}
-            price={data[0].price}
-            thumbnail={data[0].image}
+            text={`${bun.name} (верх)`}
+            price={bun.price}
+            thumbnail={bun.image}
           />
         </div>
 
@@ -42,9 +48,10 @@ const BurgerConstructorElements = ({ data }) => {
         <div className={styles.burgerElement}>
           <ConstructorElement
             type="bottom"
-            text={`${data[0].name} (низ)`}
-            price={data[0].price}
-            thumbnail={data[0].image}
+            isLocked={true}
+            text={`${bun.name} (низ)`}
+            price={bun.price}
+            thumbnail={bun.image}
           />
         </div>
       </div>
@@ -55,7 +62,8 @@ const BurgerConstructorElements = ({ data }) => {
 }
 
 BurgerConstructorElements.propTypes = {
-  data: ingredientsPropTypes.isRequired
+  bun: ingredientDetails.isRequired,
+  stuff: ingredientsPropTypes.isRequired,
 };
 
 export default BurgerConstructorElements

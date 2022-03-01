@@ -1,10 +1,13 @@
 import styles from './order-details.module.css'
 import done from '../../images/done.png'
+import { orderDetailsPropTypes } from '../../utils/types';
 
-const OrderDetails = () => {
+const OrderDetails = ({ orderDetails }) => {
+  const { order } = orderDetails
+
   return (
     <div className={styles.order}>
-      <h4 className={styles.number}>034536</h4>
+      <h4 className={styles.number}>{order.number}</h4>
       <p className={styles.subtitle}>идентификатор заказа</p>
       <img className={styles.image} src={done} alt="done" />
       <p className={styles.caption}>Ваш заказ начали готовить</p>
@@ -13,4 +16,7 @@ const OrderDetails = () => {
   );
 };
 
+OrderDetails.propTypes = {
+  orderDetails: orderDetailsPropTypes.isRequired,
+}
 export default OrderDetails;
