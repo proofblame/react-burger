@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 
 import { getIngredients } from '../../services/actions/ingredients';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { Main, Login, Register, ForgotPassword, ResetPassword, Profile } from '../../pages';
+import { Main, Login, Register, ForgotPassword, ResetPassword, Profile, IngredientInfo } from '../../pages';
 
 function App() {
   const dispatch = useDispatch()
@@ -42,6 +42,9 @@ function App() {
             </Route>
             <Route path='/profile'>
               <Profile />
+            </Route>
+            <Route path='/ingredients/:id'>
+              <IngredientInfo />
             </Route>
           </Switch>
         </main>
