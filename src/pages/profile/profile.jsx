@@ -1,19 +1,56 @@
 import style from './profile.module.css'
-import { useState, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components'
+import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
+import { updateUser, logout } from '../../services/actions/auth'
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom'
 
 
 export const Profile = () => {
-  const [value, setValue] = useState('value')
-  const inputRef = useRef(null)
-  const onIconClick = () => {
+  const dispatch = useDispatch()
+  const history = useHistory()
 
-    setTimeout(() => inputRef.current.focus(), 0)
-    alert('Icon Click Callback')
+  const { userData } = useSelector(store => store.auth)
 
+  const [data, setData] = useState({
+    name: '',
+    email: '',
+    password: '',
+  })
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setData({
+      ...data,
+      [name]: value
+    })
+  }
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      dispatch(updateUser(data))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  const onLogout = () => {
+    dispatch(logout())
+    history.push('/')
   }
 
+  useEffect(
+    () => {
+      if (userData) {
+        const { name, email } = userData
+        setData({
+          name,
+          email,
+          password: '',
+        })
+      }
+    }, [userData]
+  )
 
   return (
     <section className={style.profile}>
@@ -26,7 +63,9 @@ export const Profile = () => {
             <NavLink className={style.link} activeClassName={style.active} to="/profile/orders">История заказов</NavLink>
           </li>
           <li>
-            <NavLink className={style.link} activeClassName={style.active} to="/logout">Выход</NavLink>
+            <button type="secondary" size="large" className={style.button} onClick={onLogout}>
+              Выход
+            </button>
           </li>
         </ul>
         <p className={style.caption}>
@@ -35,51 +74,47 @@ export const Profile = () => {
         </p>
       </nav>
 
-      <form className={style.form}>
+      <form className={style.form} onSubmit={handleSubmit}>
         <div className={style.input}>
           <Input
-            type={'text'}
-            placeholder={'Имя'}
-            onChange={e => setValue(e.target.value)}
-            value={value}
-            name={'name'}
+            type='text'
+            placeholder='Имя'
+            onChange={handleChange}
+            value={data.name}
+            name='name'
             error={false}
-            ref={inputRef}
-            onIconClick={onIconClick}
-            errorText={'Ошибка'}
-            size={'default'}
-            icon={'EditIcon'}
+            errorText='Ошибка'
+            size='default'
           />
         </div>
         <div className={style.input}>
           <Input
-            type={'email'}
-            placeholder={'E-mail'}
-            onChange={e => setValue(e.target.value)}
-            value={value}
-            name={'name'}
+            type='email'
+            placeholder='E-mail'
+            onChange={handleChange}
+            value={data.email}
+            name='email'
             error={false}
-            ref={inputRef}
-            onIconClick={onIconClick}
-            errorText={'Ошибка'}
-            size={'default'}
-            icon={'EditIcon'}
+            errorText='Ошибка'
+            size='default'
           />
         </div>
         <div className={style.input}>
           <Input
-            type={'password'}
-            placeholder={'Пароль'}
-            onChange={e => setValue(e.target.value)}
-            icon={'EditIcon'}
-            value={value}
-            name={'name'}
+            type='password'
+            placeholder='Пароль'
+            onChange={handleChange}
+            value={data.password}
+            name='password'
             error={false}
-            ref={inputRef}
-            onIconClick={onIconClick}
-            errorText={'Ошибка'}
-            size={'default'}
+            errorText='Ошибка'
+            size='default'
           />
+        </div>
+        <div className={style.button}>
+          <Button type="primary" size="medium">
+            Сохранить
+          </Button>
         </div>
 
       </form>

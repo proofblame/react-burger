@@ -5,8 +5,20 @@
   column-gap: 8px;
   background: none;
   border: none;
-  color: #fff;
   cursor: pointer;
-  composes: pl-5 pr-5 pt-4 pb-4 from global;
+  composes: pl-5 pr-5 pt-4 pb-4 text_color_inactive from global;
   box-sizing: border-box;
+  text-decoration: none;
+}
+.caption {
+  composes: text text_type_main-default from global;
+  color: inherit;
+}
+
+.active {
+  color: #fff;
+}
+
+.active svg {
+  fill: #fff;
 }

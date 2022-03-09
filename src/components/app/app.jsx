@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 
 import { getIngredients } from '../../services/actions/ingredients';
+import { getUser } from '../../services/actions/auth';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Main, Login, Register, ForgotPassword, ResetPassword, Profile, IngredientInfo } from '../../pages';
 
@@ -14,6 +15,7 @@ function App() {
 
   useEffect(
     () => {
+      dispatch(getUser())
       dispatch(getIngredients())
     },
     [dispatch]

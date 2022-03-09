@@ -1,51 +1,69 @@
 import style from './login.module.css'
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useState, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../../services/actions/auth';
 
 export const Login = () => {
 
 
-  const [value, setValue] = useState('value')
-  const inputRef = useRef(null)
-  const onIconClick = () => {
+  const dispatch = useDispatch()
+  const history = useHistory()
 
-    setTimeout(() => inputRef.current.focus(), 0)
-    alert('Icon Click Callback')
+  const [data, setData] = useState({
+    email: '',
+    password: '',
+  })
 
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setData({
+      ...data,
+      [name]: value
+    })
+  }
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      dispatch(loginUser(data))
+      history.push('/')
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setData({
+        email: '',
+        password: '',
+      })
+    }
   }
 
 
   return (
-    <form className={style.login}>
+    <form className={style.login} onSubmit={handleSubmit}>
       <h2 className={style.title}>Вход</h2>
       <div className={style.input}>
         <Input
-          type={'email'}
-          placeholder={'E-mail'}
-          onChange={e => setValue(e.target.value)}
-          value={value}
-          name={'name'}
+          type='email'
+          placeholder='E-mail'
+          onChange={handleChange}
+          value={data.email}
+          name='email'
           error={false}
-          ref={inputRef}
-          onIconClick={onIconClick}
-          errorText={'Ошибка'}
-          size={'default'}
+          errorText='Ошибка'
+          size='default'
         />
       </div>
       <div className={style.input}>
         <Input
-          type={'password'}
-          placeholder={'Пароль'}
-          onChange={e => setValue(e.target.value)}
-          icon={'ShowIcon'}
-          value={value}
-          name={'name'}
+          type='password'
+          placeholder='Пароль'
+          onChange={handleChange}
+          value={data.password}
+          name='password'
           error={false}
-          ref={inputRef}
-          onIconClick={onIconClick}
-          errorText={'Ошибка'}
-          size={'default'}
+          errorText='Ошибка'
+          size='default'
         />
       </div>
       <div className={style.button}>

@@ -13,12 +13,13 @@ import {
   disableLoader,
 } from '../reducers/ingredients'
 
+
 export const getIngredients = () => {
 
   return async (dispatch) => {
     dispatch(getIngredientsRequest())
     try {
-      const res = await api.getData()
+      const res = await api.getIngredients()
       dispatch(getIngredientsSuccess(res.data));
     } catch (error) {
       dispatch(getIngredientsFailed());
@@ -33,7 +34,7 @@ export const sendOrder = (idList) => {
     dispatch(enableLoader());
     dispatch(sendOrderRequest())
     try {
-      const res = await api.sendData(idList)
+      const res = await api.sendIngredients(idList)
       dispatch(sendOrderSuccess(res.order));
       dispatch(openOrderModal());
       dispatch(clearCart());

@@ -32,6 +32,17 @@
   color: #fff;
 }
 
+.button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  composes: text text_type_main-medium from global;
+  color: #8585AD;
+}
+.button:hover {
+  opacity: 0.8;
+}
+
 .input {
   composes: mb-6 from global;
 }
@@ -39,5 +50,8 @@
 .caption {
   composes: text text_type_main-default text_color_inactive from global;
   opacity: 0.4;
+}
+.button {
+  composes: mb-20 from global;
 }
 
