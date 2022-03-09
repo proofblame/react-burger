@@ -26,7 +26,7 @@ export const updateToken = async () => {
 
   if (refreshToken) {
     try {
-      const res = await api.forgotPassword(refreshToken)
+      const res = await api.updateToken(refreshToken)
       deleteCookie('accessToken');
       localStorage.removeItem('refreshToken');
 
@@ -83,7 +83,7 @@ export const getUser = () => {
         if (error.message === 'jwt expired') {
           console.log(error, '123')
           updateToken()
-          dispatch(updateUser())
+          dispatch(getUser())
         } else {
           dispatch(getUserFailed())
           console.error(error)

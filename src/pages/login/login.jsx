@@ -1,15 +1,17 @@
 import style from './login.module.css'
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { useCallback, useState } from 'react'
+import { Link, Redirect, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../services/actions/auth';
+import { useSelector } from 'react-redux';
 
 export const Login = () => {
-
+  const { userData } = useSelector(store => store.auth)
 
   const dispatch = useDispatch()
-  const history = useHistory()
+  const location = useLocation()
+
 
   const [data, setData] = useState({
     email: '',
@@ -27,7 +29,6 @@ export const Login = () => {
     e.preventDefault()
     try {
       dispatch(loginUser(data))
-      history.push('/')
     } catch (error) {
       console.error(error)
     } finally {
@@ -36,6 +37,10 @@ export const Login = () => {
         password: '',
       })
     }
+  }
+
+  if (userData) {
+    return <Redirect to={location?.state?.from || '/'} />
   }
 
 

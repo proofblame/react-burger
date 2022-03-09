@@ -1,13 +1,15 @@
 import style from './register.module.css'
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { useCallback, useState } from 'react'
+import { Link, Redirect, useLocation } from 'react-router-dom'
 import { registerUser } from '../../services/actions/auth'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const Register = () => {
+
+  const { userData } = useSelector(store => store.auth)
   const dispatch = useDispatch()
-  const history = useHistory()
+  const location = useLocation()
 
   const [data, setData] = useState({
     name: '',
@@ -26,7 +28,6 @@ export const Register = () => {
     e.preventDefault()
     try {
       dispatch(registerUser(data))
-      history.push('/')
     } catch (error) {
       console.error(error)
     } finally {
@@ -36,6 +37,10 @@ export const Register = () => {
         password: '',
       })
     }
+  }
+
+  if (userData) {
+    return <Redirect to={location?.state?.from || '/'} />
   }
 
 

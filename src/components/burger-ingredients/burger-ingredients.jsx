@@ -12,6 +12,7 @@ import useSwitchTabs from '../use-switch-tabs/use-switch-tabs';
 
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import { Route, Switch } from 'react-router-dom';
 
 const BurgerIngredients = () => {
 
@@ -86,12 +87,16 @@ const BurgerIngredients = () => {
         </div>
 
       </section>
-
+      {/* 
       {ingredientModal &&
-        <Modal onClose={handleCloseModal} header='Детали ингредиента'>
-          <IngredientDetails />
-        </Modal>
-      }
+        <Switch>
+          <Route path='/ingredients/:id'>
+            <Modal onClose={handleCloseModal} header='Детали ингредиента'>
+              <IngredientDetails />
+            </Modal>
+          </Route>
+        </Switch>
+      } */}
     </>
   );
 };

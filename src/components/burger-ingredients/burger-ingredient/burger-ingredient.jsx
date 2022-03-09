@@ -4,11 +4,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { openIngredientModal } from '../../../services/reducers/ingredients'
 import { ingredientDetails } from '../../../utils/types'
 import { useDrag } from "react-dnd";
+import { Link, useLocation } from 'react-router-dom'
 
 
 const BurgerIngredient = ({ ingredient }) => {
-
   const { image, price, name } = ingredient
+  const location = useLocation();
+
   const dispatch = useDispatch()
   const { cart } = useSelector(store => store.ingredients)
 
@@ -29,25 +31,27 @@ const BurgerIngredient = ({ ingredient }) => {
 
   return (
     <li
-      className={styles.cardItem}
       onClick={() => handleOpenIngredientModal(ingredient)}
       ref={dragRef}
       style={{ opacity }}
+      className={styles.cardItem}
     >
-      <img
-        src={image}
-        alt={image}
-        className={styles.cardImage} />
-      <div className={styles.price}>
-        <span>{price}</span>
-        <CurrencyIcon type="primary" />
-      </div>
-      <p className={styles.cardTitle}>{name}</p>
-      {counter > 0 &&
-        <div className={styles.count} >
-          <Counter count={counter} size="default" />
+      <Link key={location.key} className={styles.link} to={{ pathname: `/ingredients/${ingredient._id}`, state: { modal: true } }}>
+        <img
+          src={image}
+          alt={image}
+          className={styles.cardImage} />
+        <div className={styles.price}>
+          <span>{price}</span>
+          <CurrencyIcon type="primary" />
         </div>
-      }
+        <p className={styles.cardTitle}>{name}</p>
+        {counter > 0 &&
+          <div className={styles.count} >
+            <Counter count={counter} size="default" />
+          </div>
+        }
+      </Link>
     </li>
   )
 }
