@@ -27,6 +27,8 @@ export const initialState = {
   logoutRequest: false,
   logoutFailed: false,
 
+  loader: false,
+
 };
 
 const authSlice = createSlice({
@@ -124,12 +126,17 @@ const authSlice = createSlice({
       state.logoutRequest = false
       state.logoutFailed = true
     },
-
-
-
-
-
-
+    // Открытие/закрытие лоадера
+    enableLoader(state) {
+      state.loader = true
+    },
+    disableLoader(state) {
+      state.loader = false
+    },
+    // Переадресация с reset-password
+    disableReset(state) {
+      state.forgotSuccess = false
+    },
   }
 })
 const { actions, reducer } = authSlice;
@@ -152,8 +159,10 @@ export const {
   forgotPasswordFailed,
   logoutRequest,
   logoutSuccess,
-  logoutFailed
-
+  logoutFailed,
+  enableLoader,
+  disableLoader,
+  disableReset
 } = actions;
 
 export default reducer;

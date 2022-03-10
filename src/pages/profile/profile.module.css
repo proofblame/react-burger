@@ -51,7 +51,15 @@
   composes: text text_type_main-default text_color_inactive from global;
   opacity: 0.4;
 }
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-beetween;
+  column-gap: 25px;
+}
 .button {
   composes: mb-20 from global;
 }
-
+.loader {
+  color: #4c4cff !important;
+}

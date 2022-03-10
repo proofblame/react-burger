@@ -5,10 +5,8 @@ import Modal from '../../components/modal/modal';
 import { Main } from '../main/main';
 
 export const IngredientInfo = () => {
-
   const history = useHistory();
   let render;
-
   const handleCloseModal = () => {
     history.goBack()
   }

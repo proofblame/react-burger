@@ -4,17 +4,13 @@ import { useParams } from "react-router-dom";
 import { useMemo } from 'react';
 
 const IngredientDetails = () => {
-
   const { id } = useParams()
-
   const { ingredients } = useSelector(store => store.ingredients)
-
   const ingredient = useMemo(
     () => {
       return ingredients.find(ingredient => ingredient._id === id)
     }, [ingredients, id]
   )
-
 
   if (!ingredient) return (null)
 

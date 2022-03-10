@@ -82,3 +82,9 @@ export const useSwitchTabsPropTypes = PropTypes.shape({
   ]).isRequired,
   switchTab: PropTypes.func.isRequired,
 })
+
+export const headerButtonPropTypes = PropTypes.shape({
+  children: PropTypes.node,
+  text: PropTypes.string,
+  path: PropTypes.string.isRequired,
+})

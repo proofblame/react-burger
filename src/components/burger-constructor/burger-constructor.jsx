@@ -14,11 +14,14 @@ import OrderDetails from '../order-details/order-details';
 import uuid from 'react-uuid'
 import CircularProgress from '@mui/material/CircularProgress';
 import ModalOverlay from '../modal/modal-overlay/modal-overlay';
+import { useHistory } from 'react-router-dom';
 
 
 const BurgerConstructor = () => {
   const { cart, orderModal, loader } = useSelector(store => store.ingredients)
+  const { useData } = useSelector(store => store.auth)
   const dispatch = useDispatch()
+  const history = useHistory()
 
   const totalCost = useMemo(() => {
     if (cart.length > 0) {
@@ -43,9 +46,13 @@ const BurgerConstructor = () => {
   });
 
   const handleOpenOrderModal = (cart) => {
+    if (!useData) {
+      history.replace('/login')
+      return
+    }
+
     const idList = cart.map(item => item._id)
     dispatch(sendOrder(idList))
-
   }
   const handleCloseModal = () => {
     dispatch(closeOrderModal())
@@ -87,10 +94,6 @@ const BurgerConstructor = () => {
       }
     </>
   );
-};
-
-BurgerConstructor.propTypes = {
-
 };
 
 export default BurgerConstructor;

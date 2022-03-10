@@ -68,9 +68,7 @@ const ConstructorList = () => {
         </div>
       }
     </div>
-
   )
-
 }
 
 export default ConstructorList

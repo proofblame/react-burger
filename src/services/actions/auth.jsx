@@ -17,7 +17,10 @@ import {
   forgotPasswordFailed,
   logoutRequest,
   logoutSuccess,
-  logoutFailed
+  logoutFailed,
+  enableLoader,
+  disableLoader,
+  disableReset
 } from '../reducers/auth'
 import { setCookie, getCookie, deleteCookie } from '../../utils/helpers'
 
@@ -42,6 +45,7 @@ export const updateToken = async () => {
 
 export const registerUser = ({ email, password, name }) => {
   return async (dispatch) => {
+    dispatch(enableLoader())
     dispatch(getRegisterRequest())
     try {
       const res = await api.register(email, password, name)
@@ -51,12 +55,15 @@ export const registerUser = ({ email, password, name }) => {
     } catch (error) {
       dispatch(getRegisterFailed())
       console.error(error)
+    } finally {
+      dispatch(disableLoader())
     }
   }
 }
 
 export const loginUser = ({ email, password }) => {
   return async (dispatch) => {
+    dispatch(enableLoader())
     dispatch(getLoginRequest())
     try {
       const res = await api.login(email, password)
@@ -66,6 +73,8 @@ export const loginUser = ({ email, password }) => {
     } catch (error) {
       dispatch(getLoginFailed())
       console.error(error)
+    } finally {
+      dispatch(disableLoader())
     }
   }
 }
@@ -94,6 +103,7 @@ export const getUser = () => {
 }
 export const updateUser = ({ email, password, name }) => {
   return async (dispatch) => {
+    dispatch(enableLoader())
     dispatch(updateUserRequest())
 
     const accessToken = getCookie('accessToken')
@@ -109,12 +119,15 @@ export const updateUser = ({ email, password, name }) => {
           dispatch(updateUserFailed())
           console.error(error)
         }
+      } finally {
+        dispatch(disableLoader())
       }
     }
   }
 }
 export const forgotPassword = ({ email }) => {
   return async (dispatch) => {
+    dispatch(enableLoader())
     dispatch(forgotPasswordRequest())
     try {
       const res = await api.forgotPassword(email)
@@ -122,12 +135,15 @@ export const forgotPassword = ({ email }) => {
     } catch (error) {
       dispatch(forgotPasswordFailed())
       console.error(error)
+    } finally {
+      dispatch(disableLoader())
     }
   }
 }
 
 export const resetPassword = ({ password, token }) => {
   return async (dispatch) => {
+    dispatch(enableLoader())
     dispatch(forgotPasswordRequest())
     try {
       const res = await api.resetPassword(password, token)
@@ -135,11 +151,15 @@ export const resetPassword = ({ password, token }) => {
     } catch (error) {
       dispatch(forgotPasswordFailed())
       console.error(error)
+    } finally {
+      dispatch(disableLoader())
+      dispatch(disableReset())
     }
   }
 }
 export const logout = () => {
   return async (dispatch) => {
+    dispatch(enableLoader())
     dispatch(logoutRequest())
 
     const refreshToken = localStorage.getItem('refreshToken');
@@ -152,6 +172,8 @@ export const logout = () => {
       } catch (error) {
         dispatch(logoutFailed())
         console.error(error)
+      } finally {
+        dispatch(disableLoader())
       }
     } else {
       console.error('Error logout')

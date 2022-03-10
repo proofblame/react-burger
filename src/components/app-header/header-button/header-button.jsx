@@ -1,5 +1,6 @@
 import styles from './header-button.module.css'
 import { NavLink } from 'react-router-dom';
+import { headerButtonPropTypes } from '../../../utils/types';
 
 const HeaderButton = ({ children, text, path }) => {
   return (
@@ -11,5 +12,7 @@ const HeaderButton = ({ children, text, path }) => {
     </NavLink>
   );
 };
+
+HeaderButton.propTypes = headerButtonPropTypes.isRequired
 
 export default HeaderButton;
