@@ -38,7 +38,7 @@ export const Login = () => {
   }
 
   if (userData) {
-    return <Redirect to='/' />
+    return <Redirect to={location?.state?.from || '/'} />
   }
 
   return (

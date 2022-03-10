@@ -19,7 +19,7 @@ import { useHistory } from 'react-router-dom';
 
 const BurgerConstructor = () => {
   const { cart, orderModal, loader } = useSelector(store => store.ingredients)
-  const { useData } = useSelector(store => store.auth)
+  const { userData } = useSelector(store => store.auth)
   const dispatch = useDispatch()
   const history = useHistory()
 
@@ -46,7 +46,7 @@ const BurgerConstructor = () => {
   });
 
   const handleOpenOrderModal = (cart) => {
-    if (!useData) {
+    if (!userData) {
       history.replace('/login')
       return
     }

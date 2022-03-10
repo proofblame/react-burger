@@ -36,7 +36,7 @@ const BurgerIngredient = ({ ingredient }) => {
       style={{ opacity }}
       className={styles.cardItem}
     >
-      <Link key={location.key} className={styles.link} to={{ pathname: `/ingredients/${ingredient._id}`, state: { modal: true } }}>
+      <Link key={location.key} className={styles.link} to={{ pathname: `/ingredients/${ingredient._id}`, state: { background: location } }}>
         <img
           src={image}
           alt={image}

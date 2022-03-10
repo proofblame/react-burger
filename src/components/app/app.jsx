@@ -4,12 +4,10 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import { getIngredients } from '../../services/actions/ingredients';
 import { getUser } from '../../services/actions/auth';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { Main, Login, Register, ForgotPassword, ResetPassword, Profile, IngredientInfo } from '../../pages';
-import { ProtectedRoute } from '../protected-route/protected-route';
+import { BrowserRouter as Router } from 'react-router-dom'
+import ModalSwitch from '../modal-switch/modal-switch'
 
 function App() {
-
   const dispatch = useDispatch()
 
   useEffect(
@@ -25,29 +23,7 @@ function App() {
       <section className={styles.app}>
         <AppHeader />
         <main className={styles.main}>
-          <Switch>
-            <Route exact path='/'>
-              <Main />
-            </Route>
-            <Route path='/login'>
-              <Login />
-            </Route>
-            <Route path='/register'>
-              <Register />
-            </Route>
-            <Route path='/forgot-password'>
-              <ForgotPassword />
-            </Route>
-            <Route path='/reset-password'>
-              <ResetPassword />
-            </Route>
-            <Route path='/ingredients/:id'>
-              <IngredientInfo />
-            </Route>
-            <ProtectedRoute path='/profile'>
-              <Profile />
-            </ProtectedRoute>
-          </Switch>
+          <ModalSwitch />
         </main>
       </section>
     </Router>
