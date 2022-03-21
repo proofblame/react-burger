@@ -6,18 +6,18 @@ const AppHeader = () => {
   return (
     <div className={styles.header}>
       <nav className={styles.nav}>
-        <HeaderButton text='Конструктор'>
-          <BurgerIcon type="primary" />
+        <HeaderButton text='Конструктор' exact path='/'>
+          <BurgerIcon type="secondary" />
         </HeaderButton>
-        <HeaderButton text='Лента заказов' inActive={true}>
+        <HeaderButton text='Лента заказов' exact path='/'>
           <ListIcon type="secondary" />
         </HeaderButton>
       </nav>
       <Logo />
-      <HeaderButton text=' Личный кабинет' inActive={true}>
+      <HeaderButton text='Личный кабинет' path='/profile'>
         <ProfileIcon type="secondary" />
       </HeaderButton>
-    </div>
+    </div >
   )
 };
 

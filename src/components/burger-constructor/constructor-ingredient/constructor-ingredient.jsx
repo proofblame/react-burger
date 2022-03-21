@@ -28,8 +28,6 @@ const ConstructorIngredient = ({ ingredient, index, onMove }) => {
 
   const opacity = isDragging ? 0 : 1
 
-
-
   const [, drop] = useDrop({
     accept: 'stuff',
 
@@ -63,7 +61,6 @@ const ConstructorIngredient = ({ ingredient, index, onMove }) => {
     <li className={styles.burgerElement}
       ref={ref}
       style={{ opacity }}
-    // onMouseDown={switchFrame}
     >
       <div className={styles.dragIcon}>
         <DragIcon type="primary" />

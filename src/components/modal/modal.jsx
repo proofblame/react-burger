@@ -8,7 +8,6 @@ import { modalPropTypes } from '../../utils/types'
 const modalRoot = document.getElementById("modals");
 
 const Modal = ({ header, onClose, children }) => {
-
   useEffect(() => {
     const handleEscapePress = (e) => {
       if (e.key === 'Escape') {

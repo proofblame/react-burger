@@ -1,16 +1,24 @@
+
 .cardItem {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   position: relative;
   max-width: 272px;
   cursor: pointer;
-  position: relative;
+
+}
+
+.link {
+  color: #F2F2F3;
+  text-decoration: none;
+  composes: text text_type_main-default from global;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .cardImage {
   composes: pr-4 pl-4 from global;
   display: inline-block;
   box-sizing: border-box;
+
 }
 .price {
   composes: pt-1 pb-1 text text_type_digits-default from global;

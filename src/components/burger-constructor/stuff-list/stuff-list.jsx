@@ -6,23 +6,17 @@ import { stuffListPropTypes } from '../../../utils/types';
 
 const StuffList = ({ target, onHover }) => {
 
-
   const dispatch = useDispatch()
   const { cart } = useSelector(store => store.ingredients)
-
   const classes = `${styles.burgerBody} ${styles.borderColor}`
-
   const borderColor = onHover ? classes : styles.burgerBody
 
   const moveItemHandler = (dragIndex, hoverIndex) => {
     const dragItem = cart[dragIndex]
-
     if (dragItem) {
       dispatch(sortCart({ dragItem, hoverIndex, dragIndex }))
     }
   }
-
-
 
   const ingredientItem = cart.map((ingredient, index) => (
     ingredient.type !== 'bun' &&

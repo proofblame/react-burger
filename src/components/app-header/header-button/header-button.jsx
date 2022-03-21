@@ -1,14 +1,18 @@
 import styles from './header-button.module.css'
+import { NavLink } from 'react-router-dom';
+import { headerButtonPropTypes } from '../../../utils/types';
 
-const HeaderButton = ({ children, text, inActive }) => {
+const HeaderButton = ({ children, text, path }) => {
   return (
-    <button className={styles.button}>
+    <NavLink className={styles.button} exact to={path} activeClassName={styles.active}>
       {children}
-      <span className={`text text_type_main-default ${inActive ? 'text_color_inactive' : ''}`}>
+      <span className={styles.caption}>
         {text}
       </span>
-    </button>
+    </NavLink>
   );
 };
+
+HeaderButton.propTypes = headerButtonPropTypes.isRequired
 
 export default HeaderButton;
