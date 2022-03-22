@@ -2,23 +2,23 @@ import styles from './stuff-list.module.css'
 import ConstructorIngredient from '../constructor-ingredient/constructor-ingredient'
 import { useSelector, useDispatch } from 'react-redux';
 import { sortCart } from '../../../services/reducers/ingredients';
-import { stuffListPropTypes } from '../../../utils/types';
+import { TStuffList, TIngredientDetails } from '../../../utils/types';
 
-const StuffList = ({ target, onHover }) => {
+const StuffList = ({ target, onHover }: TStuffList) => {
 
   const dispatch = useDispatch()
-  const { cart } = useSelector(store => store.ingredients)
+  const { cart } = useSelector((store: any) => store.ingredients)
   const classes = `${styles.burgerBody} ${styles.borderColor}`
   const borderColor = onHover ? classes : styles.burgerBody
 
-  const moveItemHandler = (dragIndex, hoverIndex) => {
+  const moveItemHandler = (dragIndex: number, hoverIndex: number) => {
     const dragItem = cart[dragIndex]
     if (dragItem) {
       dispatch(sortCart({ dragItem, hoverIndex, dragIndex }))
     }
   }
 
-  const ingredientItem = cart.map((ingredient, index) => (
+  const ingredientItem = cart.map((ingredient: TIngredientDetails, index: number) => (
     ingredient.type !== 'bun' &&
     <ConstructorIngredient ingredient={ingredient} key={ingredient.uid} index={index} onMove={moveItemHandler} />
   ))
@@ -31,6 +31,5 @@ const StuffList = ({ target, onHover }) => {
   )
 }
 
-StuffList.propTypes = stuffListPropTypes.isRequired
 
 export default StuffList

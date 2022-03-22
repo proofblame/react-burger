@@ -1,10 +1,9 @@
 import styles from './ingredients-list.module.css'
-import { ingredientsPropTypes } from '../../../utils/types'
-import PropTypes from 'prop-types';
-import { forwardRef } from 'react'
+import { TIngredientsList } from '../../../utils/types'
+import { forwardRef, Ref } from 'react'
 import BurgerIngredient from '../burger-ingredient/burger-ingredient';
 
-const IngredientsList = forwardRef(({ ingredients, title }, ref) => {
+const IngredientsList = forwardRef(({ ingredients, title }: TIngredientsList, ref: Ref<HTMLHeadingElement>) => {
 
   const ingredientItem = ingredients.map((ingredient) => (
     <BurgerIngredient ingredient={ingredient} key={ingredient._id} />
@@ -22,9 +21,5 @@ const IngredientsList = forwardRef(({ ingredients, title }, ref) => {
   )
 })
 
-IngredientsList.propTypes = {
-  ingredients: ingredientsPropTypes.isRequired,
-  title: PropTypes.string.isRequired,
-};
 
 export default IngredientsList

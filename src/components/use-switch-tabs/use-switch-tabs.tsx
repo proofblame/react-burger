@@ -1,9 +1,9 @@
-import { useEffect, useRef } from 'react';
-import { useSwitchTabsPropTypes } from '../../utils/types';
 
-const useSwitchTabs = (rootRef, currentRef, switchTab) => {
+import { RefObject, useEffect, useRef } from 'react';
 
-  const observer = useRef(null)
+const useSwitchTabs = (rootRef: RefObject<HTMLDivElement>, currentRef: RefObject<HTMLHeadingElement>, switchTab: any) => {
+
+  const observer = useRef<IntersectionObserver | null>(null)
   useEffect(
     () => {
 
@@ -13,12 +13,13 @@ const useSwitchTabs = (rootRef, currentRef, switchTab) => {
         threshold: [0, 1.0]
       }
 
-      const callbackFunctions = (entries) => {
+      const callbackFunctions = (entries: any) => {
         const [entry] = entries
         if (entry.isIntersecting && entry.boundingClientRect.top < entry.intersectionRect.top) {
           switchTab()
         }
       }
+      if (!currentRef.current) return
 
       const current = currentRef.current
 
@@ -29,11 +30,10 @@ const useSwitchTabs = (rootRef, currentRef, switchTab) => {
 
 
       return () => {
-        observer.current.unobserve(current)
+        observer.current?.unobserve(current)
       }
     }, [switchTab])
 }
 
-useSwitchTabs.propTypes = useSwitchTabsPropTypes.isRequired
 
 export default useSwitchTabs

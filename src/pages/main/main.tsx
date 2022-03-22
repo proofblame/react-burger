@@ -3,8 +3,9 @@ import BurgerConstructor from '../../components/burger-constructor/burger-constr
 
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { DndProvider } from 'react-dnd'
+import { FC } from 'react'
 
-export const Main = () => {
+export const Main: FC = () => {
   return (
     <>
       <DndProvider backend={HTML5Backend}>

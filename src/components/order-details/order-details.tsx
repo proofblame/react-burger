@@ -1,9 +1,10 @@
 import styles from './order-details.module.css'
 import done from '../../images/done.png'
 import { useSelector } from 'react-redux';
+import { FC } from 'react';
 
-const OrderDetails = () => {
-  const { order } = useSelector(store => store.ingredients)
+const OrderDetails: FC = () => {
+  const { order } = useSelector((store: any) => store.ingredients)
 
   return (
     <div className={styles.order}>

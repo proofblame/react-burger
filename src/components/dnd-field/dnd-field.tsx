@@ -1,8 +1,8 @@
 
 import styles from './dnd-field.module.css'
-import { dndFieldPropTypes } from '../../utils/types'
+import { TDndField } from '../../utils/types'
 
-const DndField = ({ target, text, onHover }) => {
+const DndField = ({ target, text, onHover }: TDndField) => {
 
   const classes = `${styles.wrapper} ${styles.borderColor}`
 
@@ -17,6 +17,5 @@ const DndField = ({ target, text, onHover }) => {
   )
 }
 
-DndField.propTypes = dndFieldPropTypes.isRequired
 
 export default DndField

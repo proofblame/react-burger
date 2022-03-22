@@ -3,13 +3,13 @@ import ModalOverlay from './modal-overlay/modal-overlay'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useEffect } from 'react'
 import ReactDOM from 'react-dom';
-import { modalPropTypes } from '../../utils/types'
+import { TModal } from '../../utils/types'
 
-const modalRoot = document.getElementById("modals");
+const modalRoot = document.getElementById("modals") as HTMLElement;
 
-const Modal = ({ header, onClose, children }) => {
+const Modal = ({ header, onClose, children }: TModal) => {
   useEffect(() => {
-    const handleEscapePress = (e) => {
+    const handleEscapePress = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         onClose()
       }
@@ -40,7 +40,5 @@ const Modal = ({ header, onClose, children }) => {
     </ModalOverlay>
     , modalRoot)
 }
-
-Modal.propTypes = modalPropTypes.isRequired
 
 export default Modal

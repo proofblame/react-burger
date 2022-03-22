@@ -1,15 +1,16 @@
 import style from './profile.module.css'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { updateUser, logout } from '../../services/actions/auth'
 import { useDispatch, useSelector } from 'react-redux';
 import ModalOverlay from '../../components/modal/modal-overlay/modal-overlay';
 import { CircularProgress } from '@mui/material';
+import { FC } from 'react'
 
-export const Profile = () => {
+export const Profile: FC = () => {
   const dispatch = useDispatch()
-  const { userData, loader } = useSelector(store => store.auth)
+  const { userData, loader } = useSelector((store: any) => store.auth)
   const [data, setData] = useState({
     name: '',
     email: '',
@@ -17,7 +18,7 @@ export const Profile = () => {
   })
   const [buttonsState, setButtonsState] = useState(false)
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setButtonsState(true)
     const { name, value } = e.target
     setData({
@@ -25,7 +26,7 @@ export const Profile = () => {
       [name]: value
     })
   }
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
       dispatch(updateUser(data))
@@ -75,7 +76,7 @@ export const Profile = () => {
               <NavLink className={style.link} activeClassName={style.active} to="/profile/orders">История заказов</NavLink>
             </li>
             <li>
-              <button type="secondary" size="large" className={style.button} onClick={onLogout}>
+              <button className={style.button} onClick={onLogout}>
                 Выход
               </button>
             </li>

@@ -1,14 +1,12 @@
 import styles from './modal-overlay.module.css'
-import { modalOverlayPropTypes } from '../../../utils/types'
+import { TModalOverlay } from '../../../utils/types'
 
-const ModalOverlay = ({ children, onClose }) => {
+const ModalOverlay = ({ children, onClose }: TModalOverlay) => {
   return (
     <div className={styles.modal} onClick={onClose}>
       {children}
     </div>
   )
 }
-
-ModalOverlay.propTypes = modalOverlayPropTypes.isRequired
 
 export default ModalOverlay 

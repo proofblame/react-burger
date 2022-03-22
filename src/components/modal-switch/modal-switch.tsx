@@ -1,14 +1,16 @@
 
+import { FC } from 'react'
 import { useLocation, Switch, Route, useHistory } from 'react-router-dom'
 import { ForgotPassword, IngredientInfo, Login, Main, Profile, Register, ResetPassword } from '../../pages'
+import { TLocation } from '../../utils/types'
 import IngredientDetails from '../ingredient-details/ingredient-details'
 import Modal from '../modal/modal'
 import { ProtectedRoute } from '../protected-route/protected-route'
 
-const ModalSwitch = () => {
-  const location = useLocation()
+const ModalSwitch: FC = () => {
+  const location = useLocation<TLocation>()
   const history = useHistory()
-  let background = location.state && location.state.background
+  const background = location.state && location.state.background
 
   const handleCloseModal = () => {
     history.goBack()
