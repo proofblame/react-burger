@@ -73,4 +73,4 @@ export type TIngredientId = {
 export type TLocation = {
   from: Location;
   background?: Location;
-};
+}
