@@ -2,7 +2,7 @@ import style from './login.module.css'
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { Link, Redirect, useLocation } from 'react-router-dom'
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import { loginUser } from '../../services/actions/auth';
 import { useSelector } from 'react-redux';
 import ModalOverlay from '../../components/modal/modal-overlay/modal-overlay';

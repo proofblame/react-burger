@@ -12,11 +12,12 @@ import {
   enableLoader,
   disableLoader,
 } from '../reducers/ingredients'
+import { AppDispatch } from '../types';
 
 
 export const getIngredients = () => {
 
-  return async (dispatch) => {
+  return async (dispatch: AppDispatch) => {
     dispatch(getIngredientsRequest())
     try {
       const res = await api.getIngredients()
@@ -28,9 +29,9 @@ export const getIngredients = () => {
   };
 }
 
-export const sendOrder = (idList) => {
+export const sendOrder = (idList: Array<string>) => {
 
-  return async (dispatch) => {
+  return async (dispatch: AppDispatch) => {
     dispatch(enableLoader());
     dispatch(sendOrderRequest())
     try {

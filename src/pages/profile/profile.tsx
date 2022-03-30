@@ -3,7 +3,7 @@ import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { updateUser, logout } from '../../services/actions/auth'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import ModalOverlay from '../../components/modal/modal-overlay/modal-overlay';
 import { CircularProgress } from '@mui/material';
 import { FC } from 'react'

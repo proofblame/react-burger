@@ -2,7 +2,7 @@ import style from './forgot-password.module.css'
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { Link, Redirect, useLocation } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { forgotPassword } from '../../services/actions/auth';
 import ModalOverlay from '../../components/modal/modal-overlay/modal-overlay';
 import { CircularProgress } from '@mui/material';

@@ -1,6 +1,6 @@
 import styles from './constructor-list.module.css'
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../../services/hooks';
 import { useDrop } from "react-dnd";
 import { useMemo, FC } from 'react';
 import DndField from '../../dnd-field/dnd-field';

@@ -2,7 +2,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-ingredients.module.css';
 import IngredientsList from './ingredients-list/ingredients-list'
 import { useRef } from 'react'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { swithTab } from '../../services/reducers/ingredients';
 import useSwitchTabs from '../use-switch-tabs/use-switch-tabs';
 import { TIngredientDetails } from '../../utils/types';

@@ -1,6 +1,6 @@
 import styles from './burger-ingredient.module.css'
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from '../../../services/hooks'
 import { openIngredientModal } from '../../../services/reducers/ingredients'
 import { TBurgerIngredient, TIngredientDetails } from '../../../utils/types'
 import { useDrag } from "react-dnd";

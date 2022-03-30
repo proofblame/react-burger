@@ -1,23 +1,22 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { TIngredientState, TIngredient, TOrder } from '../types/ingredients'
 
-export const initialState = {
+export const initialState: TIngredientState = {
   ingredients: [],
   ingredientsRequest: false,
   ingredientsFailed: false,
 
   currentTab: 'buns',
 
-  ingredient: {},
+  ingredient: null,
   ingredientModal: false,
 
   cart: [],
 
-  order: {},
+  order: null,
   orderModal: false,
   orderRequest: false,
   orderFailed: false,
-
-  uuid: null,
 
   loader: false,
 };
@@ -31,7 +30,7 @@ const ingredientsSlice = createSlice({
       state.ingredientsRequest = true
       state.ingredientsFailed = false
     },
-    getIngredientsSuccess(state, action) {
+    getIngredientsSuccess(state, action: PayloadAction<Array<TIngredient>>) {
       state.ingredients = action.payload
       state.ingredientsRequest = false
     },
@@ -40,25 +39,25 @@ const ingredientsSlice = createSlice({
       state.ingredientsFailed = true
     },
     // Переключение Таба
-    swithTab(state, action) {
+    swithTab(state, action: PayloadAction<string>) {
       state.currentTab = action.payload
     },
     // Получение информации об ингредиенте
-    openIngredientModal(state, action) {
+    openIngredientModal(state, action: PayloadAction<TIngredient>) {
       state.ingredientModal = true
       state.ingredient = action.payload
     },
     closeIngredientModal(state) {
-      state.ingredient = {}
+      state.ingredient = null
       state.ingredientModal = false
     },
     // Удаление ингредиента из заказа
-    deleteIngredient(state, action) {
+    deleteIngredient(state, action: PayloadAction<string>) {
       const index = state.cart.findIndex(item => item.uid === action.payload)
       state.cart.splice(index, 1)
     },
     // Добавление ингредиента из заказа
-    addIngredient(state, action) {
+    addIngredient(state, action: PayloadAction<TIngredient>) {
       if (action.payload.type === 'bun') {
         const index = state.cart.findIndex(bun => bun.type === 'bun')
         index !== -1
@@ -88,7 +87,7 @@ const ingredientsSlice = createSlice({
       state.orderRequest = true
       state.orderFailed = false
     },
-    sendOrderSuccess(state, action) {
+    sendOrderSuccess(state, action: PayloadAction<TOrder>) {
       state.order = action.payload
       state.orderRequest = false
     },
@@ -102,10 +101,6 @@ const ingredientsSlice = createSlice({
     },
     closeOrderModal(state) {
       state.orderModal = false
-    },
-    // Геренация uuid
-    setUuid(state, action) {
-      state.uuid = action.payload
     },
     // Открытие/закрытие лоадера
     enableLoader(state) {
@@ -133,7 +128,6 @@ export const {
   sendOrderFailed,
   openOrderModal,
   closeOrderModal,
-  setUuid,
   clearCart,
   enableLoader,
   disableLoader,

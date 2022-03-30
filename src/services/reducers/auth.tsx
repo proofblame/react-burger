@@ -1,6 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { TAuthState, TUserData } from '../types/auth'
 
-export const initialState = {
+export const initialState: TAuthState = {
 
   userData: null,
 
@@ -40,7 +41,7 @@ const authSlice = createSlice({
       state.registerRequest = true
       state.registerFailed = false
     },
-    getRegisterSuccess(state, action) {
+    getRegisterSuccess(state, action: PayloadAction<TUserData>) {
       state.userData = action.payload
       state.registerRequest = false
     },
@@ -53,7 +54,7 @@ const authSlice = createSlice({
       state.loginRequest = true
       state.loginFailed = false
     },
-    getLoginSuccess(state, action) {
+    getLoginSuccess(state, action: PayloadAction<TUserData>) {
       state.userData = action.payload
       state.loginRequest = false
     },
@@ -66,7 +67,7 @@ const authSlice = createSlice({
       state.userRequest = true
       state.userFailed = false
     },
-    getUserSuccess(state, action) {
+    getUserSuccess(state, action: PayloadAction<TUserData>) {
       state.userData = action.payload
       state.userRequest = false
     },
@@ -79,7 +80,7 @@ const authSlice = createSlice({
       state.updateRequest = true
       state.updateFailed = false
     },
-    updateUserSuccess(state, action) {
+    updateUserSuccess(state, action: PayloadAction<TUserData>) {
       state.userData = action.payload
       state.updateRequest = false
     },
@@ -92,7 +93,7 @@ const authSlice = createSlice({
       state.forgotRequest = true
       state.forgotFailed = false
     },
-    forgotPasswordSuccess(state, action) {
+    forgotPasswordSuccess(state, action: PayloadAction<boolean>) {
       state.forgotSuccess = action.payload
       state.forgotRequest = false
     },
@@ -105,7 +106,7 @@ const authSlice = createSlice({
       state.forgotRequest = true
       state.forgotFailed = false
     },
-    resetPasswordSuccess(state, action) {
+    resetPasswordSuccess(state, action: PayloadAction<boolean>) {
       state.resetSuccess = action.payload
       state.forgotRequest = false
     },

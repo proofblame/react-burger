@@ -23,6 +23,8 @@ import {
   disableReset
 } from '../reducers/auth'
 import { setCookie, getCookie, deleteCookie } from '../../utils/helpers'
+import { TUserData } from '../types/auth'
+import { AppDispatch } from '../types'
 
 export const updateToken = async () => {
   const refreshToken = localStorage.getItem('refreshToken');
@@ -43,8 +45,8 @@ export const updateToken = async () => {
 
 }
 
-export const registerUser = ({ email, password, name }) => {
-  return async (dispatch) => {
+export const registerUser = ({ email, password, name }: TUserData & { password: string }) => {
+  return async (dispatch: AppDispatch) => {
     dispatch(enableLoader())
     dispatch(getRegisterRequest())
     try {
@@ -61,8 +63,8 @@ export const registerUser = ({ email, password, name }) => {
   }
 }
 
-export const loginUser = ({ email, password }) => {
-  return async (dispatch) => {
+export const loginUser = ({ email, password }: { email: string, password: string }) => {
+  return async (dispatch: AppDispatch) => {
     dispatch(enableLoader())
     dispatch(getLoginRequest())
     try {
@@ -80,7 +82,7 @@ export const loginUser = ({ email, password }) => {
 }
 
 export const getUser = () => {
-  return async (dispatch) => {
+  return async (dispatch: AppDispatch) => {
     dispatch(getUserRequest())
 
     const accessToken = getCookie('accessToken')
@@ -88,10 +90,11 @@ export const getUser = () => {
       try {
         const res = await api.getUser(accessToken)
         dispatch(getUserSuccess(res.user))
-      } catch (error) {
+      } catch (error: any) {
         if (error.message === 'jwt expired') {
           console.log(error, '123')
-          updateToken()
+          await updateToken()
+          // @ts-ignore
           dispatch(getUser())
         } else {
           dispatch(getUserFailed())
@@ -101,8 +104,8 @@ export const getUser = () => {
     }
   }
 }
-export const updateUser = ({ email, password, name }) => {
-  return async (dispatch) => {
+export const updateUser = ({ email, password, name }: TUserData & { password: string }) => {
+  return async (dispatch: AppDispatch) => {
     dispatch(enableLoader())
     dispatch(updateUserRequest())
 
@@ -111,9 +114,10 @@ export const updateUser = ({ email, password, name }) => {
       try {
         const res = await api.editUser(accessToken, email, password, name)
         dispatch(updateUserSuccess(res.user))
-      } catch (error) {
+      } catch (error: any) {
         if (error.message === 'jwt expired') {
           updateToken()
+          // @ts-ignore
           dispatch(updateUser())
         } else {
           dispatch(updateUserFailed())
@@ -125,8 +129,8 @@ export const updateUser = ({ email, password, name }) => {
     }
   }
 }
-export const forgotPassword = ({ email }) => {
-  return async (dispatch) => {
+export const forgotPassword = ({ email }: { email: string }) => {
+  return async (dispatch: AppDispatch) => {
     dispatch(enableLoader())
     dispatch(forgotPasswordRequest())
     try {
@@ -141,8 +145,8 @@ export const forgotPassword = ({ email }) => {
   }
 }
 
-export const resetPassword = ({ password, token }) => {
-  return async (dispatch) => {
+export const resetPassword = ({ password, token }: { password: string, token: string }) => {
+  return async (dispatch: AppDispatch) => {
     dispatch(enableLoader())
     dispatch(forgotPasswordRequest())
     try {
@@ -158,15 +162,15 @@ export const resetPassword = ({ password, token }) => {
   }
 }
 export const logout = () => {
-  return async (dispatch) => {
+  return async (dispatch: AppDispatch) => {
     dispatch(enableLoader())
     dispatch(logoutRequest())
 
     const refreshToken = localStorage.getItem('refreshToken');
     if (refreshToken) {
       try {
-        const res = await api.logout(refreshToken)
-        dispatch(logoutSuccess(res.message))
+        await api.logout(refreshToken)
+        dispatch(logoutSuccess())
         deleteCookie('accessToken');
         localStorage.removeItem('refreshToken');
       } catch (error) {
