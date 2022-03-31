@@ -10,7 +10,7 @@ import { FC } from 'react'
 
 export const Profile: FC = () => {
   const dispatch = useDispatch()
-  const { userData, loader } = useSelector((store: any) => store.auth)
+  const { userData, loader } = useSelector(store => store.auth)
   const [data, setData] = useState({
     name: '',
     email: '',
@@ -139,7 +139,8 @@ export const Profile: FC = () => {
                   Сохранить
                 </Button>
               </div>
-            </div>}
+            </div>
+          }
         </form>
       </section>
       {

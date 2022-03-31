@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { forgotPassword, getUser, loginUser, logout, registerUser, resetPassword, updateUser } from '../actions/auth'
 import { TAuthState, TUserData } from '../types/auth'
 
 export const initialState: TAuthState = {
@@ -35,135 +36,116 @@ export const initialState: TAuthState = {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {
-    // Регистрация
-    getRegisterRequest(state) {
-      state.registerRequest = true
-      state.registerFailed = false
-    },
-    getRegisterSuccess(state, action: PayloadAction<TUserData>) {
-      state.userData = action.payload
-      state.registerRequest = false
-    },
-    getRegisterFailed(state) {
-      state.registerRequest = false
-      state.registerFailed = true
-    },
-    // Авторизация
-    getLoginRequest(state) {
-      state.loginRequest = true
-      state.loginFailed = false
-    },
-    getLoginSuccess(state, action: PayloadAction<TUserData>) {
-      state.userData = action.payload
-      state.loginRequest = false
-    },
-    getLoginFailed(state) {
-      state.loginRequest = false
-      state.loginFailed = true
-    },
-    // Получение пользователя
-    getUserRequest(state) {
-      state.userRequest = true
-      state.userFailed = false
-    },
-    getUserSuccess(state, action: PayloadAction<TUserData>) {
-      state.userData = action.payload
-      state.userRequest = false
-    },
-    getUserFailed(state) {
-      state.userRequest = false
-      state.userFailed = true
-    },
-    // Редактирование пользователя
-    updateUserRequest(state) {
-      state.updateRequest = true
-      state.updateFailed = false
-    },
-    updateUserSuccess(state, action: PayloadAction<TUserData>) {
-      state.userData = action.payload
-      state.updateRequest = false
-    },
-    updateUserFailed(state) {
-      state.updateRequest = false
-      state.updateFailed = true
-    },
-    // Восстановление пароля
-    forgotPasswordRequest(state) {
-      state.forgotRequest = true
-      state.forgotFailed = false
-    },
-    forgotPasswordSuccess(state, action: PayloadAction<boolean>) {
-      state.forgotSuccess = action.payload
-      state.forgotRequest = false
-    },
-    forgotPasswordFailed(state) {
-      state.forgotRequest = false
-      state.forgotFailed = true
-    },
-    // Сброс пароля
-    resetPasswordRequest(state) {
-      state.forgotRequest = true
-      state.forgotFailed = false
-    },
-    resetPasswordSuccess(state, action: PayloadAction<boolean>) {
-      state.resetSuccess = action.payload
-      state.forgotRequest = false
-    },
-    resetPasswordFailed(state) {
-      state.forgotRequest = false
-      state.forgotFailed = true
-    },
-    // Выход пароля
-    logoutRequest(state) {
-      state.logoutRequest = true
-      state.logoutFailed = false
-    },
-    logoutSuccess(state) {
-      state.userData = null
-      state.logoutRequest = false
-    },
-    logoutFailed(state) {
-      state.logoutRequest = false
-      state.logoutFailed = true
-    },
-    // Открытие/закрытие лоадера
-    enableLoader(state) {
-      state.loader = true
-    },
-    disableLoader(state) {
-      state.loader = false
-    },
-    // Переадресация с reset-password
-    disableReset(state) {
-      state.forgotSuccess = false
-    },
-  }
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(getUser.pending, (state) => {
+        state.userRequest = true
+        state.userFailed = false
+        state.loader = true
+      })
+      .addCase(getUser.fulfilled, (state, action: PayloadAction<TUserData>) => {
+        state.userData = action.payload
+        state.userRequest = false
+        state.loader = false
+      })
+      .addCase(getUser.rejected, (state) => {
+        state.userRequest = false
+        state.userFailed = true
+        state.loader = false
+      })
+      .addCase(logout.pending, (state) => {
+        state.logoutRequest = true
+        state.logoutFailed = false
+        state.loader = true
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.userData = null
+        state.logoutRequest = false
+        state.loader = false
+      })
+      .addCase(logout.rejected, (state) => {
+        state.logoutRequest = false
+        state.logoutFailed = true
+        state.loader = false
+      })
+      .addCase(loginUser.pending, (state) => {
+        state.loginRequest = true
+        state.loginFailed = false
+        state.loader = true
+      })
+      .addCase(loginUser.fulfilled, (state, action: PayloadAction<TUserData>) => {
+        state.userData = action.payload
+        state.loginRequest = false
+        state.loader = false
+      })
+      .addCase(loginUser.rejected, (state) => {
+        state.loginRequest = false
+        state.loginFailed = true
+        state.loader = false
+      })
+      .addCase(registerUser.pending, (state) => {
+        state.registerRequest = true
+        state.registerFailed = false
+        state.loader = true
+      })
+      .addCase(registerUser.fulfilled, (state, action: PayloadAction<TUserData>) => {
+        state.userData = action.payload
+        state.registerRequest = false
+        state.loader = false
+      })
+      .addCase(registerUser.rejected, (state) => {
+        state.registerRequest = false
+        state.registerFailed = true
+        state.loader = false
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.updateRequest = true
+        state.updateFailed = false
+        state.loader = true
+      })
+      .addCase(updateUser.fulfilled, (state, action: PayloadAction<TUserData>) => {
+        state.userData = action.payload
+        state.updateRequest = false
+        state.loader = false
+      })
+      .addCase(updateUser.rejected, (state) => {
+        state.updateRequest = false
+        state.updateFailed = true
+        state.loader = false
+      })
+      .addCase(forgotPassword.pending, (state) => {
+        state.forgotRequest = true
+        state.forgotFailed = false
+        state.loader = true
+      })
+      .addCase(forgotPassword.fulfilled, (state, action: PayloadAction<boolean>) => {
+        state.forgotSuccess = action.payload
+        state.forgotRequest = false
+        state.loader = false
+      })
+      .addCase(forgotPassword.rejected, (state) => {
+        state.forgotRequest = false
+        state.forgotFailed = true
+        state.loader = false
+      })
+      .addCase(resetPassword.pending, (state) => {
+        state.forgotRequest = true
+        state.forgotFailed = false
+      })
+      .addCase(resetPassword.fulfilled, (state, action: PayloadAction<boolean>) => {
+        state.resetSuccess = action.payload
+        state.forgotRequest = false
+        state.forgotSuccess = false
+      })
+      .addCase(resetPassword.rejected, (state) => {
+        state.forgotRequest = false
+        state.forgotFailed = true
+        state.forgotSuccess = false
+      })
+  },
 })
-const { actions, reducer } = authSlice;
 
-export const {
-  getRegisterRequest,
-  getRegisterSuccess,
-  getRegisterFailed,
-  getLoginRequest,
-  getLoginSuccess,
-  getLoginFailed,
-  getUserRequest,
-  getUserSuccess,
-  getUserFailed,
-  updateUserRequest,
-  updateUserSuccess,
-  updateUserFailed,
-  forgotPasswordRequest,
-  forgotPasswordSuccess,
-  forgotPasswordFailed,
-  logoutRequest,
-  logoutSuccess,
-  logoutFailed,
-  enableLoader,
-  disableLoader,
-  disableReset
-} = actions;
+const { reducer } = authSlice
 
-export default reducer;
+export default reducer

@@ -1,30 +1,7 @@
 import api from '../../utils/api'
-import {
-  getRegisterRequest,
-  getRegisterSuccess,
-  getRegisterFailed,
-  getLoginRequest,
-  getLoginSuccess,
-  getLoginFailed,
-  getUserRequest,
-  getUserSuccess,
-  getUserFailed,
-  updateUserRequest,
-  updateUserSuccess,
-  updateUserFailed,
-  forgotPasswordRequest,
-  forgotPasswordSuccess,
-  forgotPasswordFailed,
-  logoutRequest,
-  logoutSuccess,
-  logoutFailed,
-  enableLoader,
-  disableLoader,
-  disableReset
-} from '../reducers/auth'
 import { setCookie, getCookie, deleteCookie } from '../../utils/helpers'
 import { TUserData } from '../types/auth'
-import { AppDispatch } from '../types'
+import { createAsyncThunk } from '@reduxjs/toolkit'
 
 export const updateToken = async () => {
   const refreshToken = localStorage.getItem('refreshToken');
@@ -40,150 +17,115 @@ export const updateToken = async () => {
     } catch (error) {
       console.error(error)
     }
-
-  }
-
-}
-
-export const registerUser = ({ email, password, name }: TUserData & { password: string }) => {
-  return async (dispatch: AppDispatch) => {
-    dispatch(enableLoader())
-    dispatch(getRegisterRequest())
-    try {
-      const res = await api.register(email, password, name)
-      dispatch(getRegisterSuccess(res.user))
-      setCookie('accessToken', res.accessToken)
-      localStorage.setItem('refreshToken', res.refreshToken);
-    } catch (error) {
-      dispatch(getRegisterFailed())
-      console.error(error)
-    } finally {
-      dispatch(disableLoader())
-    }
   }
 }
 
-export const loginUser = ({ email, password }: { email: string, password: string }) => {
-  return async (dispatch: AppDispatch) => {
-    dispatch(enableLoader())
-    dispatch(getLoginRequest())
-    try {
-      const res = await api.login(email, password)
-      dispatch(getLoginSuccess(res.user))
-      setCookie('accessToken', res.accessToken)
-      localStorage.setItem('refreshToken', res.refreshToken);
-    } catch (error) {
-      dispatch(getLoginFailed())
-      console.error(error)
-    } finally {
-      dispatch(disableLoader())
-    }
-  }
-}
-
-export const getUser = () => {
-  return async (dispatch: AppDispatch) => {
-    dispatch(getUserRequest())
-
+export const getUser = createAsyncThunk(
+  'getUser',
+  async () => {
     const accessToken = getCookie('accessToken')
     if (accessToken) {
       try {
         const res = await api.getUser(accessToken)
-        dispatch(getUserSuccess(res.user))
+        return res.user
       } catch (error: any) {
         if (error.message === 'jwt expired') {
-          console.log(error, '123')
           await updateToken()
-          // @ts-ignore
-          dispatch(getUser())
+          getUser()
         } else {
-          dispatch(getUserFailed())
-          console.error(error)
+          throw new Error(error.message)
         }
       }
     }
   }
-}
-export const updateUser = ({ email, password, name }: TUserData & { password: string }) => {
-  return async (dispatch: AppDispatch) => {
-    dispatch(enableLoader())
-    dispatch(updateUserRequest())
+)
 
-    const accessToken = getCookie('accessToken')
-    if (accessToken) {
-      try {
-        const res = await api.editUser(accessToken, email, password, name)
-        dispatch(updateUserSuccess(res.user))
-      } catch (error: any) {
-        if (error.message === 'jwt expired') {
-          updateToken()
-          // @ts-ignore
-          dispatch(updateUser())
-        } else {
-          dispatch(updateUserFailed())
-          console.error(error)
-        }
-      } finally {
-        dispatch(disableLoader())
-      }
-    }
-  }
-}
-export const forgotPassword = ({ email }: { email: string }) => {
-  return async (dispatch: AppDispatch) => {
-    dispatch(enableLoader())
-    dispatch(forgotPasswordRequest())
-    try {
-      const res = await api.forgotPassword(email)
-      dispatch(forgotPasswordSuccess(res.message))
-    } catch (error) {
-      dispatch(forgotPasswordFailed())
-      console.error(error)
-    } finally {
-      dispatch(disableLoader())
-    }
-  }
-}
-
-export const resetPassword = ({ password, token }: { password: string, token: string }) => {
-  return async (dispatch: AppDispatch) => {
-    dispatch(enableLoader())
-    dispatch(forgotPasswordRequest())
-    try {
-      const res = await api.resetPassword(password, token)
-      dispatch(forgotPasswordSuccess(res.message))
-    } catch (error) {
-      dispatch(forgotPasswordFailed())
-      console.error(error)
-    } finally {
-      dispatch(disableLoader())
-      dispatch(disableReset())
-    }
-  }
-}
-export const logout = () => {
-  return async (dispatch: AppDispatch) => {
-    dispatch(enableLoader())
-    dispatch(logoutRequest())
-
+export const logout = createAsyncThunk(
+  'logout',
+  async () => {
     const refreshToken = localStorage.getItem('refreshToken');
     if (refreshToken) {
       try {
         await api.logout(refreshToken)
-        dispatch(logoutSuccess())
         deleteCookie('accessToken');
         localStorage.removeItem('refreshToken');
-      } catch (error) {
-        dispatch(logoutFailed())
-        console.error(error)
-      } finally {
-        dispatch(disableLoader())
+      } catch (error: any) {
+        throw new Error(error.message)
       }
     } else {
-      console.error('Error logout')
+      throw new Error('Error logout')
     }
   }
-}
+)
 
+export const loginUser = createAsyncThunk(
+  'loginUser',
+  async ({ email, password }: { email: string, password: string }) => {
+    try {
+      const res = await api.login(email, password)
+      setCookie('accessToken', res.accessToken)
+      localStorage.setItem('refreshToken', res.refreshToken)
+      return res.user
+    } catch (error: any) {
+      throw new Error(error.message)
+    }
+  }
+)
 
+export const registerUser = createAsyncThunk(
+  'registerUser',
+  async ({ email, password, name }: TUserData & { password: string }) => {
+    try {
+      const res = await api.register(email, password, name)
+      setCookie('accessToken', res.accessToken)
+      localStorage.setItem('refreshToken', res.refreshToken)
+      return res.user
+    } catch (error: any) {
+      throw new Error(error.message)
+    }
+  }
+)
 
+export const updateUser = createAsyncThunk(
+  'updateUser',
+  async ({ email, password, name }: TUserData & { password: string }) => {
+    const accessToken = getCookie('accessToken')
+    if (accessToken) {
+      try {
+        const res = await api.editUser(accessToken, email, password, name)
+        return res.user
+      } catch (error: any) {
+        if (error.message === 'jwt expired') {
+          await updateToken()
+          updateUser({ email, password, name })
+        } else {
+          throw new Error(error.message)
+        }
+      }
+    }
+  }
+)
+
+export const forgotPassword = createAsyncThunk(
+  'forgotPassword',
+  async ({ email }: { email: string }) => {
+    try {
+      const res = await api.forgotPassword(email)
+      return res
+    } catch (error: any) {
+      throw new Error(error.message)
+    }
+  }
+)
+
+export const resetPassword = createAsyncThunk(
+  'resetPassword',
+  async ({ password, token }: { password: string, token: string }) => {
+    try {
+      const res = await api.resetPassword(password, token)
+      return res
+    } catch (error: any) {
+      throw new Error(error.message)
+    }
+  }
+)
