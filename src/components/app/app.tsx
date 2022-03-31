@@ -10,6 +10,7 @@ import ModalSwitch from '../modal-switch/modal-switch'
 const App: FC = () => {
   const dispatch = useDispatch()
 
+
   useEffect(
     () => {
       dispatch(getUser())

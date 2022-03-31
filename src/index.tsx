@@ -1,14 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { store } from './services/store';
+import { setupStore } from './services/store';
 import { Provider } from 'react-redux';
 import './index.css';
 import App from './components/app/app';
 
-
-
-
-
+const store = setupStore();
 
 ReactDOM.render(
   <React.StrictMode>
