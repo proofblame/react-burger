@@ -39,7 +39,7 @@ const ModalSwitch: FC = () => {
         <Route path='/ingredients/:id'>
           <IngredientInfo />
         </Route>
-        <Route path='/orders'>
+        <Route path='/feed'>
           <FeedPage />
         </Route>
         <ProtectedRoute path='/profile'>
@@ -57,7 +57,15 @@ const ModalSwitch: FC = () => {
       {
         background &&
         <Route path='/profile/orders/:id'>
-          <Modal onClose={handleCloseModal} header="Детали ингредиента">
+          <Modal onClose={handleCloseModal}>
+            <OrderInfo />
+          </Modal>
+        </Route>
+      }
+      {
+        background &&
+        <Route path='/feed/:id'>
+          <Modal onClose={handleCloseModal}>
             <OrderInfo />
           </Modal>
         </Route>

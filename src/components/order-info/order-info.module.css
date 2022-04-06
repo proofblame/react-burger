@@ -4,7 +4,7 @@
   flex-direction: column;
   width: 100%;
   max-width: 640px;
-  overflow: hidden;
+  height: 100%;
 }
 
 
@@ -12,7 +12,8 @@
 .wrapper {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  /* align-items: center; */
+  height: 100%;
 }
 
 .number {
@@ -53,8 +54,8 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  height: 100%;
   overflow-y: auto;
+  height: 100%;
 }
 
 .list::-webkit-scrollbar {
@@ -103,7 +104,6 @@
 .price {
   composes: text text_type_digits-default from global;
   display: flex;
-  align-items: center;
 }
 
 

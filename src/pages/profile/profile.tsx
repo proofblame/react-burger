@@ -39,16 +39,12 @@ export const ProfilePage: FC = () => {
             изменить свои персональные данные
           </p>
         </nav>
-        <Switch>
-          <Route exact path={path}>
-            <UserProfile />
-          </Route>
-          <Route path={`${path}/orders`}>
-            <div className={style.feedList}>
-              <FeedList />
-            </div>
-          </Route>
-        </Switch>
+        <Route exact path={path}>
+          <UserProfile />
+        </Route>
+        <Route path={`${path}/orders`}>
+          <FeedList />
+        </Route>
 
       </section>
 

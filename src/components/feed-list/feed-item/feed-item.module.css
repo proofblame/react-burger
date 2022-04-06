@@ -12,6 +12,15 @@
   cursor: pointer;
 }
 
+.link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.link:hover {
+  opacity: .8;
+}
+
 .section div {
   margin-bottom: 24px;
 }

@@ -10,7 +10,7 @@ const AppHeader: FC = () => {
         <HeaderButton text='Конструктор' path='/'>
           <BurgerIcon type="secondary" />
         </HeaderButton>
-        <HeaderButton text='Лента заказов' path='/orders'>
+        <HeaderButton text='Лента заказов' path='/feed'>
           <ListIcon type="secondary" />
         </HeaderButton>
       </nav>
