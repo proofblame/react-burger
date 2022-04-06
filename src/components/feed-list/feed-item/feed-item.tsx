@@ -10,7 +10,7 @@ const FeedItem = ({ status }: { status?: boolean }) => {
       </div>
       <div>
         <h3 className={style.title}>Death Star Starship Main бургер</h3>
-        {status && <p className={style.status}>Готовится</p>}
+        {status === true && <p className={style.status}>Готовится</p>}
       </div>
       <div className={style.wrapper}>
         <ul className={style.list}>

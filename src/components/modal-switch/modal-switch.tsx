@@ -1,14 +1,13 @@
 
 import { FC } from 'react'
 import { useLocation, Switch, Route, useHistory } from 'react-router-dom'
-import { ForgotPassword, IngredientInfo, Login, Main, Profile, Register, ResetPassword } from '../../pages'
+import { ForgotPassword, IngredientInfo, Login, Main, ProfilePage, Register, ResetPassword } from '../../pages'
 import { TLocation } from '../../utils/types'
 import IngredientDetails from '../ingredient-details/ingredient-details'
 import Modal from '../modal/modal'
 import { ProtectedRoute } from '../protected-route/protected-route'
-import FeedList from '../feed-list/feed-list'
+import OrderInfo from '../order-info/order-info'
 import FeedPage from '../../pages/feed/feed'
-import FeedTable from '../feed-table/feed-table'
 
 const ModalSwitch: FC = () => {
   const location = useLocation<TLocation>()
@@ -44,7 +43,7 @@ const ModalSwitch: FC = () => {
           <FeedPage />
         </Route>
         <ProtectedRoute path='/profile'>
-          <Profile />
+          <ProfilePage />
         </ProtectedRoute>
       </Switch>
       {
@@ -52,6 +51,14 @@ const ModalSwitch: FC = () => {
         <Route path='/ingredients/:id'>
           <Modal onClose={handleCloseModal} header="Детали ингредиента">
             <IngredientDetails />
+          </Modal>
+        </Route>
+      }
+      {
+        background &&
+        <Route path='/profile/orders/:id'>
+          <Modal onClose={handleCloseModal} header="Детали ингредиента">
+            <OrderInfo />
           </Modal>
         </Route>
       }

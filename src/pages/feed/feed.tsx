@@ -9,7 +9,7 @@ const FeedPage: FC = () => {
 
       <h2 className={style.title}>Лента заказов</h2>
       <div className={style.wrapper}>
-        <FeedList />
+        <FeedList status={false} />
         <FeedTable />
       </div>
     </section>

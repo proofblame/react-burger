@@ -3,3 +3,7 @@
 * {
   /* outline: 1px solid red; */
 }
+
+.input_size_default {
+  width: 480px !important;
+}

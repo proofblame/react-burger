@@ -9,6 +9,7 @@
   max-width: 850px;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 }
 
 .section div {
@@ -31,11 +32,10 @@
 
 .title {
   composes: mb-2 text text_type_main-medium from global;
-  font-size: 30px;
 }
 
 .status {
-  composes: text text_type_main-medium from global;
+  composes: text text_type_main-default from global;
 }
 
 .list {
@@ -44,7 +44,7 @@
   padding: 0;
   display: flex;
   flex-direction: row-reverse;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
 }
 
