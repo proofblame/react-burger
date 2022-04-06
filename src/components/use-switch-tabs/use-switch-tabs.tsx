@@ -10,7 +10,7 @@ const useSwitchTabs = (rootRef: RefObject<HTMLDivElement>, currentRef: RefObject
       const options = {
         root: rootRef.current,
         rootMargin: '0px',
-        threshold: [0, 1.0]
+        threshold: [0, 1]
       }
 
       const callbackFunctions = (entries: any) => {

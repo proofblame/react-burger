@@ -1,50 +1,41 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../utils/api'
-import {
-  getIngredientsRequest,
-  getIngredientsSuccess,
-  getIngredientsFailed,
-  sendOrderRequest,
-  sendOrderSuccess,
-  sendOrderFailed,
-  openOrderModal,
-  closeOrderModal,
-  clearCart,
-  enableLoader,
-  disableLoader,
-} from '../reducers/ingredients'
-import { AppDispatch } from '../types';
+// import {
+//   getIngredientsRequest,
+//   getIngredientsSuccess,
+//   getIngredientsFailed,
+//   sendOrderRequest,
+//   sendOrderSuccess,
+//   sendOrderFailed,
+//   openOrderModal,
+//   closeOrderModal,
+//   clearCart,
+//   enableLoader,
+//   disableLoader,
+// } from '../reducers/ingredients'
+// import { AppDispatch } from '../types';
 
 
-export const getIngredients = () => {
-
-  return async (dispatch: AppDispatch) => {
-    dispatch(getIngredientsRequest())
+export const getIngredients = createAsyncThunk(
+  'getIngredients',
+  async () => {
     try {
       const res = await api.getIngredients()
-      dispatch(getIngredientsSuccess(res.data));
-    } catch (error) {
-      dispatch(getIngredientsFailed());
-      console.error(error)
+      return res.data
+    } catch (error: any) {
+      throw new Error(error.message)
     }
-  };
-}
+  }
+)
 
-export const sendOrder = (idList: Array<string>) => {
-
-  return async (dispatch: AppDispatch) => {
-    dispatch(enableLoader());
-    dispatch(sendOrderRequest())
+export const sendOrder = createAsyncThunk(
+  'sendOrder',
+  async (idList: Array<string>) => {
     try {
       const res = await api.sendIngredients(idList)
-      dispatch(sendOrderSuccess(res.order));
-      dispatch(openOrderModal());
-      dispatch(clearCart());
-    } catch (error) {
-      dispatch(sendOrderFailed());
-      dispatch(closeOrderModal());
-      console.error(error)
-    } finally {
-      dispatch(disableLoader());
+      return res.order
+    } catch (error: any) {
+      throw new Error(error.message)
     }
-  };
-}
+  }
+)
