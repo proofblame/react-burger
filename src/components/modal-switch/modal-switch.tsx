@@ -6,7 +6,9 @@ import { TLocation } from '../../utils/types'
 import IngredientDetails from '../ingredient-details/ingredient-details'
 import Modal from '../modal/modal'
 import { ProtectedRoute } from '../protected-route/protected-route'
-import FeedItem from '../feed-list/feed-item/feed-item'
+import FeedList from '../feed-list/feed-list'
+import FeedPage from '../../pages/feed/feed'
+import FeedTable from '../feed-table/feed-table'
 
 const ModalSwitch: FC = () => {
   const location = useLocation<TLocation>()
@@ -39,7 +41,7 @@ const ModalSwitch: FC = () => {
           <IngredientInfo />
         </Route>
         <Route path='/orders'>
-          <FeedItem />
+          <FeedPage />
         </Route>
         <ProtectedRoute path='/profile'>
           <Profile />
