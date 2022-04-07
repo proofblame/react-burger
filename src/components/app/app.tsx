@@ -6,6 +6,7 @@ import { getIngredients } from '../../services/actions/ingredients';
 import { getUser } from '../../services/actions/auth';
 import { BrowserRouter as Router } from 'react-router-dom'
 import ModalSwitch from '../modal-switch/modal-switch'
+import { wsConnectionStart } from '../../services/actions/feed';
 
 const App: FC = () => {
   const dispatch = useDispatch()
@@ -15,6 +16,7 @@ const App: FC = () => {
     () => {
       dispatch(getUser())
       dispatch(getIngredients())
+      dispatch(wsConnectionStart(`wss://norma.nomoreparties.space/orders/all`))
     },
     [dispatch]
   )

@@ -17,6 +17,6 @@ export type TFeed = {
 }
 
 export type TFeedState = {
-  feed: TFeed | null,
+  feed: null | TFeed,
   wsConnected: boolean,
 }

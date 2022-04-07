@@ -19,11 +19,8 @@ const feedSlice = createSlice({
     wsConnectionClosed(state) {
       state.wsConnected = false
     },
-    wsGetMessage(state, action: PayloadAction<TFeed>) {
-      return {
-        ...state,
-        feed: action.payload
-      }
+    wsGetMessage(state: TFeedState, action: PayloadAction<TFeed>) {
+      state.feed = action.payload
     }
   },
 })

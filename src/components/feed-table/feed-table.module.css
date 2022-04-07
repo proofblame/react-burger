@@ -32,6 +32,7 @@ ul li:last-child {
 
 .listReady {
   composes: text text_type_digits-default from global;
+  color: #00CCCC;
 }
 
 .listOrder {

@@ -1,16 +1,16 @@
 
-import { useSelector } from '../../services/hooks'
+import { TOrder } from '../../services/types/feed'
 import FeedItem from './feed-item/feed-item'
 import style from './feed-list.module.css'
 
-const FeedList = ({ status }: { status?: boolean }) => {
-  const { feed } = useSelector(store => store.feed)
+const FeedList = ({ status, orders }: { status?: boolean, orders: Array<TOrder> }) => {
+
   return (
-    feed &&
+    orders &&
     <section className={style.section}>
       <ul className={style.list}>
         {
-          feed?.orders.map((order) => (
+          orders.map((order) => (
             <FeedItem order={order} key={order.number} status={status} />
           ))
         }

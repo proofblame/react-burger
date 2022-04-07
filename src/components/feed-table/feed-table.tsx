@@ -1,36 +1,45 @@
 import { FC } from 'react'
+import { useSelector } from '../../services/hooks'
 import style from './feed-table.module.css'
 
 const FeedTable: FC = () => {
+  const { feed } = useSelector(store => store.feed)
   return (
+    feed &&
     <section className={style.section}>
       <div className={style.orderWrapper}>
         <div className={style.readyBlock}>
           <h3 className={style.title}>Готовы:</h3>
           <ul className={style.listReady}>
-            <li>034533</li>
-            <li>034533</li>
-            <li>034533</li>
-            <li>034533</li>
-            <li>034533</li>
+            {
+              feed.orders
+                .filter(order => order.status === 'done')
+                .map((order, index) => (
+                  index <= 5 && <li key={order.number}>{order.number}</li>
+                ))
+            }
           </ul>
         </div>
         <div>
           <h3 className={style.title}>В работе:</h3>
           <ul className={style.listOrder}>
-            <li>034538</li>
-            <li>034538</li>
-            <li>034538</li>
+            {
+              feed.orders
+                .filter(order => order.status === 'pending')
+                .map((order, index) => (
+                  index <= 5 && <li key={order.number}>{order.number}</li>
+                ))
+            }
           </ul>
         </div>
       </div>
       <div className={style.wrapper}>
         <h3 className={style.title}>Выполнено за все время:</h3>
-        <p className={style.price}>28 752</p>
+        <p className={style.price}>{feed.total}</p>
       </div>
       <div className={style.wrapper}>
         <h3 className={style.title}>Выполнено за сегодня:</h3>
-        <p className={style.price}>138</p>
+        <p className={style.price}>{feed.totalToday}</p>
       </div>
     </section>
   )
