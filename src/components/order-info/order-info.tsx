@@ -54,7 +54,7 @@ const OrderInfo = () => {
   );
 
   console.log(order)
-  console.log(orderIngredients)
+  console.log(id)
 
   return (
     feed &&

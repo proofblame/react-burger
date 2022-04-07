@@ -1,5 +1,5 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { Link, useLocation, useRouteMatch } from 'react-router-dom'
+import { Link, useHistory, useLocation, useRouteMatch } from 'react-router-dom'
 import { TOrder } from '../../../services/types/feed';
 import style from './feed-item.module.css'
 import dayjs from 'dayjs'
@@ -40,12 +40,11 @@ const FeedItem = ({ status, order }: { status?: boolean, order: TOrder }) => {
     },
     [orderIngredients]
   );
-  console.log(path)
-  console.log(order)
+
   return (
     order &&
     <li className={style.section}>
-      <Link key={location.key} className={style.link} to={{ pathname: `${path}/${order._id}`, state: { background: location } }}>
+      <Link key={order._id} className={style.link} to={{ pathname: `${location.pathname}/${order._id}`, state: { background: location } }}>
         <div className={style.wrapper}>
           <span className={style.number}>#{order.number}</span>
           <span className={style.date}>{dayjs(order.createdAt).format("HH:mm DD MMM YY")}</span>

@@ -11,9 +11,9 @@ import FeedPage from '../../pages/feed/feed'
 import OrderInfoPage from '../../pages/order-info-page/order-info-page'
 
 const ModalSwitch: FC = () => {
-  const location = useLocation<TLocation>()
+  const location = useLocation()
   const history = useHistory()
-  const background = location.state && location.state.background
+  const background = location.state && (location.state as any).background
 
   const handleCloseModal = () => {
     history.goBack()
@@ -40,7 +40,7 @@ const ModalSwitch: FC = () => {
         <Route path='/ingredients/:id'>
           <IngredientInfo />
         </Route>
-        <Route path='/feed'>
+        <Route exact path='/feed'>
           <FeedPage />
         </Route>
         <Route path='/feed/:id'>
@@ -52,23 +52,18 @@ const ModalSwitch: FC = () => {
       </Switch>
       {
         background &&
-        <Switch>
+        <>
           <Route path='/ingredients/:id'>
             <Modal onClose={handleCloseModal} header="Детали ингредиента">
               <IngredientDetails />
             </Modal>
           </Route>
-          <Route path='/profile/orders/:id'>
+          <Route path={['/feed/:id', '/profile/orders/:id']}>
             <Modal onClose={handleCloseModal}>
               <OrderInfo />
             </Modal>
           </Route>
-          <Route path='/feed/:id'>
-            <Modal onClose={handleCloseModal}>
-              <OrderInfo />
-            </Modal>
-          </Route>
-        </Switch>
+        </>
       }
     </>
   )
