@@ -30,4 +30,11 @@ export function getCookie(name: string) {
 
 export function deleteCookie(name: string) {
   setCookie(name, '', { expires: -1 });
-} 
+}
+
+export const OrderStatusTranslate = new Map<string | undefined, string>([
+  ["done", "Выполнен"],
+  ["pending", "В процессе"],
+  ["created", "Создан"],
+]
+);

@@ -8,6 +8,7 @@ import Modal from '../modal/modal'
 import { ProtectedRoute } from '../protected-route/protected-route'
 import OrderInfo from '../order-info/order-info'
 import FeedPage from '../../pages/feed/feed'
+import OrderInfoPage from '../../pages/order-info-page/order-info-page'
 
 const ModalSwitch: FC = () => {
   const location = useLocation<TLocation>()
@@ -42,33 +43,32 @@ const ModalSwitch: FC = () => {
         <Route path='/feed'>
           <FeedPage />
         </Route>
+        <Route path='/feed/:id'>
+          <OrderInfoPage />
+        </Route>
         <ProtectedRoute path='/profile'>
           <ProfilePage />
         </ProtectedRoute>
       </Switch>
       {
         background &&
-        <Route path='/ingredients/:id'>
-          <Modal onClose={handleCloseModal} header="Детали ингредиента">
-            <IngredientDetails />
-          </Modal>
-        </Route>
-      }
-      {
-        background &&
-        <Route path='/profile/orders/:id'>
-          <Modal onClose={handleCloseModal}>
-            <OrderInfo />
-          </Modal>
-        </Route>
-      }
-      {
-        background &&
-        <Route path='/feed/:id'>
-          <Modal onClose={handleCloseModal}>
-            <OrderInfo />
-          </Modal>
-        </Route>
+        <Switch>
+          <Route path='/ingredients/:id'>
+            <Modal onClose={handleCloseModal} header="Детали ингредиента">
+              <IngredientDetails />
+            </Modal>
+          </Route>
+          <Route path='/profile/orders/:id'>
+            <Modal onClose={handleCloseModal}>
+              <OrderInfo />
+            </Modal>
+          </Route>
+          <Route path='/feed/:id'>
+            <Modal onClose={handleCloseModal}>
+              <OrderInfo />
+            </Modal>
+          </Route>
+        </Switch>
       }
     </>
   )

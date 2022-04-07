@@ -2,7 +2,7 @@ export type TOrder = {
   number: number,
   ingredients?: ReadonlyArray<string>,
   _id?: string,
-  status?: string,
+  status?: string | undefined,
   createdAt?: Date,
   updatedAt?: Date,
   name?: string,

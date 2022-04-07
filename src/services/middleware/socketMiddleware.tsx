@@ -29,7 +29,6 @@ export const socketMiddleware = (wsActions: any): Middleware => {
         socket.onmessage = event => {
           const { data } = event;
           dispatch(onMessage(JSON.parse(data)));
-          console.log(`Получены данные: ${event.data}`)
         };
 
         // функция, которая вызывается при закрытии соединения

@@ -14,6 +14,10 @@ export type TIngredient = {
   uid?: string | undefined
 }
 
+export type TSelectedIngredient = TIngredient & {
+  key: string,
+}
+
 export type TOrder = {
   number: number
 }
