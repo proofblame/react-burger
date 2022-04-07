@@ -1,11 +1,26 @@
-import React, { FC } from 'react'
-import { Route, useRouteMatch } from 'react-router-dom'
+import React, { FC, useEffect } from 'react'
 import FeedList from '../../components/feed-list/feed-list'
 import FeedTable from '../../components/feed-table/feed-table'
+import { wsConnectionClose, wsConnectionStart } from '../../services/actions/feed'
+
+import { useDispatch } from '../../services/hooks'
+
 import style from './feed.module.css'
 
+
 const FeedPage: FC = () => {
-  const { path } = useRouteMatch();
+  const dispatch = useDispatch()
+
+  useEffect(
+    () => {
+      dispatch(wsConnectionStart(`wss://norma.nomoreparties.space/orders/all`))
+
+      return () => {
+        // dispatch(wsConnectionClose())
+      }
+    }, [dispatch]
+  )
+
 
   return (
     <section className={style.section}>

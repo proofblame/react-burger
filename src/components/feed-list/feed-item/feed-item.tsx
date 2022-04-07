@@ -1,20 +1,22 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link, useLocation, useRouteMatch } from 'react-router-dom'
+import { TOrder } from '../../../services/types/feed';
 import style from './feed-item.module.css'
 
-const FeedItem = ({ status }: { status?: boolean }) => {
+const FeedItem = ({ status, order }: { status?: boolean, order: TOrder }) => {
+  const { number, createdAt, name } = order
   const location = useLocation();
   const { path } = useRouteMatch();
   return (
     <li className={style.section}>
       <Link key={location.key} className={style.link} to={{ pathname: `${path}/:id`, state: { background: location } }}>
         <div className={style.wrapper}>
-          <span className={style.number}>#034535</span>
-          <span className={style.date}>Сегодня, 16:20 i-GMT+3</span>
+          <span className={style.number}>#{order.number}</span>
+          <span className={style.date}>{order.createdAt}</span>
         </div>
         <div>
-          <h3 className={style.title}>Death Star Starship Main бургер</h3>
-          {status === true && <p className={style.status}>Готовится</p>}
+          <h3 className={style.title}>{order.name}</h3>
+          {status === true && <p className={style.status}>{order.status}</p>}
         </div>
         <div className={style.wrapper}>
           <ul className={style.list}>
