@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../utils/api'
+import { getCookie } from '../../utils/helpers';
 // import {
 //   getIngredientsRequest,
 //   getIngredientsSuccess,
@@ -31,11 +32,14 @@ export const getIngredients = createAsyncThunk(
 export const sendOrder = createAsyncThunk(
   'sendOrder',
   async (idList: Array<string>) => {
-    try {
-      const res = await api.sendIngredients(idList)
-      return res.order
-    } catch (error: any) {
-      throw new Error(error.message)
+    const accessToken = getCookie('accessToken')
+    if (accessToken) {
+      try {
+        const res = await api.sendIngredients(idList, accessToken)
+        return res.order
+      } catch (error: any) {
+        throw new Error(error.message)
+      }
     }
   }
 )

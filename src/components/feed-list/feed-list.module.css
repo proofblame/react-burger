@@ -13,6 +13,8 @@
   box-sizing: border-box;
   overflow-y: auto;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .list::-webkit-scrollbar {
@@ -26,8 +28,4 @@
 
 .list li {
   margin-bottom: 16px;
-}
-
-.list li:last-child {
-  margin-bottom: 0;
 }
