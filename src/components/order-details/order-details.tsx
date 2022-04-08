@@ -1,12 +1,13 @@
 import styles from './order-details.module.css'
 import done from '../../images/done.png'
-import { useSelector } from 'react-redux';
 import { FC } from 'react';
+import { useSelector } from '../../services/hooks';
 
 const OrderDetails: FC = () => {
-  const { order } = useSelector((store: any) => store.ingredients)
+  const { order } = useSelector(store => store.ingredients)
 
   return (
+    order &&
     <div className={styles.order}>
       <h4 className={styles.number}>{order.number}</h4>
       <p className={styles.subtitle}>идентификатор заказа</p>

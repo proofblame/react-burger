@@ -1,5 +1,5 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useMemo } from 'react'
+import { FC, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector } from '../../services/hooks'
 import { TOrder } from '../../services/types/feed'
@@ -10,15 +10,19 @@ import style from './order-info.module.css'
 import { v4 } from "uuid";
 import dayjs from 'dayjs'
 
-const OrderInfo = () => {
+const OrderInfo: FC = () => {
   const { id } = useParams<TIngredientId>()
-  const { feed } = useSelector((store: any) => store.feed)
-  const { ingredients } = useSelector((store: any) => store.ingredients)
+  const { feed } = useSelector(store => store.feed)
+  const { ingredients } = useSelector(store => store.ingredients)
 
 
-  const order = useMemo(
+  const order: TOrder | undefined = useMemo(
     () => {
-      return feed?.orders.find((order: TOrder) => order._id === id)
+      let result
+      if (feed && id) {
+        return feed.orders.find((order: TOrder) => order._id === id)
+      }
+      return result
     },
     [feed, id]
   );
@@ -45,53 +49,49 @@ const OrderInfo = () => {
   const totalPrice = useMemo(
     () => {
       if (orderIngredients && orderIngredients.length > 0) {
-        return orderIngredients.reduce((x, obj) => x + obj.price, 0);
+        return orderIngredients.reduce((x, obj) => x + (obj.count * obj.price), 0);
       }
-
       return 0;
     },
     [orderIngredients]
   );
 
-  console.log(order)
-  console.log(id)
-
   return (
-    feed &&
-    <section className={style.section}>
-      <p className={style.number}>#{order.number}</p>
-      <div className={style.titleWrapper}>
-        <h3 className={style.title}>{order.name}</h3>
-        <p className={order.status === OrderStatus.DONE ? style.statusDone : style.status}>{OrderStatusTranslate.get(order.status)}</p>
-      </div>
-      <h3 className={style.structure}>Состав:</h3>
-      <div className={style.listWrapper}>
-        <ul className={style.list}>
-          {
-            orderIngredients.map((ingredient) => (
-              <li key={ingredient.key}>
-                <span className={style.imageWrapper}>
-                  <img src={ingredient.image} alt={ingredient.name} />
-                </span>
-                <p className={style.ingredientTitle}>{ingredient.name}</p>
-                <span className={style.price}>
-                  <span className={style.ingredientSum}>{ingredient.count} x {ingredient.price}</span>
-                  <CurrencyIcon type="primary" />
-                </span>
-              </li>
-            ))
-          }
+    order && orderIngredients ?
+      <section className={style.section}>
+        <p className={style.number}>#{order.number}</p>
+        <div className={style.titleWrapper}>
+          <h3 className={style.title}>{order.name}</h3>
+          <p className={order.status === OrderStatus.DONE ? style.statusDone : style.status}>{OrderStatusTranslate.get(order.status)}</p>
+        </div>
+        <h3 className={style.structure}>Состав:</h3>
+        <div className={style.listWrapper}>
+          <ul className={style.list}>
+            {
+              orderIngredients.map((ingredient) => (
+                <li key={ingredient.key}>
+                  <span className={style.imageWrapper}>
+                    <img src={ingredient.image} alt={ingredient.name} />
+                  </span>
+                  <p className={style.ingredientTitle}>{ingredient.name}</p>
+                  <span className={style.price}>
+                    <span className={style.ingredientSum}>{ingredient.count} x {ingredient.price}</span>
+                    <CurrencyIcon type="primary" />
+                  </span>
+                </li>
+              ))
+            }
 
-        </ul>
-      </div>
-      <div className={style.wrapper}>
-        <span className={style.date}>{dayjs(order.createdAt).format("HH:mm DD MMM YY")}</span>
-        <span className={style.price}>
-          <span className={style.ingredientSum}>{totalPrice}</span>
-          <CurrencyIcon type="primary" />
-        </span>
-      </div>
-    </section>
+          </ul>
+        </div>
+        <div className={style.wrapper}>
+          <span className={style.date}>{dayjs(order.createdAt).format("HH:mm DD MMM YY")}</span>
+          <span className={style.price}>
+            <span className={style.ingredientSum}>{totalPrice}</span>
+            <CurrencyIcon type="primary" />
+          </span>
+        </div>
+      </section> : null
   )
 }
 

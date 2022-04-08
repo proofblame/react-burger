@@ -2,11 +2,11 @@ import style from './profile.module.css'
 import { NavLink, Route, Switch, useRouteMatch } from 'react-router-dom'
 import { logout } from '../../services/actions/auth'
 import { useDispatch, useSelector } from '../../services/hooks';
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import UserProfile from '../../components/user-profile/user-profile';
-import UserOrders from '../../components/user-orders/user-orders';
-import OrderInfo from '../../components/order-info/order-info';
 import FeedList from '../../components/feed-list/feed-list';
+import { wsConnectionClose, wsConnectionStart } from '../../services/actions/feed';
+import { getCookie } from '../../utils/helpers';
 
 export const ProfilePage: FC = () => {
   const dispatch = useDispatch()
@@ -16,6 +16,19 @@ export const ProfilePage: FC = () => {
   const onLogout = () => {
     dispatch(logout())
   }
+
+  useEffect(
+    () => {
+      const accessToken = getCookie('accessToken')
+      if (accessToken) {
+        const authToken = accessToken.split('Bearer ')[1];
+        dispatch(wsConnectionStart(`wss://norma.nomoreparties.space/orders?token=${authToken}`))
+      }
+      return () => {
+        dispatch(wsConnectionClose())
+      }
+    }, [dispatch]
+  )
 
   return (
     feed &&
@@ -39,12 +52,14 @@ export const ProfilePage: FC = () => {
           изменить свои персональные данные
         </p>
       </nav>
-      <Route exact path={path}>
-        <UserProfile />
-      </Route>
-      <Route path={`${path}/orders`}>
-        <FeedList orders={feed?.orders} />
-      </Route>
+      <Switch>
+        <Route exact path={`${path}`}>
+          <UserProfile />
+        </Route>
+        <Route path={`${path}/orders`}>
+          <FeedList orders={feed?.orders} />
+        </Route>
+      </Switch>
     </section>
   )
 }

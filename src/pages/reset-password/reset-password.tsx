@@ -11,7 +11,7 @@ import { TLocation } from '../../utils/types'
 import { FC } from 'react'
 
 export const ResetPassword: FC = () => {
-  const { loader, userData, forgotSuccess } = useSelector((store: any) => store.auth)
+  const { loader, userData, forgotSuccess } = useSelector(store => store.auth)
 
   const dispatch = useDispatch()
   const history = useHistory()

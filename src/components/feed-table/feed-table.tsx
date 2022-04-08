@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { useSelector } from '../../services/hooks'
+import { OrderStatus } from '../../utils/types'
 import style from './feed-table.module.css'
 
 const FeedTable: FC = () => {
@@ -13,9 +14,11 @@ const FeedTable: FC = () => {
           <ul className={style.listReady}>
             {
               feed.orders
-                .filter(order => order.status === 'done')
-                .map((order, index) => (
-                  index <= 5 && <li key={order.number}>{order.number}</li>
+                .filter(order => order.status === OrderStatus.DONE)
+                .slice(0, 10)
+                .map((item) =>
+                (
+                  <li key={item.number}>{item.number}</li>
                 ))
             }
           </ul>
@@ -25,7 +28,7 @@ const FeedTable: FC = () => {
           <ul className={style.listOrder}>
             {
               feed.orders
-                .filter(order => order.status === 'pending')
+                .filter(order => order.status !== OrderStatus.DONE)
                 .map((order, index) => (
                   index <= 5 && <li key={order.number}>{order.number}</li>
                 ))

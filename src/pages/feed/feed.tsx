@@ -1,11 +1,26 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import FeedList from '../../components/feed-list/feed-list'
 import FeedTable from '../../components/feed-table/feed-table'
-import { useSelector } from '../../services/hooks'
+import { wsConnectionClose, wsConnectionStart } from '../../services/actions/feed'
+import { useDispatch, useSelector } from '../../services/hooks'
+import { wsConnectionClosed } from '../../services/reducers/feed'
 import style from './feed.module.css'
 
 
 const FeedPage: FC = () => {
+  const dispatch = useDispatch()
+
+  useEffect(
+    () => {
+      dispatch(wsConnectionStart(`wss://norma.nomoreparties.space/orders/all`))
+      return () => {
+        dispatch(wsConnectionClose())
+      }
+    }, [dispatch]
+  )
+
+
+
   const { feed } = useSelector(store => store.feed)
   return (
     feed &&

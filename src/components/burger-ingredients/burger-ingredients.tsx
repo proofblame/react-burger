@@ -10,7 +10,7 @@ import { FC } from 'react';
 
 const BurgerIngredients: FC = () => {
   const dispatch = useDispatch()
-  const { ingredients, currentTab } = useSelector((store: any) => store.ingredients)
+  const { ingredients, currentTab } = useSelector(store => store.ingredients)
   const bunsRef = useRef<HTMLHeadingElement>(null)
   const saucesRef = useRef<HTMLHeadingElement>(null)
   const fillingsRef = useRef<HTMLHeadingElement>(null)

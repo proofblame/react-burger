@@ -20,8 +20,8 @@ import { FC } from 'react';
 
 
 const BurgerConstructor: FC = () => {
-  const { cart, orderModal, loader } = useSelector((store: any) => store.ingredients)
-  const { userData } = useSelector((store: any) => store.auth)
+  const { cart, orderModal, loader } = useSelector(store => store.ingredients)
+  const { userData } = useSelector(store => store.auth)
   const dispatch = useDispatch()
   const history = useHistory()
 

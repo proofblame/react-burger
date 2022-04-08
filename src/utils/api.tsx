@@ -1,5 +1,4 @@
-
-const baseURL = 'https://norma.nomoreparties.space/api';
+import { baseURL } from './config';
 
 // Возвращаем объект ответа
 const getResponseData = async (res: Response) => {

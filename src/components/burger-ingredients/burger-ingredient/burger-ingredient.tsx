@@ -12,7 +12,7 @@ const BurgerIngredient = ({ ingredient }: TBurgerIngredient) => {
   const location = useLocation();
 
   const dispatch = useDispatch()
-  const { cart } = useSelector((store: any) => store.ingredients)
+  const { cart } = useSelector(store => store.ingredients)
 
   const handleOpenIngredientModal = (ingredient: TIngredientDetails) => {
     dispatch(openIngredientModal(ingredient))

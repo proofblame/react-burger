@@ -12,7 +12,6 @@ import { OrderStatusTranslate } from '../../../utils/helpers';
 
 const FeedItem = ({ status, order }: { status?: boolean, order: TOrder }) => {
   const location = useLocation();
-  const { path } = useRouteMatch();
   const { ingredients } = useSelector(store => store.ingredients);
 
   const orderIngredients = useMemo(

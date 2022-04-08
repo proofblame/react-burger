@@ -16,7 +16,7 @@ const App: FC = () => {
     () => {
       dispatch(getUser())
       dispatch(getIngredients())
-      dispatch(wsConnectionStart(`wss://norma.nomoreparties.space/orders/all`))
+
     },
     [dispatch]
   )

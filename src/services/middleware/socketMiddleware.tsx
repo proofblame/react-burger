@@ -1,7 +1,7 @@
 import { Middleware, MiddlewareAPI } from "redux";
 import { AppDispatch, RootState, TWsActionTypes } from "../types";
 
-export const socketMiddleware = (wsActions: any): Middleware => {
+export const socketMiddleware = (wsActions: TWsActionTypes): Middleware => {
   return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
     let socket: WebSocket | null = null;
 
@@ -13,7 +13,6 @@ export const socketMiddleware = (wsActions: any): Middleware => {
         socket = new WebSocket(action.payload);
       }
 
-
       if (wsDisconnect.match(action) && socket) {
         socket.close();
       }
@@ -24,13 +23,11 @@ export const socketMiddleware = (wsActions: any): Middleware => {
           dispatch(onOpen());
           console.log("Соединение установлено");
         };
-
         // функция, которая вызывается при получения события от сервера
         socket.onmessage = event => {
           const { data } = event;
           dispatch(onMessage(JSON.parse(data)));
         };
-
         // функция, которая вызывается при закрытии соединения
         socket.onclose = event => {
           dispatch(onClose());
@@ -42,17 +39,12 @@ export const socketMiddleware = (wsActions: any): Middleware => {
             console.log('Соединение закрыто с кодом - ')
           }
         }
-
-
         // функция, которая вызывается при ошибке соединения
         socket.onerror = (event: Event) => {
           dispatch(onError());
           console.log(`Ошибка ${event}`);
         };
-
       }
-
-
 
       next(action);
     };

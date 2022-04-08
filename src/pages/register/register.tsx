@@ -10,7 +10,7 @@ import { TLocation } from '../../utils/types'
 import { FC } from 'react'
 
 export const Register: FC = () => {
-  const { userData, loader } = useSelector((store: any) => store.auth)
+  const { userData, loader } = useSelector(store => store.auth)
   const dispatch = useDispatch()
   const location = useLocation<TLocation>()
   const [data, setData] = useState({

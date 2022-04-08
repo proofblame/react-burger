@@ -33,10 +33,24 @@ ul li:last-child {
 .listReady {
   composes: text text_type_digits-default from global;
   color: #00CCCC;
+  height: 200px;
+  width: 270px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  column-gap: 8px;
 }
 
 .listOrder {
   composes: text text_type_digits-default from global;
+  height: 200px;
+  width: 270px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  column-gap: 8px;
 }
 
 .title {

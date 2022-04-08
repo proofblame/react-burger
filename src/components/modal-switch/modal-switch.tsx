@@ -46,9 +46,14 @@ const ModalSwitch: FC = () => {
         <Route path='/feed/:id'>
           <OrderInfoPage />
         </Route>
+        <ProtectedRoute path='/profile/orders/:id'>
+          <OrderInfoPage />
+        </ProtectedRoute>
         <ProtectedRoute path='/profile'>
           <ProfilePage />
         </ProtectedRoute>
+
+
       </Switch>
       {
         background &&
