@@ -1,29 +1,31 @@
 import style from './login.module.css'
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import { Link, Redirect, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../services/actions/auth';
 import { useSelector } from 'react-redux';
 import ModalOverlay from '../../components/modal/modal-overlay/modal-overlay';
 import { CircularProgress } from '@mui/material';
+import { TLocation } from '../../utils/types';
+import { FC } from 'react';
 
-export const Login = () => {
-  const { userData, loader } = useSelector(store => store.auth)
+export const Login: FC = () => {
+  const { userData, loader } = useSelector((store: any) => store.auth)
   const dispatch = useDispatch()
-  const location = useLocation()
+  const location = useLocation<TLocation>()
   const [data, setData] = useState({
     email: '',
     password: '',
   })
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setData({
       ...data,
       [name]: value
     })
   }
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
       dispatch(loginUser(data))

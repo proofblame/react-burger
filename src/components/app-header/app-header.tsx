@@ -1,15 +1,16 @@
 import styles from './app-header.module.css'
 import { BurgerIcon, ListIcon, ProfileIcon, Logo } from '@ya.praktikum/react-developer-burger-ui-components'
 import HeaderButton from './header-button/header-button'
+import { FC } from 'react'
 
-const AppHeader = () => {
+const AppHeader: FC = () => {
   return (
     <div className={styles.header}>
       <nav className={styles.nav}>
-        <HeaderButton text='Конструктор' exact path='/'>
+        <HeaderButton text='Конструктор' path='/'>
           <BurgerIcon type="secondary" />
         </HeaderButton>
-        <HeaderButton text='Лента заказов' exact path='/'>
+        <HeaderButton text='Лента заказов' path='/orders'>
           <ListIcon type="secondary" />
         </HeaderButton>
       </nav>

@@ -1,32 +1,34 @@
 import style from './reset-password.module.css'
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import { Link, Redirect, useLocation } from 'react-router-dom'
 import { resetPassword } from '../../services/actions/auth'
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom'
 import ModalOverlay from '../../components/modal/modal-overlay/modal-overlay';
 import { CircularProgress } from '@mui/material';
+import { TLocation } from '../../utils/types'
+import { FC } from 'react'
 
-export const ResetPassword = () => {
-  const { loader, userData, forgotSuccess } = useSelector(store => store.auth)
+export const ResetPassword: FC = () => {
+  const { loader, userData, forgotSuccess } = useSelector((store: any) => store.auth)
 
   const dispatch = useDispatch()
   const history = useHistory()
-  const location = useLocation()
+  const location = useLocation<TLocation>()
   const [data, setData] = useState({
     password: '',
     token: '',
   })
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setData({
       ...data,
       [name]: value
     })
   }
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
       dispatch(resetPassword(data))
@@ -67,7 +69,7 @@ export const ResetPassword = () => {
         </div>
         <div className={style.input}>
           <Input
-            type='token'
+            type='text'
             placeholder='Введите код из письма'
             onChange={handleChange}
             value={data.token}

@@ -2,26 +2,28 @@ import styles from './constructor-list.module.css'
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from "react-dnd";
-import { useMemo } from 'react';
+import { useMemo, FC } from 'react';
 import DndField from '../../dnd-field/dnd-field';
 import { addIngredient } from '../../../services/reducers/ingredients';
 import StuffList from '../stuff-list/stuff-list';
-import uuid from 'react-uuid'
+import { v4 as uuid } from 'uuid'
+import { TIngredientDetails } from '../../../utils/types';
 
-const ConstructorList = () => {
+
+const ConstructorList: FC = () => {
   const dispatch = useDispatch()
-  const { cart } = useSelector(store => store.ingredients)
+  const { cart } = useSelector((store: any) => store.ingredients)
 
   const bun = useMemo(() => {
-    return cart.find(bun => bun.type === 'bun')
+    return cart.find((bun: TIngredientDetails) => bun.type === 'bun')
   }, [cart])
 
   const stuff = useMemo(() => {
-    return cart.filter(stuff => stuff.type !== 'bun')
+    return cart.filter((stuff: TIngredientDetails) => stuff.type !== 'bun')
   }, [cart])
 
 
-  const addItem = (ingredient) => {
+  const addItem = (ingredient: TIngredientDetails) => {
     const uid = uuid()
     dispatch(addIngredient({ ...ingredient, uid }))
 
@@ -32,7 +34,7 @@ const ConstructorList = () => {
     collect: monitor => ({
       isHover: monitor.isOver()
     }),
-    drop(ingredient) {
+    drop: (ingredient: TIngredientDetails) => {
       addItem(ingredient)
     },
   });

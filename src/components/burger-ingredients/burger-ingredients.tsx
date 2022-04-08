@@ -5,37 +5,39 @@ import { useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { swithTab } from '../../services/reducers/ingredients';
 import useSwitchTabs from '../use-switch-tabs/use-switch-tabs';
+import { TIngredientDetails } from '../../utils/types';
+import { FC } from 'react';
 
-const BurgerIngredients = () => {
+const BurgerIngredients: FC = () => {
   const dispatch = useDispatch()
-  const { ingredients, currentTab } = useSelector(store => store.ingredients)
-  const bunsRef = useRef(null)
-  const saucesRef = useRef(null)
-  const fillingsRef = useRef(null)
-  const rootRef = useRef(null)
-  const smoothSettings = { block: "start", behavior: "smooth" }
-  const buns = ingredients.filter((item) => {
+  const { ingredients, currentTab } = useSelector((store: any) => store.ingredients)
+  const bunsRef = useRef<HTMLHeadingElement>(null)
+  const saucesRef = useRef<HTMLHeadingElement>(null)
+  const fillingsRef = useRef<HTMLHeadingElement>(null)
+  const rootRef = useRef<HTMLDivElement>(null)
+  const smoothSettings: ScrollIntoViewOptions = { block: "start", behavior: "smooth" }
+  const buns = ingredients.filter((item: TIngredientDetails) => {
     return item.type === 'bun'
   })
-  const sauces = ingredients.filter((item) => {
+  const sauces = ingredients.filter((item: TIngredientDetails) => {
     return item.type === 'sauce'
   })
-  const fillings = ingredients.filter((item) => {
+  const fillings = ingredients.filter((item: TIngredientDetails) => {
     return item.type === 'main'
   })
-  const handleBunTab = (event) => {
+  const handleBunTab = (event: string) => {
     dispatch(swithTab(event))
-    bunsRef.current.scrollIntoView(smoothSettings);
+    bunsRef?.current?.scrollIntoView(smoothSettings);
   }
-  const handleSauceTab = (event) => {
+  const handleSauceTab = (event: string) => {
     dispatch(swithTab(event))
-    saucesRef.current.scrollIntoView(smoothSettings);
+    saucesRef?.current?.scrollIntoView(smoothSettings);
   }
-  const handleFillingsTab = (event) => {
+  const handleFillingsTab = (event: string) => {
     dispatch(swithTab(event))
-    fillingsRef.current.scrollIntoView(smoothSettings);
+    fillingsRef?.current?.scrollIntoView(smoothSettings);
   }
-  const setCurrent = value => dispatch(swithTab(value))
+  const setCurrent = (value: string) => dispatch(swithTab(value))
 
   useSwitchTabs(rootRef, bunsRef, () => setCurrent('buns'))
   useSwitchTabs(rootRef, saucesRef, () => setCurrent('sauces'))

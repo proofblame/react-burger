@@ -2,19 +2,19 @@ import styles from './constructor-ingredient.module.css'
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch } from 'react-redux';
 import { deleteIngredient } from '../../../services/reducers/ingredients'
-import { useDrag, useDrop } from "react-dnd";
+import { useDrag, useDrop, DropTargetMonitor, DragObjectFactory } from "react-dnd";
 import { useRef } from 'react';
-import { constructorIngredientPropTypes } from '../../../utils/types';
+import { TConstructorIngredient, TIngredientDetails } from '../../../utils/types';
 
 
-const ConstructorIngredient = ({ ingredient, index, onMove }) => {
-  const ref = useRef(null)
+const ConstructorIngredient = ({ ingredient, index, onMove }: TConstructorIngredient) => {
+  const ref = useRef<HTMLLIElement>(null)
 
   const { name, price, image, uid } = ingredient
 
   const dispatch = useDispatch();
 
-  const handleDeleteIngredient = (id) => {
+  const handleDeleteIngredient = (id: string) => {
     dispatch(deleteIngredient(id))
   }
 
@@ -31,18 +31,14 @@ const ConstructorIngredient = ({ ingredient, index, onMove }) => {
   const [, drop] = useDrop({
     accept: 'stuff',
 
-    hover(item, monitor) {
-      if (!ref.current) {
-        return;
-      }
+    hover: (item: DragObjectFactory<TIngredientDetails> & { index: number }, monitor: DropTargetMonitor) => {
+      if (!ref.current) return
       const dragIndex = item.index;
       const hoverIndex = index;
-      if (dragIndex === hoverIndex) {
-        return;
-      }
+      if (dragIndex === hoverIndex) return;
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
       const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      const clientOffset = monitor.getClientOffset();
+      const clientOffset: any = monitor.getClientOffset();
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
@@ -58,6 +54,7 @@ const ConstructorIngredient = ({ ingredient, index, onMove }) => {
   drag(drop(ref))
 
   return (
+    ingredient &&
     <li className={styles.burgerElement}
       ref={ref}
       style={{ opacity }}
@@ -69,12 +66,10 @@ const ConstructorIngredient = ({ ingredient, index, onMove }) => {
         text={name}
         price={price}
         thumbnail={image}
-        handleClose={() => handleDeleteIngredient(uid)}
+        handleClose={() => handleDeleteIngredient(uid as string)}
       />
     </li>
   )
 }
-
-ConstructorIngredient.propTypes = constructorIngredientPropTypes.isRequired
 
 export default ConstructorIngredient
