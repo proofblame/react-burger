@@ -1,4 +1,4 @@
-export const setCookie = (name: string, value: string, props: any) => {
+export const setCookie = (name: string, value: string, props?: any) => {
   props = props || {};
   let exp = props.expires;
   if (typeof exp == 'number' && exp) {
@@ -30,4 +30,11 @@ export function getCookie(name: string) {
 
 export function deleteCookie(name: string) {
   setCookie(name, '', { expires: -1 });
-} 
+}
+
+export const OrderStatusTranslate = new Map<string | undefined, string>([
+  ["done", "Выполнен"],
+  ["pending", "В процессе"],
+  ["created", "Создан"],
+]
+);

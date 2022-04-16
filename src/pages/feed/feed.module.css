@@ -1,0 +1,15 @@
+.section {
+  overflow: hidden;
+  width: 100%;
+}
+
+.title {
+  composes: text text_type_main-large from global;
+  margin-bottom: 20px;
+}
+
+.wrapper {
+  display: flex;
+  column-gap: 60px;
+  height: 100%;
+}

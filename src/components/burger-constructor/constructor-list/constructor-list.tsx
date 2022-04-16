@@ -1,6 +1,6 @@
 import styles from './constructor-list.module.css'
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../../services/hooks';
 import { useDrop } from "react-dnd";
 import { useMemo, FC } from 'react';
 import DndField from '../../dnd-field/dnd-field';
@@ -12,7 +12,7 @@ import { TIngredientDetails } from '../../../utils/types';
 
 const ConstructorList: FC = () => {
   const dispatch = useDispatch()
-  const { cart } = useSelector((store: any) => store.ingredients)
+  const { cart } = useSelector(store => store.ingredients)
 
   const bun = useMemo(() => {
     return cart.find((bun: TIngredientDetails) => bun.type === 'bun')

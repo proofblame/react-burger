@@ -1,0 +1,60 @@
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+ul li {
+  margin-bottom: 8px;
+}
+
+
+.section {
+  width: 100%;
+  max-width: 580px;
+}
+
+.orderWrapper {
+  display: flex;
+  margin-bottom: 60px;
+}
+
+.wrapper {
+  margin-bottom: 60px;
+}
+
+.readyBlock {
+  composes: mr-9 from global;
+}
+
+.listReady {
+  composes: text text_type_digits-default from global;
+  color: #00CCCC;
+  height: 200px;
+  width: 270px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  column-gap: 8px;
+}
+
+.listOrder {
+  composes: text text_type_digits-default from global;
+  height: 200px;
+  width: 270px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  column-gap: 8px;
+}
+
+.title {
+  composes: text text_type_main-medium mb-6 from global;
+}
+
+.price {
+  composes: text text_type_digits-large from global;
+  text-shadow: 0px 0px 16px rgba(51, 51, 255, 0.25), 0px 0px 8px rgba(51, 51, 255, 0.25), 0px 4px 32px rgba(51, 51, 255, 0.5);
+}

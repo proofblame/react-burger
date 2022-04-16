@@ -3,7 +3,7 @@ import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-co
 import ConstructorList from './constructor-list/constructor-list'
 
 import { useDrop } from 'react-dnd';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { useMemo } from 'react';
 
 import DndField from '../dnd-field/dnd-field';
@@ -20,8 +20,8 @@ import { FC } from 'react';
 
 
 const BurgerConstructor: FC = () => {
-  const { cart, orderModal, loader } = useSelector((store: any) => store.ingredients)
-  const { userData } = useSelector((store: any) => store.auth)
+  const { cart, orderModal, loader } = useSelector(store => store.ingredients)
+  const { userData } = useSelector(store => store.auth)
   const dispatch = useDispatch()
   const history = useHistory()
 

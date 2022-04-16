@@ -73,4 +73,10 @@ export type TIngredientId = {
 export type TLocation = {
   from: Location;
   background?: Location;
+
 }
+export enum OrderStatus {
+  DONE = 'done',
+  PENDING = 'pending',
+  CREATED = 'created',
+} 

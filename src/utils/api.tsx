@@ -1,5 +1,4 @@
-
-const baseURL = 'https://norma.nomoreparties.space/api';
+import { baseURL } from './config';
 
 // Возвращаем объект ответа
 const getResponseData = async (res: Response) => {
@@ -18,11 +17,12 @@ const getIngredients = async () => {
 }
 
 // Отправить заказ
-const sendIngredients = async (ingredients: Array<string>) => {
+const sendIngredients = async (ingredients: Array<string>, accessToken: string) => {
   const res = await fetch(`${baseURL}/orders`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      Authorization: accessToken
     },
     body: JSON.stringify({
       ingredients

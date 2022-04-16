@@ -3,7 +3,7 @@ import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-component
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { Link, Redirect, useLocation } from 'react-router-dom'
 import { resetPassword } from '../../services/actions/auth'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { useHistory } from 'react-router-dom'
 import ModalOverlay from '../../components/modal/modal-overlay/modal-overlay';
 import { CircularProgress } from '@mui/material';
@@ -11,7 +11,7 @@ import { TLocation } from '../../utils/types'
 import { FC } from 'react'
 
 export const ResetPassword: FC = () => {
-  const { loader, userData, forgotSuccess } = useSelector((store: any) => store.auth)
+  const { loader, userData, forgotSuccess } = useSelector(store => store.auth)
 
   const dispatch = useDispatch()
   const history = useHistory()

@@ -3,14 +3,14 @@ import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-component
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { Link, Redirect, useLocation } from 'react-router-dom'
 import { registerUser } from '../../services/actions/auth'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import ModalOverlay from '../../components/modal/modal-overlay/modal-overlay';
 import { CircularProgress } from '@mui/material';
 import { TLocation } from '../../utils/types'
 import { FC } from 'react'
 
 export const Register: FC = () => {
-  const { userData, loader } = useSelector((store: any) => store.auth)
+  const { userData, loader } = useSelector(store => store.auth)
   const dispatch = useDispatch()
   const location = useLocation<TLocation>()
   const [data, setData] = useState({

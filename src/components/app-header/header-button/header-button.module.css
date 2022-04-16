@@ -1,8 +1,5 @@
 .button {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  column-gap: 8px;
+
   background: none;
   border: none;
   cursor: pointer;
@@ -10,6 +7,14 @@
   box-sizing: border-box;
   text-decoration: none;
 }
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 8px;
+}
+
 .caption {
   composes: text text_type_main-default from global;
   color: inherit;

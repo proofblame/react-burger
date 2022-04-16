@@ -1,13 +1,13 @@
 import styles from './stuff-list.module.css'
 import ConstructorIngredient from '../constructor-ingredient/constructor-ingredient'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../../services/hooks';
 import { sortCart } from '../../../services/reducers/ingredients';
 import { TStuffList, TIngredientDetails } from '../../../utils/types';
 
 const StuffList = ({ target, onHover }: TStuffList) => {
 
   const dispatch = useDispatch()
-  const { cart } = useSelector((store: any) => store.ingredients)
+  const { cart } = useSelector(store => store.ingredients)
   const classes = `${styles.burgerBody} ${styles.borderColor}`
   const borderColor = onHover ? classes : styles.burgerBody
 
