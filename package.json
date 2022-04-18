@@ -55,6 +55,10 @@
     "@types/react-transition-group": "^4.4.4",
     "@types/redux-logger": "^3.0.9",
     "@types/uuid": "^8.3.4",
+    "cypress": "^9.5.4",
+    "fetch-mock": "^9.11.0",
+    "jest": "^27.5.1",
+    "jest-fetch-mock": "^3.0.3",
     "prop-types": "^15.8.1",
     "react-dnd": "^15.1.1",
     "react-dnd-html5-backend": "^15.1.2",
@@ -62,6 +66,7 @@
     "react-transition-group": "^4.4.2",
     "redux": "^4.1.2",
     "redux-logger": "^3.0.6",
+    "redux-mock-store": "^1.5.4",
     "redux-thunk": "^2.4.1"
   }
 }

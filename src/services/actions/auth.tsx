@@ -74,7 +74,7 @@ export const loginUser = createAsyncThunk(
 
 export const registerUser = createAsyncThunk(
   'registerUser',
-  async ({ email, password, name }: TUserData & { password: string }) => {
+  async ({ email, password, name }: TUserData) => {
     try {
       const res = await api.register(email, password, name)
       setCookie('accessToken', res.accessToken)
@@ -88,7 +88,7 @@ export const registerUser = createAsyncThunk(
 
 export const updateUser = createAsyncThunk(
   'updateUser',
-  async ({ email, password, name }: TUserData & { password: string }) => {
+  async ({ email, password, name }: TUserData) => {
     const accessToken = getCookie('accessToken')
     if (accessToken) {
       try {
