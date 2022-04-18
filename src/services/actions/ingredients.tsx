@@ -1,21 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../utils/api'
 import { getCookie } from '../../utils/helpers';
-// import {
-//   getIngredientsRequest,
-//   getIngredientsSuccess,
-//   getIngredientsFailed,
-//   sendOrderRequest,
-//   sendOrderSuccess,
-//   sendOrderFailed,
-//   openOrderModal,
-//   closeOrderModal,
-//   clearCart,
-//   enableLoader,
-//   disableLoader,
-// } from '../reducers/ingredients'
-// import { AppDispatch } from '../types';
-
 
 export const getIngredients = createAsyncThunk(
   'getIngredients',
