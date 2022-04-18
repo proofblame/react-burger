@@ -1,7 +1,7 @@
 import { initialState } from './auth';
 import authReducer from './auth';
 import { AnyAction } from "redux";
-import { TAuthState, TUserData } from '../types/auth'
+import { TAuthState } from '../types/auth'
 import { forgotPassword, getUser, loginUser, logout, registerUser, resetPassword, updateUser } from '../actions/auth';
 
 describe('authReducer', () => {
