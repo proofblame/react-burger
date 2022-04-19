@@ -4,7 +4,7 @@ import { useEffect, FC } from 'react'
 import { useDispatch } from '../../services/hooks';
 import { getIngredients } from '../../services/actions/ingredients';
 import { getUser } from '../../services/actions/auth';
-import { HashRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 import ModalSwitch from '../modal-switch/modal-switch'
 
 const App: FC = () => {
@@ -21,7 +21,7 @@ const App: FC = () => {
   )
 
   return (
-    <Router>
+    <Router basename={'/react-burger'}>
       <section className={styles.app}>
         <AppHeader />
         <main className={styles.main}>
