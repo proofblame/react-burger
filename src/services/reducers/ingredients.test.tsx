@@ -1,4 +1,4 @@
-import { deleteIngredient, initialState, openIngredientModal, swithTab } from './ingredients';
+import { addIngredient, closeOrderModal, deleteIngredient, initialState, openIngredientModal, openOrderModal, sortCart, swithTab } from './ingredients';
 import ingredientsReducer from './ingredients';
 import { AnyAction } from "redux";
 import { TIngredientState } from '../types/ingredients'
@@ -9,6 +9,149 @@ describe('ingredientsReducer', () => {
 
   it('return initial state', () => {
     expect(ingredientsReducer(undefined, {} as AnyAction)).toEqual(initialState);
+  })
+
+  it('swithTab', () => {
+
+    const expected: TIngredientState = {
+      ...initialState,
+      currentTab: 'string'
+    };
+
+    expect(ingredientsReducer(initialState, swithTab('string'))).toEqual(expected)
+  })
+
+  it('openIngredientModal', () => {
+
+    const expected: TIngredientState = {
+      ...initialState,
+      ingredientModal: true,
+      ingredient: {
+        "_id": "60d3b41abdacab0026a733c6",
+        "name": "Краторная булка N-200i",
+        "type": "bun",
+        "proteins": 80,
+        "fat": 24,
+        "carbohydrates": 53,
+        "calories": 420,
+        "price": 1255,
+        "image": "https://code.s3.yandex.net/react/code/bun-02.png",
+        "image_mobile": "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
+        "image_large": "https://code.s3.yandex.net/react/code/bun-02-large.png",
+        "__v": 0
+      },
+    };
+
+    expect(ingredientsReducer(initialState, openIngredientModal({
+      "_id": "60d3b41abdacab0026a733c6",
+      "name": "Краторная булка N-200i",
+      "type": "bun",
+      "proteins": 80,
+      "fat": 24,
+      "carbohydrates": 53,
+      "calories": 420,
+      "price": 1255,
+      "image": "https://code.s3.yandex.net/react/code/bun-02.png",
+      "image_mobile": "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
+      "image_large": "https://code.s3.yandex.net/react/code/bun-02-large.png",
+      "__v": 0
+    }))).toEqual(expected)
+  })
+
+  it('deleteIngredient', () => {
+    const origin = {
+      ...initialState,
+      cart: [{
+        "_id": "60d3b41abdacab0026a733c6",
+        "name": "Краторная булка N-200i",
+        "type": "bun",
+        "proteins": 80,
+        "fat": 24,
+        "carbohydrates": 53,
+        "calories": 420,
+        "price": 1255,
+        "image": "https://code.s3.yandex.net/react/code/bun-02.png",
+        "image_mobile": "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
+        "image_large": "https://code.s3.yandex.net/react/code/bun-02-large.png",
+        "__v": 0
+      },]
+    }
+
+    const expected: TIngredientState = {
+      ...initialState,
+      cart: []
+    };
+
+    expect(ingredientsReducer(origin, deleteIngredient('6db03372-4b24-442e-985c-6df1c475c0da'))).toEqual(expected)
+  })
+
+  it('addIngredient', () => {
+
+    const expected: TIngredientState = {
+      ...initialState,
+      cart: [{
+        "_id": "60d3b41abdacab0026a733c6",
+        "name": "Краторная булка N-200i",
+        "type": "bun",
+        "proteins": 80,
+        "fat": 24,
+        "carbohydrates": 53,
+        "calories": 420,
+        "price": 1255,
+        "image": "https://code.s3.yandex.net/react/code/bun-02.png",
+        "image_mobile": "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
+        "image_large": "https://code.s3.yandex.net/react/code/bun-02-large.png",
+        "__v": 0
+      }]
+    };
+
+    expect(ingredientsReducer(initialState, addIngredient({
+      "_id": "60d3b41abdacab0026a733c6",
+      "name": "Краторная булка N-200i",
+      "type": "bun",
+      "proteins": 80,
+      "fat": 24,
+      "carbohydrates": 53,
+      "calories": 420,
+      "price": 1255,
+      "image": "https://code.s3.yandex.net/react/code/bun-02.png",
+      "image_mobile": "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
+      "image_large": "https://code.s3.yandex.net/react/code/bun-02-large.png",
+      "__v": 0
+    }))).toEqual(expected)
+  })
+
+  it('sortCart', () => {
+
+    const expected: TIngredientState = {
+      ...initialState,
+      cart: []
+    };
+
+    expect(ingredientsReducer(initialState, sortCart({
+      dragIndex: 1,
+      hoverIndex: 2
+    }))).toEqual(expected)
+  })
+
+  it('openOrderModal', () => {
+
+    const expected: TIngredientState = {
+      ...initialState,
+      orderModal: true
+    };
+
+    expect(ingredientsReducer(initialState, openOrderModal())).toEqual(expected)
+  })
+
+  it('closeOrderModal', () => {
+
+    const expected: TIngredientState = {
+      ...initialState,
+      orderModal: false
+    };
+
+    expect(ingredientsReducer(initialState, closeOrderModal())).toEqual(expected)
   })
 
   it('getIngredients pending', () => {
@@ -83,7 +226,6 @@ describe('ingredientsReducer', () => {
     ))).toEqual(expected)
   })
 
-
   it('sendOrder pending', () => {
 
     const expected: TIngredientState = {
@@ -132,6 +274,5 @@ describe('ingredientsReducer', () => {
       ["60d3b41abdacab0026a733c6"]
     ))).toEqual(expected)
   })
-
 
 })

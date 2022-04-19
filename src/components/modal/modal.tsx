@@ -26,12 +26,12 @@ const Modal = ({ header, onClose, children }: TModal) => {
 
   return ReactDOM.createPortal(
     <ModalOverlay onClose={onClose}>
-      <div className={styles.content} onClick={e => e.stopPropagation()}>
+      <div className={styles.content} onClick={e => e.stopPropagation()} data-test="modal">
         <div className={styles.modalHeader}>
           <h3 className={styles.title}>
             {header}
           </h3>
-          <div className={styles.close} onClick={onClose}>
+          <div className={styles.close} onClick={onClose} data-test="modal-close">
             <CloseIcon type="primary" />
           </div>
         </div>

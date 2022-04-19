@@ -66,9 +66,9 @@ const BurgerConstructor: FC = () => {
         {cart.length > 0 ?
           <>
             <ConstructorList />
-            <div className={styles.total}>
+            <div className={styles.total} data-test="send-order">
               <div className={styles.price}>
-                <span className={styles.priceNumber}>{totalCost}</span>
+                <span className={styles.priceNumber} data-test="total-price">{totalCost}</span>
                 <div className={styles.currencyIcon}>
                   <CurrencyIcon type="primary" />
                 </div>
