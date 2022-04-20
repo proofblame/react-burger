@@ -1,4 +1,4 @@
-const servUrl = 'http://localhost:3000/';
+const servUrl = 'http://localhost:3000/react-burger/';
 
 describe('Burger Constructor', () => {
 
