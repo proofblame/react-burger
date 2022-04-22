@@ -25,7 +25,7 @@ const StuffList = ({ target, onHover }: TStuffList) => {
 
 
   return (
-    <ul className={borderColor} ref={target} >
+    <ul className={borderColor} ref={target} data-test="constructor">
       {ingredientItem}
     </ul>
   )

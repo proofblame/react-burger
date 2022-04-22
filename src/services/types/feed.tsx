@@ -4,8 +4,8 @@ export type TOrder = {
   ingredients?: ReadonlyArray<string>,
   _id?: string,
   status?: string | undefined,
-  createdAt?: Date,
-  updatedAt?: Date,
+  createdAt?: string,
+  updatedAt?: string,
   name?: string,
   owner?: string,
 }

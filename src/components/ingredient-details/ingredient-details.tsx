@@ -17,7 +17,7 @@ const IngredientDetails: FC = () => {
   if (!ingredient) return (null)
 
   return (
-    <div className={styles.card}>
+    <div className={styles.card} data-test="ingredient-detail">
       <img src={ingredient.image} alt={ingredient.name} className={styles.image} />
       <p className={styles.cardTitle}>{ingredient.name}</p>
       <ul className={styles.nutritionals}>

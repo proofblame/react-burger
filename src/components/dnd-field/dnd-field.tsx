@@ -9,8 +9,8 @@ const DndField = ({ target, text, onHover }: TDndField) => {
   const borderColor = onHover ? classes : styles.wrapper
 
   return (
-    <section className={styles.field}>
-      <div className={borderColor} ref={target}>
+    <section className={styles.field} data-test="constructor">
+      <div className={borderColor} ref={target} >
         <p className={styles.title}>{text}</p>
       </div>
     </section >

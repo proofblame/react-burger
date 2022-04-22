@@ -22,7 +22,6 @@ export const initialState: TAuthState = {
   forgotRequest: false,
   forgotFailed: false,
 
-  resetSuccess: false,
   resetRequest: false,
   resetFailed: false,
 
@@ -50,6 +49,7 @@ const authSlice = createSlice({
         state.loader = false
       })
       .addCase(getUser.rejected, (state) => {
+        state.userData = initialState.userData
         state.userRequest = false
         state.userFailed = true
         state.loader = false
@@ -60,11 +60,12 @@ const authSlice = createSlice({
         state.loader = true
       })
       .addCase(logout.fulfilled, (state) => {
-        state.userData = null
+        state.userData = initialState.userData
         state.logoutRequest = false
         state.loader = false
       })
       .addCase(logout.rejected, (state) => {
+        state.userData = initialState.userData
         state.logoutRequest = false
         state.logoutFailed = true
         state.loader = false
@@ -80,6 +81,7 @@ const authSlice = createSlice({
         state.loader = false
       })
       .addCase(loginUser.rejected, (state) => {
+        state.userData = initialState.userData
         state.loginRequest = false
         state.loginFailed = true
         state.loader = false
@@ -95,6 +97,7 @@ const authSlice = createSlice({
         state.loader = false
       })
       .addCase(registerUser.rejected, (state) => {
+        state.userData = initialState.userData
         state.registerRequest = false
         state.registerFailed = true
         state.loader = false
@@ -110,6 +113,7 @@ const authSlice = createSlice({
         state.loader = false
       })
       .addCase(updateUser.rejected, (state) => {
+        state.userData = initialState.userData
         state.updateRequest = false
         state.updateFailed = true
         state.loader = false
@@ -119,12 +123,13 @@ const authSlice = createSlice({
         state.forgotFailed = false
         state.loader = true
       })
-      .addCase(forgotPassword.fulfilled, (state, action: PayloadAction<boolean>) => {
-        state.forgotSuccess = action.payload
+      .addCase(forgotPassword.fulfilled, (state) => {
+        state.forgotSuccess = true
         state.forgotRequest = false
         state.loader = false
       })
       .addCase(forgotPassword.rejected, (state) => {
+        state.forgotSuccess = false
         state.forgotRequest = false
         state.forgotFailed = true
         state.loader = false
@@ -133,8 +138,7 @@ const authSlice = createSlice({
         state.forgotRequest = true
         state.forgotFailed = false
       })
-      .addCase(resetPassword.fulfilled, (state, action: PayloadAction<boolean>) => {
-        state.resetSuccess = action.payload
+      .addCase(resetPassword.fulfilled, (state) => {
         state.forgotRequest = false
         state.forgotSuccess = false
       })

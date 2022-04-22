@@ -35,6 +35,7 @@ const BurgerIngredient = ({ ingredient }: TBurgerIngredient) => {
       ref={dragRef}
       style={{ opacity }}
       className={styles.cardItem}
+      data-test={ingredient._id}
     >
       <Link key={location.key} className={styles.link} to={{ pathname: `/ingredients/${ingredient._id}`, state: { background: location } }}>
         <img
